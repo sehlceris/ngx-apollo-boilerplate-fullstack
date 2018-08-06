@@ -1,0 +1,52 @@
+.card-container {
+
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+
+  .card-content {
+
+    display: flex;
+    flex-direction: row;
+
+    .card-right {
+      min-width: 3em;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: stretch;
+
+      .card-button {
+        height: 100%;
+        border: 0;
+        outline: 0;
+
+        color: rgba(255, 255, 255, 0.9);
+        transition: background-color 300ms;
+      }
+
+      .add-button {
+        background-color: #006767;
+        &:hover {
+          background-color: #008d8d;
+        }
+      }
+    }
+
+    .card-center {
+      flex-grow: 1;
+      text-align: center;
+
+      display: flex;
+
+      input {
+        border: 0;
+        outline: 0;
+        width: 100%;
+        font-size: 1.3em;
+        padding: 0.3em;
+      }
+    }
+  }
+}

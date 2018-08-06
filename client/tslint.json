@@ -30,7 +30,10 @@
     "label-position": true,
     "max-line-length": [
       true,
-      140
+      {
+        "limit": 140,
+        "ignore-pattern": "//|\\s*\\*"
+      }
     ],
     "member-access": false,
     "member-ordering": [
@@ -61,7 +64,7 @@
     "no-empty-interface": true,
     "no-eval": true,
     "no-inferrable-types": [
-      true,
+      false,
       "ignore-params"
     ],
     "no-misused-new": true,
@@ -77,7 +80,7 @@
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [
-      true,
+      false,
       "check-open-brace",
       "check-catch",
       "check-else",

@@ -1,0 +1,25 @@
+<div class="card-container elevation-shadow">
+  <form
+    [formGroup]="addTaskForm"
+    (ngSubmit)="handleSubmit()"
+  >
+    <div class="card-content">
+
+      <div class="card-center">
+        <input
+          name="name"
+          formControlName="name"
+          placeholder="Add a Task"
+          type="text"
+          #nameInput
+          autocomplete="off"
+        >
+      </div>
+      <div class="card-right">
+        <button class="card-button add-button ripple">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

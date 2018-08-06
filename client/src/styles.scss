@@ -27,6 +27,8 @@
 @import 'app/feature-modules/examples/theming/child/child.component.scss-theme';
 @import 'app/feature-modules/examples/examples/examples.component.scss-theme';
 
+@import 'global-styles/global';
+
 @mixin custom-components-theme($theme) {
   @include anms-styles-reset-theme($theme);
   @include anms-app-component-theme($theme);

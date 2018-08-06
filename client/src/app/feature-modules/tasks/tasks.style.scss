@@ -1,0 +1,32 @@
+:host {
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+  padding-bottom: 3em;
+
+  @media (min-width: 700px) {
+    align-items: center;
+  }
+
+  .cards {
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    // todo: set this to a sane breakpoint
+    @media (min-width: 700px) {
+      min-width: 600px;
+      max-width: 650px;
+    }
+
+    add-task-card,
+    task-card {
+      margin: 0.5em;
+    }
+  }
+}

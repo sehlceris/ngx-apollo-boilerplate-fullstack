@@ -1,0 +1,23 @@
+<div class="card-container elevation-shadow">
+  <div class="card-content">
+    <div class="card-left">
+      <button
+        class="card-button check-button ripple ripple-dark"
+        (click)="handleCheckboxClick()"
+      >
+        <i class="material-icons">check</i>
+      </button>
+    </div>
+    <div class="card-center">
+      <h2 class="card-title">{{task.name}}</h2>
+    </div>
+    <div class="card-right">
+      <button
+        class="card-button settings-button ripple"
+        (click)="handleEditClick()"
+      >
+        <i class="material-icons">settings</i>
+      </button>
+    </div>
+  </div>
+</div>

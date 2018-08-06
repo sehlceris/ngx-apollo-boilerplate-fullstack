@@ -17,6 +17,12 @@ import { AuthEffects } from './auth/auth.effects';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { AnimationsService } from './animations/animations.service';
 import { TitleService } from './title/title.service';
+import { DomAbstractionService } from '@app/core/services/dom-abstraction.service';
+import { FormValidationService } from '@app/core/services/form-validation.service';
+import { LogService } from '@app/core/services/log-service';
+import {LoadingOverlayComponent} from '@app/core/loading-overlay/loading-overlay.component';
+import {LoadingOverlayService} from '@app/core/loading-overlay/loading-overlay.service';
+import {SharedModule} from '@app/shared';
 
 export const metaReducers: MetaReducer<any>[] = [initStateFromLocalStorage];
 
@@ -27,11 +33,29 @@ if (!environment.production) {
   }
 }
 
+const SERVICES = [
+  DomAbstractionService,
+  FormValidationService,
+  LogService,
+  LocalStorageService,
+  AuthGuardService,
+  AnimationsService,
+  TitleService,
+  LoadingOverlayService,
+];
+
+const COMPONENTS = [
+  LoadingOverlayComponent,
+];
+
 @NgModule({
   imports: [
     // angular
     CommonModule,
     HttpClientModule,
+
+    // shared module
+    SharedModule,
 
     // ngrx
     StoreModule.forRoot(
@@ -51,20 +75,22 @@ if (!environment.production) {
       }
     })
   ],
-  declarations: [],
-  providers: [
-    LocalStorageService,
-    AuthGuardService,
-    AnimationsService,
-    TitleService
+  declarations: [
+    ...COMPONENTS,
   ],
-  exports: [TranslateModule]
+  providers: [
+    ...SERVICES
+  ],
+  exports: [
+    TranslateModule,
+    ...COMPONENTS,
+  ]
 })
 export class CoreModule {
   constructor(
     @Optional()
     @SkipSelf()
-    parentModule: CoreModule
+      parentModule: CoreModule
   ) {
     if (parentModule) {
       throw new Error('CoreModule is already loaded. Import only in AppModule');

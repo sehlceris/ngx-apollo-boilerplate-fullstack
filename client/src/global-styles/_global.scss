@@ -1,0 +1,37 @@
+@import 'global_partials/ripple';
+
+html,
+body {
+  height: 100%;
+}
+
+// todo: proper theming
+.error-hint {
+  color: red;
+  font-size: 0.8em;
+}
+
+.snack-error {
+  color: #ff5c18;
+
+  & > simple-snack-bar {
+    font-size: 1em;
+  }
+}
+
+// firefox fix
+button.mat-icon-button {
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: normal;
+}
+
+.elevation-shadow {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+}
