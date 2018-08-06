@@ -1,0 +1,14 @@
+# system/platform/IDE reserved
+.idea/
+.DS_Store
+node_modules/
+
+# scratch files (type whatever temporary data you like here)
+scratch/
+scratch.json
+scratch.ts
+scratch.js
+scratch.html
+
+# local files
+local/
