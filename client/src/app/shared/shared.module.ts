@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { BigInputComponent } from './big-input/big-input.component';
@@ -10,6 +10,7 @@ import {MaterialModule} from '@app/shared/material.module';
 const MODULES = [
   CommonModule,
   FormsModule,
+  ReactiveFormsModule,
   TranslateModule,
   MaterialModule,
 ];

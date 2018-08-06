@@ -3,6 +3,7 @@
   "anms.title.short": "Angular Starter",
   "anms.header.github": "Project Github Repository",
   "anms.footer.changelog": "Show changelog",
+  "anms.menu.tasks": "Tasks",
   "anms.menu.about": "About",
   "anms.menu.features": "Features",
   "anms.menu.examples": "Examples",

@@ -15,6 +15,10 @@ const routes: Routes = [
     data: { title: 'anms.menu.settings' }
   },
   {
+    path: 'tasks',
+    loadChildren: 'app/feature-modules/tasks/tasks.module#TasksModule'
+  },
+  {
     path: 'examples',
     loadChildren: 'app/feature-modules/examples/examples.module#ExamplesModule'
   },
