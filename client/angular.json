@@ -33,6 +33,9 @@
             "styles": [
               {
                 "input": "src/styles.scss"
+              },
+              {
+                "input": "node_modules/material-icons/iconfont/material-icons.css"
               }
             ],
             "scripts": []
