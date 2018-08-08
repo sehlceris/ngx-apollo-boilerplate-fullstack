@@ -1,6 +1,6 @@
 {
-  "name": "angular-ngrx-material-starter",
-  "version": "6.5.1",
+  "name": "ng2-apollo-boilerplate",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -18,10 +18,7 @@
     "release": "standard-version && git push --follow-tags origin master",
     "prettier": "prettier {src,e2e}/**/*.{ts,json,md,scss} --write",
     "prettier:ci": "prettier {src,e2e}/**/*.{ts,json,md,scss} --list-different",
-    "analyze": "npm run clean && npm run build:prod -- --stats-json && webpack-bundle-analyzer ./dist/stats.json",
-    "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate",
-    "contributors:check": "all-contributors check"
+    "analyze": "npm run clean && npm run build:prod -- --stats-json && webpack-bundle-analyzer ./dist/stats.json"
   },
   "husky": {
     "hooks": {
@@ -66,7 +63,6 @@
     "@angular/language-service": "^6.0.7",
     "@types/jasmine": "~2.8.3",
     "@types/node": "~9.4.0",
-    "all-contributors-cli": "^5.2.1",
     "codelyzer": "~4.4.2",
     "husky": "^1.0.0-rc.13",
     "jasmine-core": "~2.99.1",
