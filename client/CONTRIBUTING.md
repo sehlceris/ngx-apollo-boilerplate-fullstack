@@ -52,8 +52,6 @@ Other types that will not appear in changelog:
   * **test** - adding tests
   * **style** - changes to codestyle (should be unnecessary since we use prettier)
 
-
-
 Any line of the commit message should not be longer 100 characters! This allows the message to be easier
 to read on GitHub as well as in various git tools.
 
