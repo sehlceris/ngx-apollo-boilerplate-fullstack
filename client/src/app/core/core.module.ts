@@ -23,6 +23,8 @@ import { LogService } from '@app/core/services/log-service';
 import {LoadingOverlayComponent} from '@app/core/loading-overlay/loading-overlay.component';
 import {LoadingOverlayService} from '@app/core/loading-overlay/loading-overlay.service';
 import {SharedModule} from '@app/shared';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
 
 export const metaReducers: MetaReducer<any>[] = [initStateFromLocalStorage];
 
@@ -65,6 +67,12 @@ const COMPONENTS = [
       { metaReducers }
     ),
     EffectsModule.forRoot([AuthEffects]),
+    StoreRouterConnectingModule,
+
+    environment.envName === 'DEV' ?
+      StoreDevtoolsModule.instrument({
+        maxAge: 20
+      }) : [],
 
     // 3rd party
     TranslateModule.forRoot({
