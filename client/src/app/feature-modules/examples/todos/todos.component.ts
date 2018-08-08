@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Store} from '@ngrx/store';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
-import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
+import {ROUTE_ANIMATIONS_ELEMENTS} from '@app/core';
 
 import {
   ActionTodosAdd,
@@ -15,13 +15,13 @@ import {
   selectorTodos,
   Todo,
   TodosFilter,
-  TodosState
+  TodosState,
 } from './todos.reducer';
 
 @Component({
   selector: 'anms-todos',
   templateUrl: './todos.component.html',
-  styleUrls: ['./todos.component.scss']
+  styleUrls: ['./todos.component.scss'],
 })
 export class TodosComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();
@@ -30,7 +30,8 @@ export class TodosComponent implements OnInit, OnDestroy {
   todos: TodosState;
   newTodo = '';
 
-  constructor(public store: Store<any>, public snackBar: MatSnackBar) {}
+  constructor(public store: Store<any>, public snackBar: MatSnackBar) {
+  }
 
   ngOnInit() {
     this.store
@@ -38,7 +39,7 @@ export class TodosComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(todos => {
         this.todos = todos;
-        this.store.dispatch(new ActionTodosPersist({ todos }));
+        this.store.dispatch(new ActionTodosPersist({todos}));
       });
   }
 
@@ -48,21 +49,23 @@ export class TodosComponent implements OnInit, OnDestroy {
   }
 
   get filteredTodos() {
+    if (!this.todos) return;
     const filter = this.todos.filter;
     if (filter === 'ALL') {
       return this.todos.items;
-    } else {
+    }
+    else {
       const predicate = filter === 'DONE' ? t => t.done : t => !t.done;
       return this.todos.items.filter(predicate);
     }
   }
 
   get isAddTodoDisabled() {
-    return this.newTodo.length < 4;
+    return this.newTodo && this.newTodo.length < 4;
   }
 
   get isRemoveDoneTodosDisabled() {
-    return this.todos.items.filter(item => item.done).length === 0;
+    return this.todos && this.todos.items.filter(item => item.done).length === 0;
   }
 
   onNewTodoChange(newTodo: string) {
@@ -74,17 +77,17 @@ export class TodosComponent implements OnInit, OnDestroy {
   }
 
   onAddTodo() {
-    this.store.dispatch(new ActionTodosAdd({ name: this.newTodo }));
+    this.store.dispatch(new ActionTodosAdd({name: this.newTodo}));
     this.showNotification(`"${this.newTodo}" added`);
     this.newTodo = '';
   }
 
   onToggleTodo(todo: Todo) {
     const newStatus = todo.done ? 'active' : 'done';
-    this.store.dispatch(new ActionTodosToggle({ id: todo.id }));
+    this.store.dispatch(new ActionTodosToggle({id: todo.id}));
     this.showNotification(`Toggled "${todo.name}" to ${newStatus}`, 'Undo')
       .onAction()
-      .subscribe(() => this.onToggleTodo({ ...todo, done: !todo.done }));
+      .subscribe(() => this.onToggleTodo({...todo, done: !todo.done}));
   }
 
   onRemoveDoneTodos() {
@@ -93,14 +96,14 @@ export class TodosComponent implements OnInit, OnDestroy {
   }
 
   onFilterTodos(filter: TodosFilter) {
-    this.store.dispatch(new ActionTodosFilter({ filter }));
+    this.store.dispatch(new ActionTodosFilter({filter}));
     this.showNotification(`Filtered to ${filter.toLowerCase()}`);
   }
 
   private showNotification(message: string, action?: string) {
     return this.snackBar.open(message, action, {
       duration: 2500,
-      panelClass: 'todos-notification-overlay'
+      panelClass: 'todos-notification-overlay',
     });
   }
 }

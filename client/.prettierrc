@@ -1,0 +1,12 @@
+{
+  "semi": false,
+  "quotes": "single",
+  "overrides": [
+    {
+      "files": "*.test.js",
+      "options": {
+        "semi": true
+      }
+    }
+  ]
+}

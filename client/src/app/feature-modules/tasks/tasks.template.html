@@ -1,17 +1,19 @@
-<div
-  class="cards"
->
-  <add-task-card
-    (addTaskName)="addTask($event)"
-  ></add-task-card>
-  <task-card
-    *ngFor="let task of (notDoneTasks$ | async), let i = index"
-    [task]="task"
-    (done)="markTaskAsDone(task, i)"
-    (edit)="editTask(task)"
-    [@animatedListItemIn]
-    [@animatedListItemOut]
-    (@animatedListItemOut.done)="handleTaskRemovalComplete($event)"
-    [@animatedListItemBelowRemovedSibling]="(deletedSiblingIndex <= i).toString()"
-  ></task-card>
+<div class="padded-route-container">
+  <div
+    class="cards"
+  >
+    <add-task-card
+      (addTaskName)="addTask($event)"
+    ></add-task-card>
+    <task-card
+      *ngFor="let task of (notDoneTasks$ | async), let i = index"
+      [task]="task"
+      (done)="markTaskAsDone(task, i)"
+      (edit)="editTask(task)"
+      [@animatedListItemIn]
+      [@animatedListItemOut]
+      (@animatedListItemOut.done)="handleTaskRemovalComplete($event)"
+      [@animatedListItemBelowRemovedSibling]="(deletedSiblingIndex <= i).toString()"
+    ></task-card>
+  </div>
 </div>
