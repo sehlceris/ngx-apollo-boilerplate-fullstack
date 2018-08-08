@@ -4,19 +4,6 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Build Status](https://travis-ci.org/tomastrajan/angular-ngrx-material-starter.svg?branch=master)](https://travis-ci.org/tomastrajan/angular-ngrx-material-starter) 
 
-## Table of Contents
-
-  * [Getting Started](#getting-started)
-  * [Useful Commands](#useful-commands)
-  * [Make It Your Own](#make-it-your-own)
-  * [Learning Materials](#learning-materials)
-  * [List of Projects Built Using This Starter](https://github.com/tomastrajan/angular-ngrx-material-starter/blob/master/BUILT_WITH.md)
-  * [Features](#features)
-  * [Stack](#stack)
-  * [Code of Conduct](https://github.com/tomastrajan/angular-ngrx-material-starter/blob/master/CODE_OF_CONDUCT.md)
-  * [Contributors Guide](https://github.com/tomastrajan/angular-ngrx-material-starter/blob/master/CONTRIBUTING.md)
-  * [Changelog](https://github.com/tomastrajan/angular-ngrx-material-starter/blob/master/CHANGELOG.md) ( get notified about the newest releases, [follow Release Butler](https://twitter.com/releasebutler) on Twitter )
-
 
 ## Getting started
 ```bash
@@ -56,16 +43,6 @@ Based on your preferences and needs you can either:
   * create Travis CI account and link it to your projects Github repo and [configure build](https://medium.com/@tomastrajan/continuous-deployment-of-client-side-apps-with-github-pages-travis-ci-10e9d641a889) 
     with `GH_REF` and `GH_TOKEN` environment variables for automatic deployment of releases to Github Pages
     
- 
-## Features
-
-* custom themes support (3 themes included)
-* lazy-loading of feature modules
-* lazy reducers
-* localStorage ui state persistence
-* `@ngrx/effects` for API requests
-* fully responsive design
-* angular-material and custom components in `SharedModule`
  
 ## Stack
 
