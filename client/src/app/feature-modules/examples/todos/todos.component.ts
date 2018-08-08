@@ -49,7 +49,9 @@ export class TodosComponent implements OnInit, OnDestroy {
   }
 
   get filteredTodos() {
-    if (!this.todos) return;
+    if (!this.todos) {
+      return;
+    }
     const filter = this.todos.filter;
     if (filter === 'ALL') {
       return this.todos.items;
