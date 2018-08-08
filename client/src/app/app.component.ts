@@ -1,11 +1,11 @@
-import browser from "browser-detect"
-import { OverlayContainer } from "@angular/cdk/overlay"
-import { Component, HostBinding, OnDestroy, OnInit } from "@angular/core"
-import { ActivationEnd, Router, NavigationEnd } from "@angular/router"
-import { TranslateService } from "@ngx-translate/core"
-import { Store } from "@ngrx/store"
-import { Subject } from "rxjs"
-import { takeUntil } from "rxjs/operators"
+import browser from 'browser-detect';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { ActivationEnd, Router, NavigationEnd } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import {
   ActionAuthLogin,
@@ -14,8 +14,8 @@ import {
   TitleService,
   selectorAuth,
   routeAnimations
-} from "@app/core"
-import { environment as env } from "@env/environment"
+} from '@app/core';
+import { environment as env } from '@env/environment';
 
 import {
   NIGHT_MODE_THEME,
@@ -24,38 +24,38 @@ import {
   ActionSettingsPersist,
   ActionSettingsChangeLanguage,
   ActionSettingsChangeAnimationsPageDisabled
-} from "./settings"
+} from './settings';
 
 @Component({
-  selector: "anms-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
+  selector: 'anms-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
   animations: [routeAnimations]
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private unsubscribe$: Subject<void> = new Subject<void>()
+  private unsubscribe$: Subject<void> = new Subject<void>();
 
-  @HostBinding("class")
-  componentCssClass
+  @HostBinding('class')
+  componentCssClass;
 
-  isProd = env.production
-  envName = env.envName
-  version = env.versions.app
-  year = new Date().getFullYear()
-  logo = require("../assets/logo.png")
-  languages = ["en", "sk"]
+  isProd = env.production;
+  envName = env.envName;
+  version = env.versions.app;
+  year = new Date().getFullYear();
+  logo = require('../assets/logo.png');
+  languages = ['en', 'sk'];
   navigation = [
-    { link: "tasks", label: "anms.menu.tasks" },
-    { link: "about", label: "anms.menu.about" },
-    { link: "examples", label: "anms.menu.examples" }
-  ]
+    { link: 'tasks', label: 'anms.menu.tasks' },
+    { link: 'about', label: 'anms.menu.about' },
+    { link: 'examples', label: 'anms.menu.examples' }
+  ];
   navigationSideMenu = [
     ...this.navigation,
-    { link: "settings", label: "anms.menu.settings" }
-  ]
+    { link: 'settings', label: 'anms.menu.settings' }
+  ];
 
-  settings: SettingsState
-  isAuthenticated: boolean
+  settings: SettingsState;
+  isAuthenticated: boolean;
 
   constructor(
     public overlayContainer: OverlayContainer,
@@ -67,44 +67,44 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   private static trackPageView(event: NavigationEnd) {
-    ;(<any>window).ga("set", "page", event.urlAfterRedirects)
-    ;(<any>window).ga("send", "pageview")
+    (<any>window).ga('set', 'page', event.urlAfterRedirects);
+    (<any>window).ga('send', 'pageview');
   }
 
   private static isIEorEdge() {
-    return ["ie", "edge"].includes(browser().name)
+    return ['ie', 'edge'].includes(browser().name);
   }
 
   ngOnInit(): void {
-    this.translate.setDefaultLang("en")
-    this.subscribeToSettings()
-    this.subscribeToIsAuthenticated()
-    this.subscribeToRouterEvents()
+    this.translate.setDefaultLang('en');
+    this.subscribeToSettings();
+    this.subscribeToIsAuthenticated();
+    this.subscribeToRouterEvents();
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next()
-    this.unsubscribe$.complete()
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   onLoginClick() {
-    this.store.dispatch(new ActionAuthLogin())
+    this.store.dispatch(new ActionAuthLogin());
   }
 
   onLogoutClick() {
-    this.store.dispatch(new ActionAuthLogout())
+    this.store.dispatch(new ActionAuthLogout());
   }
 
   onLanguageSelect({ value: language }) {
-    this.store.dispatch(new ActionSettingsChangeLanguage({ language }))
-    this.store.dispatch(new ActionSettingsPersist({ settings: this.settings }))
+    this.store.dispatch(new ActionSettingsChangeLanguage({ language }));
+    this.store.dispatch(new ActionSettingsPersist({ settings: this.settings }));
   }
 
   private subscribeToIsAuthenticated() {
     this.store
       .select(selectorAuth)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(auth => (this.isAuthenticated = auth.isAuthenticated))
+      .subscribe(auth => (this.isAuthenticated = auth.isAuthenticated));
   }
 
   private subscribeToSettings() {
@@ -113,56 +113,56 @@ export class AppComponent implements OnInit, OnDestroy {
         new ActionSettingsChangeAnimationsPageDisabled({
           pageAnimationsDisabled: true
         })
-      )
+      );
     }
     this.store
       .select(selectorSettings)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(settings => {
-        this.settings = settings
-        this.setTheme(settings)
-        this.setLanguage(settings)
+        this.settings = settings;
+        this.setTheme(settings);
+        this.setLanguage(settings);
         this.animationService.updateRouteAnimationType(
           settings.pageAnimations,
           settings.elementsAnimations
-        )
-      })
+        );
+      });
   }
 
   private setTheme(settings: SettingsState) {
-    const { theme, autoNightMode } = settings
-    const hours = new Date().getHours()
+    const { theme, autoNightMode } = settings;
+    const hours = new Date().getHours();
     const effectiveTheme = (autoNightMode && (hours >= 20 || hours <= 6)
       ? NIGHT_MODE_THEME
       : theme
-    ).toLowerCase()
-    this.componentCssClass = effectiveTheme
-    const classList = this.overlayContainer.getContainerElement().classList
+    ).toLowerCase();
+    this.componentCssClass = effectiveTheme;
+    const classList = this.overlayContainer.getContainerElement().classList;
     const toRemove = Array.from(classList).filter((item: string) =>
-      item.includes("-theme")
-    )
+      item.includes('-theme')
+    );
     if (toRemove.length) {
-      classList.remove(...toRemove)
+      classList.remove(...toRemove);
     }
-    classList.add(effectiveTheme)
+    classList.add(effectiveTheme);
   }
 
   private setLanguage(settings: SettingsState) {
-    const { language } = settings
+    const { language } = settings;
     if (language) {
-      this.translate.use(language)
+      this.translate.use(language);
     }
   }
 
   private subscribeToRouterEvents() {
     this.router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(event => {
       if (event instanceof ActivationEnd) {
-        this.titleService.setTitle(event.snapshot)
+        this.titleService.setTitle(event.snapshot);
       }
 
       if (event instanceof NavigationEnd) {
-        AppComponent.trackPageView(event)
+        AppComponent.trackPageView(event);
       }
-    })
+    });
   }
 }

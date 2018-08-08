@@ -1,39 +1,39 @@
-import { NgModule } from "@angular/core"
-import { Routes, RouterModule } from "@angular/router"
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-import { SettingsComponent } from "./settings"
+import { SettingsComponent } from './settings';
 
 const routes: Routes = [
   {
-    path: "",
-    redirectTo: "about",
-    pathMatch: "full"
+    path: '',
+    redirectTo: 'about',
+    pathMatch: 'full'
   },
   {
-    path: "settings",
+    path: 'settings',
     component: SettingsComponent,
-    data: { title: "anms.menu.settings" }
+    data: { title: 'anms.menu.settings' }
   },
   {
-    path: "tasks",
-    loadChildren: "app/feature-modules/tasks/tasks.module#TasksModule"
+    path: 'tasks',
+    loadChildren: 'app/feature-modules/tasks/tasks.module#TasksModule'
   },
   {
-    path: "examples",
-    loadChildren: "app/feature-modules/examples/examples.module#ExamplesModule"
+    path: 'examples',
+    loadChildren: 'app/feature-modules/examples/examples.module#ExamplesModule'
   },
   {
-    path: "**",
-    redirectTo: "about"
+    path: '**',
+    redirectTo: 'about'
   }
-]
+];
 
 @NgModule({
   // useHash supports github.io demo page, remove in your app
   imports: [
     RouterModule.forRoot(routes, {
       useHash: true,
-      scrollPositionRestoration: "enabled"
+      scrollPositionRestoration: 'enabled'
     })
   ],
   exports: [RouterModule]
