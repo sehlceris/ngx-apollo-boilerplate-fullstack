@@ -6,7 +6,7 @@ import {FormValidationService} from '@app/core/services/form-validation.service'
 import {LogService} from '@app/core/services/log-service';
 
 @Component({
-  selector: 'add-task-card',
+  selector: 'anms-add-task-card',
   templateUrl: 'add-task-card.htmplate.html',
   styleUrls: [
     'add-task-card.style.scss',

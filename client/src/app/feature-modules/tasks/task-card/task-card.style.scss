@@ -23,25 +23,11 @@
         height: 100%;
         border: 0;
         outline: 0;
-
-        color: rgba(255, 255, 255, 0.9);
-        transition: background-color 300ms;
+        transition: background-color 300ms, color 300ms;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
-
-      .check-button {
-        background-color: #006767;
-        &:hover {
-          background-color: #008d8d;
-        }
-      }
-
-      .settings-button {
-        background-color: rgba(0, 0, 0, 0.2);
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.6);
-        }
-      }
-
     }
 
     .card-center {
