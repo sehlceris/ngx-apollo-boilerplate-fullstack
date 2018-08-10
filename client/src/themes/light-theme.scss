@@ -8,108 +8,109 @@ $anms-light-error: mat-palette($mat-red, 500);
 
 $anms-light-theme: mat-light-theme($anms-light-primary, $anms-light-accent, $anms-light-warn);
 
-$theme-colors: (
-  'primary': (
-    'base': (
-      'color': mat-color($anms-light-primary, default),
-      'background-type': 'dark'
-    ),
-    'light': (
-      'color': mat-color($anms-light-primary, lighter),
-      'background-type': 'light'
-    ),
-    'dark': (
-      'color': mat-color($anms-light-primary, darker),
-      'background-type': 'dark'
-    )
-  ),
-  'accent': (
-    'base': (
-      'color': mat-color($anms-light-accent, default),
-      'background-type': 'dark'
-    ),
-    'light': (
-      'color': mat-color($anms-light-accent, lighter),
-      'background-type': 'dark'
-    ),
-    'dark': (
-      'color': mat-color($anms-light-accent, darker),
-      'background-type': 'dark'
-    )
-  ),
-  'warn': (
-    'base': (
-      'color': mat-color($anms-light-warn, default),
-      'background-type': 'dark'
-    ),
-    'light': (
-      'color': mat-color($anms-light-warn, lighter),
-      'background-type': 'light'
-    ),
-    'dark': (
-      'color': mat-color($anms-light-warn, darker),
-      'background-type': 'dark'
-    )
-  ),
-  'error': (
-    'base': (
-      'color': mat-color($anms-light-error, default),
-      'background-type': 'dark'
-    ),
-    'light': (
-      'color': mat-color($anms-light-error, lighter),
-      'background-type': 'dark'
-    ),
-    'dark': (
-      'color': mat-color($anms-light-error, darker),
-      'background-type': 'dark'
-    )
-  ),
-  'foreground': (
-    'base': (
-      'color': map_get($mat-grey, 100),
-      'background-type': 'dark'
-    ),
-    'light': (
-      'color': map_get($mat-grey, 50),
-      'background-type': 'dark'
-    ),
-    'dark': (
-      'color': map_get($mat-grey, 200),
-      'background-type': 'dark'
-    )
-  ),
-  'background': (
-    'base': (
-      'color': map_get($mat-grey, 800),
-      'background-type': 'dark'
-    ),
-    'light': (
-      'color': map_get($mat-grey, 700),
-      'background-type': 'dark'
-    ),
-    'dark': (
-      'color': map_get($mat-grey, 900),
-      'background-type': 'dark'
-    )
-  )
-);
-
-$contrast-colors: (
-  'dark': (
-    'primary': rgb(255, 255, 255),
-    'secondary': rgba(255, 255, 255, .70),
-    'disabled': rgba(255, 255, 255, .5),
-    'hint': rgba(255, 255, 255, .12)
-  ),
-  'light': (
-    'primary': rgba(0, 0, 0, .87),
-    'secondary': rgba(0, 0, 0, .54),
-    'disabled': rgba(0, 0, 0, .38),
-    'hint': rgba(0, 0, 0, .12)
-  ),
-);
-
 @mixin light-theme() {
+
+  $theme-colors: (
+    'primary': (
+      'base': (
+        'color': mat-color($anms-light-primary, default),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': mat-color($anms-light-primary, lighter),
+        'background-type': 'light'
+      ),
+      'dark': (
+        'color': mat-color($anms-light-primary, darker),
+        'background-type': 'dark'
+      )
+    ),
+    'accent': (
+      'base': (
+        'color': mat-color($anms-light-accent, default),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': mat-color($anms-light-accent, lighter),
+        'background-type': 'dark'
+      ),
+      'dark': (
+        'color': mat-color($anms-light-accent, darker),
+        'background-type': 'dark'
+      )
+    ),
+    'warn': (
+      'base': (
+        'color': mat-color($anms-light-warn, default),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': mat-color($anms-light-warn, lighter),
+        'background-type': 'light'
+      ),
+      'dark': (
+        'color': mat-color($anms-light-warn, darker),
+        'background-type': 'dark'
+      )
+    ),
+    'error': (
+      'base': (
+        'color': mat-color($anms-light-error, default),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': mat-color($anms-light-error, lighter),
+        'background-type': 'dark'
+      ),
+      'dark': (
+        'color': mat-color($anms-light-error, darker),
+        'background-type': 'dark'
+      )
+    ),
+    'foreground': (
+      'base': (
+        'color': map_get($mat-grey, 100),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': map_get($mat-grey, 50),
+        'background-type': 'dark'
+      ),
+      'dark': (
+        'color': map_get($mat-grey, 200),
+        'background-type': 'dark'
+      )
+    ),
+    'background': (
+      'base': (
+        'color': map_get($mat-grey, 800),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': map_get($mat-grey, 700),
+        'background-type': 'dark'
+      ),
+      'dark': (
+        'color': map_get($mat-grey, 900),
+        'background-type': 'dark'
+      )
+    )
+  );
+
+  $contrast-colors: (
+    'dark': (
+      'primary': rgb(255, 255, 255),
+      'secondary': rgba(255, 255, 255, .70),
+      'disabled': rgba(255, 255, 255, .5),
+      'hint': rgba(255, 255, 255, .12)
+    ),
+    'light': (
+      'primary': rgba(0, 0, 0, .87),
+      'secondary': rgba(0, 0, 0, .54),
+      'disabled': rgba(0, 0, 0, .38),
+      'hint': rgba(0, 0, 0, .12)
+    ),
+  );
+
   @include theme-css-variables-colors($theme-colors, $contrast-colors);
 }
