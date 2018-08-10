@@ -1,0 +1,54 @@
+@function theme-color($key: 'primary', $variant: 'base') {
+  $map: map-get($theme-colors, $key);
+  @return map-get(map-get($map, $variant), 'color');
+}
+
+@function theme-color-background-type($key: 'primary', $variant: 'base') {
+  $map: map-get($theme-colors, $key);
+  @return map-get(map-get($map, $variant), 'background-type');
+}
+
+@function theme-color-contrast($key: 'primary', $variant: 'base', $level: 'primary') {
+  $background-type: theme-color-background-type($key, $variant);
+  $contrast-map: map-get($contrast-colors, $background-type);
+  @return map-get($contrast-map, $level);
+}
+
+@mixin theme-css-variables-contrast-colors-by-weight($key: 'primary', $weight: 'primary') {
+  --theme-color-contrast-#{$key}-base-#{$weight}: #{theme-color-contrast($key, 'base', $weight)};
+  --theme-color-contrast-#{$key}-light-#{$weight}: #{theme-color-contrast($key, 'light', $weight)};
+  --theme-color-contrast-#{$key}-dark-#{$weight}: #{theme-color-contrast($key, 'dark', $weight)};
+}
+
+@mixin theme-css-variables-contrast-colors-by-key($key: 'primary') {
+  @include theme-css-variables-contrast-colors-by-weight($key, 'primary');
+  @include theme-css-variables-contrast-colors-by-weight($key, 'secondary');
+  @include theme-css-variables-contrast-colors-by-weight($key, 'disabled');
+  @include theme-css-variables-contrast-colors-by-weight($key, 'hint');
+}
+
+@mixin theme-css-variables-colors-by-key($key: 'primary') {
+  --theme-color-#{$key}-base: #{theme-color($key, 'base')};
+  --theme-color-#{$key}-light: #{theme-color($key, 'light')};
+  --theme-color-#{$key}-dark: #{theme-color($key, 'dark')};
+}
+
+@mixin theme-css-variables-colors() {
+  @include theme-css-variables-colors-by-key('primary');
+  @include theme-css-variables-contrast-colors-by-key('primary');
+
+  @include theme-css-variables-colors-by-key('accent');
+  @include theme-css-variables-contrast-colors-by-key('accent');
+
+  @include theme-css-variables-colors-by-key('foreground');
+  @include theme-css-variables-contrast-colors-by-key('foreground');
+
+  @include theme-css-variables-colors-by-key('background');
+  @include theme-css-variables-contrast-colors-by-key('background');
+
+  @include theme-css-variables-colors-by-key('warn');
+  @include theme-css-variables-contrast-colors-by-key('warn');
+
+  @include theme-css-variables-colors-by-key('error');
+  @include theme-css-variables-contrast-colors-by-key('error');
+}

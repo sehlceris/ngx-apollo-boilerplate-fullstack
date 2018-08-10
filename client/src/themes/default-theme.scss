@@ -1,5 +1,113 @@
+@import 'theming';
+
 $anms-primary: mat-palette($mat-indigo, 800, 300, 900);
 $anms-accent: mat-palette($mat-light-blue);
 $anms-warn: mat-palette($mat-pink, 600);
 
 $anms-theme: mat-light-theme($anms-primary, $anms-accent, $anms-warn);
+
+$theme-colors: (
+  'primary': (
+    'base': (
+      'color': #384ea9,
+      'background-type': 'dark'
+    ),
+    'light': (
+      'color': #e4efff,
+      'background-type': 'light'
+    ),
+    'dark': (
+      'color': #273677,
+      'background-type': 'dark'
+    )
+  ),
+  'accent': (
+    'base': (
+      'color': #f08110,
+      'background-type': 'dark'
+    ),
+    'light': (
+      'color': #ff8100,
+      'background-type': 'dark'
+    ),
+    'dark': (
+      'color': #e47f17,
+      'background-type': 'dark'
+    )
+  ),
+  'warn': (
+    'base': (
+      'color': #f08110,
+      'background-type': 'dark'
+    ),
+    'light': (
+      'color': #ffa150,
+      'background-type': 'light'
+    ),
+    'dark': (
+      'color': #ab5f11,
+      'background-type': 'dark'
+    )
+  ),
+  'error': (
+    'base': (
+      'color': #f08110,
+      'background-type': 'dark'
+    ),
+    'light': (
+      'color': #ff8100,
+      'background-type': 'dark'
+    ),
+    'dark': (
+      'color': #e47f17,
+      'background-type': 'dark'
+    )
+  ),
+  'foreground': (
+    'base': (
+      'color': #393939,
+      'background-type': 'dark'
+    ),
+    'light': (
+      'color': #6e6e6e,
+      'background-type': 'dark'
+    ),
+    'dark': (
+      'color': #111,
+      'background-type': 'dark'
+    )
+  ),
+  'background': (
+    'base': (
+      'color': #f8f5f5,
+      'background-type': 'dark'
+    ),
+    'light': (
+      'color': #fff,
+      'background-type': 'dark'
+    ),
+    'dark': (
+      'color': #ddd,
+      'background-type': 'dark'
+    )
+  )
+);
+
+$contrast-colors: (
+  'dark': (
+    'primary': rgb(255, 255, 255),
+    'secondary': rgba(255, 255, 255, .70),
+    'disabled': rgba(255, 255, 255, .5),
+    'hint': rgba(255, 255, 255, .12)
+  ),
+  'light': (
+    'primary': rgba(0, 0, 0, .87),
+    'secondary': rgba(0, 0, 0, .54),
+    'disabled': rgba(0, 0, 0, .38),
+    'hint': rgba(0, 0, 0, .12)
+  ),
+);
+
+@mixin default-theme() {
+  @include theme-css-variables-colors();
+}
