@@ -1,93 +1,95 @@
 @import 'theming';
+@import '../../node_modules/@angular/material/theming';
 
 $anms-primary: mat-palette($mat-indigo, 800, 300, 900);
 $anms-accent: mat-palette($mat-light-blue);
 $anms-warn: mat-palette($mat-pink, 600);
+$anms-error: mat-palette($mat-red, 500);
 
 $anms-theme: mat-light-theme($anms-primary, $anms-accent, $anms-warn);
 
 $theme-colors: (
   'primary': (
     'base': (
-      'color': #384ea9,
+      'color': mat-color($anms-primary, default),
       'background-type': 'dark'
     ),
     'light': (
-      'color': #e4efff,
+      'color': mat-color($anms-primary, lighter),
       'background-type': 'light'
     ),
     'dark': (
-      'color': #273677,
+      'color': mat-color($anms-primary, darker),
       'background-type': 'dark'
     )
   ),
   'accent': (
     'base': (
-      'color': #f08110,
+      'color': mat-color($anms-accent, default),
       'background-type': 'dark'
     ),
     'light': (
-      'color': #ff8100,
+      'color': mat-color($anms-accent, lighter),
       'background-type': 'dark'
     ),
     'dark': (
-      'color': #e47f17,
+      'color': mat-color($anms-accent, darker),
       'background-type': 'dark'
     )
   ),
   'warn': (
     'base': (
-      'color': #f08110,
+      'color': mat-color($anms-warn, default),
       'background-type': 'dark'
     ),
     'light': (
-      'color': #ffa150,
+      'color': mat-color($anms-warn, lighter),
       'background-type': 'light'
     ),
     'dark': (
-      'color': #ab5f11,
+      'color': mat-color($anms-warn, darker),
       'background-type': 'dark'
     )
   ),
   'error': (
     'base': (
-      'color': #f08110,
+      'color': mat-color($anms-error, default),
       'background-type': 'dark'
     ),
     'light': (
-      'color': #ff8100,
+      'color': mat-color($anms-error, lighter),
       'background-type': 'dark'
     ),
     'dark': (
-      'color': #e47f17,
+      'color': mat-color($anms-error, darker),
       'background-type': 'dark'
     )
   ),
   'foreground': (
     'base': (
-      'color': #393939,
+      'color': map_get($mat-grey, 100),
       'background-type': 'dark'
     ),
     'light': (
-      'color': #6e6e6e,
+      'color': map_get($mat-grey, 50),
       'background-type': 'dark'
     ),
     'dark': (
-      'color': #111,
+      'color': map_get($mat-grey, 200),
       'background-type': 'dark'
     )
   ),
   'background': (
     'base': (
-      'color': #f8f5f5,
+      'color': map_get($mat-grey, 800),
       'background-type': 'dark'
     ),
     'light': (
-      'color': #fff,
+      'color': map_get($mat-grey, 700),
       'background-type': 'dark'
     ),
     'dark': (
-      'color': #ddd,
+      'color': map_get($mat-grey, 900),
       'background-type': 'dark'
     )
   )
@@ -109,5 +111,5 @@ $contrast-colors: (
 );
 
 @mixin default-theme() {
-  @include theme-css-variables-colors();
+  @include theme-css-variables-colors($theme-colors, $contrast-colors);
 }
