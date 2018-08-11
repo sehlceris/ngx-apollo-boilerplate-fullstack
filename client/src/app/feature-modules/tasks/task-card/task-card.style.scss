@@ -42,10 +42,10 @@
       }
 
       & > .settings-button {
-        color: var(--theme-color-contrast-foreground-base-primary);
-        background-color: var(--theme-color-foreground-base);
+        color: var(--theme-color-contrast-background-dark-secondary);
+        background-color: var(--theme-color-background-dark);
         &:hover {
-          color: var(--theme-color-contrast-foreground-dark-primary);
+          color: var(--theme-color-contrast-foreground-dark-secondary);
           background-color: var(--theme-color-foreground-dark);
         }
       }
