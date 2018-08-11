@@ -69,20 +69,6 @@ $anms-theme: mat-light-theme($anms-primary, $anms-accent, $anms-warn);
     ),
     'foreground': (
       'base': (
-        'color': map_get($mat-grey, 100),
-        'background-type': 'dark'
-      ),
-      'light': (
-        'color': map_get($mat-grey, 50),
-        'background-type': 'dark'
-      ),
-      'dark': (
-        'color': map_get($mat-grey, 200),
-        'background-type': 'dark'
-      )
-    ),
-    'background': (
-      'base': (
         'color': map_get($mat-grey, 800),
         'background-type': 'dark'
       ),
@@ -93,6 +79,20 @@ $anms-theme: mat-light-theme($anms-primary, $anms-accent, $anms-warn);
       'dark': (
         'color': map_get($mat-grey, 900),
         'background-type': 'dark'
+      )
+    ),
+    'background': (
+      'base': (
+        'color': map_get($mat-grey, 100),
+        'background-type': 'light'
+      ),
+      'light': (
+        'color': #ffffff,
+        'background-type': 'light'
+      ),
+      'dark': (
+        'color': map_get($mat-grey, 200),
+        'background-type': 'light'
       )
     )
   );

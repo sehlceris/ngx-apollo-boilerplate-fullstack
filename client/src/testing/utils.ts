@@ -25,15 +25,15 @@ export class TestStore<T> {
     NoopAnimationsModule,
     RouterTestingModule,
     SharedModule,
-    TranslateModule.forRoot()
+    TranslateModule.forRoot(),
   ],
   exports: [
     NoopAnimationsModule,
     RouterTestingModule,
     SharedModule,
-    TranslateModule
+    TranslateModule,
   ],
-  providers: [{ provide: Store, useClass: TestStore }]
+  providers: [{ provide: Store, useClass: TestStore }],
 })
 export class TestingModule {
   constructor() {}

@@ -13,7 +13,7 @@ import {
   AnimationsService,
   TitleService,
   selectorAuth,
-  routeAnimations
+  routeAnimations,
 } from '@app/core';
 import { environment as env } from '@env/environment';
 
@@ -23,14 +23,14 @@ import {
   SettingsState,
   ActionSettingsPersist,
   ActionSettingsChangeLanguage,
-  ActionSettingsChangeAnimationsPageDisabled
+  ActionSettingsChangeAnimationsPageDisabled,
 } from './settings';
 
 @Component({
   selector: 'anms-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [routeAnimations]
+  animations: [routeAnimations],
 })
 export class AppComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();
@@ -47,11 +47,11 @@ export class AppComponent implements OnInit, OnDestroy {
   navigation = [
     { link: 'tasks', label: 'anms.menu.tasks' },
     { link: 'about', label: 'anms.menu.about' },
-    { link: 'examples', label: 'anms.menu.examples' }
+    { link: 'examples', label: 'anms.menu.examples' },
   ];
   navigationSideMenu = [
     ...this.navigation,
-    { link: 'settings', label: 'anms.menu.settings' }
+    { link: 'settings', label: 'anms.menu.settings' },
   ];
 
   settings: SettingsState;
@@ -104,21 +104,21 @@ export class AppComponent implements OnInit, OnDestroy {
     this.store
       .select(selectorAuth)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(auth => (this.isAuthenticated = auth.isAuthenticated));
+      .subscribe((auth) => (this.isAuthenticated = auth.isAuthenticated));
   }
 
   private subscribeToSettings() {
     if (AppComponent.isIEorEdge()) {
       this.store.dispatch(
         new ActionSettingsChangeAnimationsPageDisabled({
-          pageAnimationsDisabled: true
+          pageAnimationsDisabled: true,
         })
       );
     }
     this.store
       .select(selectorSettings)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(settings => {
+      .subscribe((settings) => {
         this.settings = settings;
         this.setTheme(settings);
         this.setLanguage(settings);
@@ -155,7 +155,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToRouterEvents() {
-    this.router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(event => {
+    this.router.events.pipe(takeUntil(this.unsubscribe$)).subscribe((event) => {
       if (event instanceof ActivationEnd) {
         this.titleService.setTitle(event.snapshot);
       }

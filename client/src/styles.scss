@@ -30,9 +30,6 @@
 @import 'app/feature-modules/examples/theming/child/child.component.scss-theme';
 @import 'app/feature-modules/examples/examples/examples.component.scss-theme';
 
-@import 'app/feature-modules/tasks/add-task-card/add-task-card.component.scss-theme';
-@import 'app/feature-modules/tasks/task-card/task-card.component.scss-theme';
-
 @import 'global-styles/global';
 
 @mixin custom-components-theme($theme) {
@@ -45,9 +42,6 @@
   @include anms-parent-component-theme($theme);
   @include anms-child-component-theme($theme);
   @include anms-examples-component-theme($theme);
-
-  @include anms-add-task-card-component-theme($theme);
-  @include anms-task-card-component-theme($theme);
 }
 
 .default-theme {

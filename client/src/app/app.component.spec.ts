@@ -14,9 +14,9 @@ describe('AppComponent', () => {
         NoopAnimationsModule,
         RouterTestingModule,
         SharedModule,
-        CoreModule
+        CoreModule,
       ],
-      declarations: [AppComponent]
+      declarations: [AppComponent],
     }).compileComponents();
   }));
 

@@ -7,25 +7,25 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'about',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'settings',
     component: SettingsComponent,
-    data: { title: 'anms.menu.settings' }
+    data: { title: 'anms.menu.settings' },
   },
   {
     path: 'tasks',
-    loadChildren: 'app/feature-modules/tasks/tasks.module#TasksModule'
+    loadChildren: 'app/feature-modules/tasks/tasks.module#TasksModule',
   },
   {
     path: 'examples',
-    loadChildren: 'app/feature-modules/examples/examples.module#ExamplesModule'
+    loadChildren: 'app/feature-modules/examples/examples.module#ExamplesModule',
   },
   {
     path: '**',
-    redirectTo: 'about'
-  }
+    redirectTo: 'about',
+  },
 ];
 
 @NgModule({
@@ -33,9 +33,9 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       useHash: true,
-      scrollPositionRestoration: 'enabled'
-    })
+      scrollPositionRestoration: 'enabled',
+    }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

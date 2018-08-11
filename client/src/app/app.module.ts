@@ -28,10 +28,10 @@ import { AppComponent } from './app.component';
     SettingsModule,
 
     // app
-    AppRoutingModule
+    AppRoutingModule,
   ],
   declarations: [AppComponent],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

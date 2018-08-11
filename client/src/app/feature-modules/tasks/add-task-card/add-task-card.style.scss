@@ -25,6 +25,15 @@
         align-items: center;
         transition: background-color 300ms, color 300ms;
       }
+
+      .add-button {
+        color: var(--theme-color-contrast-accent-base-primary);
+        background-color: var(--theme-color-accent-base);
+        &:hover {
+          color: var(--theme-color-contrast-accent-dark-primary);
+          background-color: var(--theme-color-accent-dark);
+        }
+      }
     }
 
     .card-center {

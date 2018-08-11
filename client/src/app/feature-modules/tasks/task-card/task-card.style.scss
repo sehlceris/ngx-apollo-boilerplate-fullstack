@@ -6,6 +6,9 @@
 
   .card-content {
 
+    background-color: var(--theme-color-background-light);
+    color: var(--theme-color-contrast-background-light);
+
     display: flex;
     flex-direction: row;
 
@@ -27,6 +30,24 @@
         display: flex;
         justify-content: center;
         align-items: center;
+      }
+
+      & > .check-button {
+        color: var(--theme-color-contrast-accent-base-primary);
+        background-color: var(--theme-color-accent-base);
+        &:hover {
+          color: var(--theme-color-contrast-accent-dark-primary);
+          background-color: var(--theme-color-accent-dark);
+        }
+      }
+
+      & > .settings-button {
+        color: var(--theme-color-contrast-foreground-light-primary);
+        background-color: var(--theme-color-foreground-light);
+        &:hover {
+          color: var(--theme-color-contrast-foreground-base-primary);
+          background-color: var(--theme-color-foreground-base);
+        }
       }
     }
 
