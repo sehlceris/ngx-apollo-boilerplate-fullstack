@@ -9,106 +9,105 @@ $anms-error: mat-palette($mat-red, 500);
 $anms-theme: mat-light-theme($anms-primary, $anms-accent, $anms-warn);
 
 @mixin default-theme() {
-
   $theme-colors: (
     'primary': (
       'base': (
         'color': mat-color($anms-primary, default),
-        'background-type': 'dark'
+        'background-type': 'dark',
       ),
       'light': (
         'color': mat-color($anms-primary, lighter),
-        'background-type': 'light'
+        'background-type': 'light',
       ),
       'dark': (
         'color': mat-color($anms-primary, darker),
-        'background-type': 'dark'
-      )
+        'background-type': 'dark',
+      ),
     ),
     'accent': (
       'base': (
         'color': mat-color($anms-accent, default),
-        'background-type': 'dark'
+        'background-type': 'dark',
       ),
       'light': (
         'color': mat-color($anms-accent, lighter),
-        'background-type': 'dark'
+        'background-type': 'dark',
       ),
       'dark': (
         'color': mat-color($anms-accent, darker),
-        'background-type': 'dark'
-      )
+        'background-type': 'dark',
+      ),
     ),
     'warn': (
       'base': (
         'color': mat-color($anms-warn, default),
-        'background-type': 'dark'
+        'background-type': 'dark',
       ),
       'light': (
         'color': mat-color($anms-warn, lighter),
-        'background-type': 'light'
+        'background-type': 'light',
       ),
       'dark': (
         'color': mat-color($anms-warn, darker),
-        'background-type': 'dark'
-      )
+        'background-type': 'dark',
+      ),
     ),
     'error': (
       'base': (
         'color': mat-color($anms-error, default),
-        'background-type': 'dark'
+        'background-type': 'dark',
       ),
       'light': (
         'color': mat-color($anms-error, lighter),
-        'background-type': 'dark'
+        'background-type': 'dark',
       ),
       'dark': (
         'color': mat-color($anms-error, darker),
-        'background-type': 'dark'
-      )
+        'background-type': 'dark',
+      ),
     ),
     'foreground': (
       'base': (
-        'color': map_get($mat-grey, 800),
-        'background-type': 'dark'
+        'color': map_get($mat-grey, 700),
+        'background-type': 'dark',
       ),
       'light': (
-        'color': map_get($mat-grey, 700),
-        'background-type': 'dark'
+        'color': map_get($mat-grey, 600),
+        'background-type': 'dark',
       ),
       'dark': (
-        'color': map_get($mat-grey, 900),
-        'background-type': 'dark'
-      )
+        'color': map_get($mat-grey, 800),
+        'background-type': 'dark',
+      ),
     ),
     'background': (
       'base': (
         'color': map_get($mat-grey, 100),
-        'background-type': 'light'
+        'background-type': 'light',
       ),
       'light': (
         'color': #ffffff,
-        'background-type': 'light'
+        'background-type': 'light',
       ),
       'dark': (
         'color': map_get($mat-grey, 200),
-        'background-type': 'light'
-      )
-    )
+        'background-type': 'light',
+      ),
+    ),
   );
 
   $contrast-colors: (
     'dark': (
       'primary': rgb(255, 255, 255),
-      'secondary': rgba(255, 255, 255, .70),
-      'disabled': rgba(255, 255, 255, .5),
-      'hint': rgba(255, 255, 255, .12)
+      'secondary': rgba(255, 255, 255, 0.7),
+      'disabled': rgba(255, 255, 255, 0.5),
+      'hint': rgba(255, 255, 255, 0.12),
     ),
     'light': (
-      'primary': rgba(0, 0, 0, .87),
-      'secondary': rgba(0, 0, 0, .54),
-      'disabled': rgba(0, 0, 0, .38),
-      'hint': rgba(0, 0, 0, .12)
+      'primary': rgba(0, 0, 0, 0.87),
+      'secondary': rgba(0, 0, 0, 0.54),
+      'disabled': rgba(0, 0, 0, 0.38),
+      'hint': rgba(0, 0, 0, 0.12),
     ),
   );
 
