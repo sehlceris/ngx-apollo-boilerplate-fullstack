@@ -82,7 +82,7 @@ $anms-theme: mat-light-theme($anms-primary, $anms-accent, $anms-warn);
     ),
     'background': (
       'base': (
-        'color': map_get($mat-grey, 100),
+        'color': #fcfcfc,
         'background-type': 'light',
       ),
       'light': (

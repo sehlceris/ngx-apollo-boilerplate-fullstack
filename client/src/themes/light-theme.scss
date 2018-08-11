@@ -86,7 +86,7 @@ $anms-light-theme: mat-light-theme(
     ),
     'background': (
       'base': (
-        'color': map_get($mat-grey, 100),
+        'color': #fcfcfc,
         'background-type': 'light',
       ),
       'light': (
