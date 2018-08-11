@@ -3,7 +3,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {TodoTask} from '../../../../../../common/models';
 
 @Component({
-  selector: 'task-card',
+  selector: 'anms-task-card',
   templateUrl: 'task-card.template.html',
   styleUrls: [
     'task-card.style.scss',

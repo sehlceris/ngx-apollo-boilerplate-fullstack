@@ -1,9 +1,120 @@
+@import 'theming';
+@import '../../node_modules/@angular/material/theming';
+
 $anms-black-primary: mat-palette($mat-grey, 700, 300, 900);
 $anms-black-accent: mat-palette($mat-blue-grey, 400);
-$anms-black-warn: mat-palette($mat-red, 500);
+$anms-black-warn: mat-palette($mat-orange, 500);
+$anms-black-error: mat-palette($mat-red, 500);
 
 $anms-black-theme: mat-dark-theme(
   $anms-black-primary,
   $anms-black-accent,
   $anms-black-warn
 );
+
+@mixin black-theme() {
+
+  $theme-colors: (
+    'primary': (
+      'base': (
+        'color': mat-color($anms-black-primary, default),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': mat-color($anms-black-primary, lighter),
+        'background-type': 'light'
+      ),
+      'dark': (
+        'color': mat-color($anms-black-primary, darker),
+        'background-type': 'dark'
+      )
+    ),
+    'accent': (
+      'base': (
+        'color': mat-color($anms-black-accent, default),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': mat-color($anms-black-accent, lighter),
+        'background-type': 'dark'
+      ),
+      'dark': (
+        'color': mat-color($anms-black-accent, darker),
+        'background-type': 'dark'
+      )
+    ),
+    'warn': (
+      'base': (
+        'color': mat-color($anms-black-warn, default),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': mat-color($anms-black-warn, lighter),
+        'background-type': 'light'
+      ),
+      'dark': (
+        'color': mat-color($anms-black-warn, darker),
+        'background-type': 'dark'
+      )
+    ),
+    'error': (
+      'base': (
+        'color': mat-color($anms-black-error, default),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': mat-color($anms-black-error, lighter),
+        'background-type': 'dark'
+      ),
+      'dark': (
+        'color': mat-color($anms-black-error, darker),
+        'background-type': 'dark'
+      )
+    ),
+    'foreground': (
+      'base': (
+        'color': map_get($mat-grey, 100),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': map_get($mat-grey, 50),
+        'background-type': 'dark'
+      ),
+      'dark': (
+        'color': map_get($mat-grey, 200),
+        'background-type': 'dark'
+      )
+    ),
+    'background': (
+      'base': (
+        'color': map_get($mat-grey, 800),
+        'background-type': 'dark'
+      ),
+      'light': (
+        'color': map_get($mat-grey, 700),
+        'background-type': 'dark'
+      ),
+      'dark': (
+        'color': map_get($mat-grey, 900),
+        'background-type': 'dark'
+      )
+    )
+  );
+
+  $contrast-colors: (
+    'dark': (
+      'primary': rgb(255, 255, 255),
+      'secondary': rgba(255, 255, 255, .70),
+      'disabled': rgba(255, 255, 255, .5),
+      'hint': rgba(255, 255, 255, .12)
+    ),
+    'light': (
+      'primary': rgba(0, 0, 0, .87),
+      'secondary': rgba(0, 0, 0, .54),
+      'disabled': rgba(0, 0, 0, .38),
+      'hint': rgba(0, 0, 0, .12)
+    ),
+  );
+
+  @include theme-css-variables-colors($theme-colors, $contrast-colors);
+}

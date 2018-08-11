@@ -1,0 +1,54 @@
+@function theme-color($theme-colors, $contrast-colors, $key: 'primary', $variant: 'base') {
+  $map: map-get($theme-colors, $key);
+  @return map-get(map-get($map, $variant), 'color');
+}
+
+@function theme-color-background-type($theme-colors, $contrast-colors, $key: 'primary', $variant: 'base') {
+  $map: map-get($theme-colors, $key);
+  @return map-get(map-get($map, $variant), 'background-type');
+}
+
+@function theme-color-contrast($theme-colors, $contrast-colors, $key: 'primary', $variant: 'base', $level: 'primary') {
+  $background-type: theme-color-background-type($theme-colors, $contrast-colors, $key, $variant);
+  $contrast-map: map-get($contrast-colors, $background-type);
+  @return map-get($contrast-map, $level);
+}
+
+@mixin theme-css-variables-contrast-colors-by-weight($theme-colors, $contrast-colors, $key: 'primary', $weight: 'primary') {
+  --theme-color-contrast-#{$key}-base-#{$weight}: #{theme-color-contrast($theme-colors, $contrast-colors, $key, 'base', $weight)};
+  --theme-color-contrast-#{$key}-light-#{$weight}: #{theme-color-contrast($theme-colors, $contrast-colors, $key, 'light', $weight)};
+  --theme-color-contrast-#{$key}-dark-#{$weight}: #{theme-color-contrast($theme-colors, $contrast-colors, $key, 'dark', $weight)};
+}
+
+@mixin theme-css-variables-contrast-colors-by-key($theme-colors, $contrast-colors, $key: 'primary') {
+  @include theme-css-variables-contrast-colors-by-weight($theme-colors, $contrast-colors, $key, 'primary');
+  @include theme-css-variables-contrast-colors-by-weight($theme-colors, $contrast-colors, $key, 'secondary');
+  @include theme-css-variables-contrast-colors-by-weight($theme-colors, $contrast-colors, $key, 'disabled');
+  @include theme-css-variables-contrast-colors-by-weight($theme-colors, $contrast-colors, $key, 'hint');
+}
+
+@mixin theme-css-variables-colors-by-key($theme-colors, $contrast-colors, $key: 'primary') {
+  --theme-color-#{$key}-base: #{theme-color($theme-colors, $contrast-colors, $key, 'base')};
+  --theme-color-#{$key}-light: #{theme-color($theme-colors, $contrast-colors, $key, 'light')};
+  --theme-color-#{$key}-dark: #{theme-color($theme-colors, $contrast-colors, $key, 'dark')};
+}
+
+@mixin theme-css-variables-colors($theme-colors, $contrast-colors) {
+  @include theme-css-variables-colors-by-key($theme-colors, $contrast-colors, 'primary');
+  @include theme-css-variables-contrast-colors-by-key($theme-colors, $contrast-colors, 'primary');
+
+  @include theme-css-variables-colors-by-key($theme-colors, $contrast-colors, 'accent');
+  @include theme-css-variables-contrast-colors-by-key($theme-colors, $contrast-colors, 'accent');
+
+  @include theme-css-variables-colors-by-key($theme-colors, $contrast-colors, 'foreground');
+  @include theme-css-variables-contrast-colors-by-key($theme-colors, $contrast-colors, 'foreground');
+
+  @include theme-css-variables-colors-by-key($theme-colors, $contrast-colors, 'background');
+  @include theme-css-variables-contrast-colors-by-key($theme-colors, $contrast-colors, 'background');
+
+  @include theme-css-variables-colors-by-key($theme-colors, $contrast-colors, 'warn');
+  @include theme-css-variables-contrast-colors-by-key($theme-colors, $contrast-colors, 'warn');
+
+  @include theme-css-variables-colors-by-key($theme-colors, $contrast-colors, 'error');
+  @include theme-css-variables-contrast-colors-by-key($theme-colors, $contrast-colors, 'error');
+}

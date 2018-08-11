@@ -2,10 +2,10 @@
   <div
     class="cards"
   >
-    <add-task-card
+    <anms-add-task-card
       (addTaskName)="addTask($event)"
-    ></add-task-card>
-    <task-card
+    ></anms-add-task-card>
+    <anms-task-card
       *ngFor="let task of (notDoneTasks$ | async), let i = index"
       [task]="task"
       (done)="markTaskAsDone(task, i)"
@@ -14,6 +14,20 @@
       [@animatedListItemOut]
       (@animatedListItemOut.done)="handleTaskRemovalComplete($event)"
       [@animatedListItemBelowRemovedSibling]="(deletedSiblingIndex <= i).toString()"
-    ></task-card>
+    ></anms-task-card>
+    <anms-task-card
+      [task]="{'name': 'TestTask1', 'done': false, 'detail': 'whee'}"
+      [@animatedListItemIn]
+      [@animatedListItemOut]
+      (@animatedListItemOut.done)="handleTaskRemovalComplete($event)"
+      [@animatedListItemBelowRemovedSibling]="(deletedSiblingIndex <= i).toString()"
+    ></anms-task-card>
+    <anms-task-card
+      [task]="{'name': 'TestTask2', 'done': false, 'detail': 'whee'}"
+      [@animatedListItemIn]
+      [@animatedListItemOut]
+      (@animatedListItemOut.done)="handleTaskRemovalComplete($event)"
+      [@animatedListItemBelowRemovedSibling]="(deletedSiblingIndex <= i).toString()"
+    ></anms-task-card>
   </div>
 </div>

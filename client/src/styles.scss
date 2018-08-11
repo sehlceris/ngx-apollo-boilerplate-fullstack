@@ -17,14 +17,21 @@
 @import 'themes/black-theme.scss';
 
 @import 'styles-reset.scss-theme';
+
 @import 'app/app.component.scss-theme';
+
 @import 'app/shared/big-input/big-input.component.scss-theme';
+
 @import 'app/feature-modules/static/about/about.component.scss-theme';
+
 @import 'app/feature-modules/examples/todos/todos.component.scss-theme';
 @import 'app/feature-modules/examples/stock-market/stock-market.component.scss-theme';
 @import 'app/feature-modules/examples/theming/parent/parent.component.scss-theme';
 @import 'app/feature-modules/examples/theming/child/child.component.scss-theme';
 @import 'app/feature-modules/examples/examples/examples.component.scss-theme';
+
+@import 'app/feature-modules/tasks/add-task-card/add-task-card.component.scss-theme';
+@import 'app/feature-modules/tasks/task-card/task-card.component.scss-theme';
 
 @import 'global-styles/global';
 
@@ -38,19 +45,25 @@
   @include anms-parent-component-theme($theme);
   @include anms-child-component-theme($theme);
   @include anms-examples-component-theme($theme);
+
+  @include anms-add-task-card-component-theme($theme);
+  @include anms-task-card-component-theme($theme);
 }
 
 .default-theme {
   @include angular-material-theme($anms-theme);
   @include custom-components-theme($anms-theme);
+  @include default-theme();
 }
 
 .light-theme {
   @include angular-material-theme($anms-light-theme);
   @include custom-components-theme($anms-light-theme);
+  @include light-theme();
 }
 
 .black-theme {
   @include angular-material-theme($anms-black-theme);
   @include custom-components-theme($anms-black-theme);
+  @include black-theme();
 }

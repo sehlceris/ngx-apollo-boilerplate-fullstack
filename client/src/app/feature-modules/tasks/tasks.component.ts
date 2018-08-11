@@ -8,7 +8,7 @@ import {createAnimatedListItemTriggers} from '@app/core/animations/animated-list
 import {AppConfig} from '@app/app.config';
 
 @Component({
-  selector: 'tasks',
+  selector: 'anms-tasks',
   templateUrl: 'tasks.template.html',
   styleUrls: ['tasks.style.scss'],
   animations: [
