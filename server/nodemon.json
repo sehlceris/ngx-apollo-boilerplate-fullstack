@@ -1,0 +1,14 @@
+{
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "js,json,ts",
+  "ignore": [
+    ".git",
+    ".idea",
+    "node_modules/**/node_modules"
+  ],
+  "execMap": {
+    "ts": "node node_modules/ts-node/dist/bin.js"
+  }
+}
