@@ -1,10 +1,16 @@
+try {
+  require('dotenv').config();
+}
+catch (e) {
+}
+
 import * as express from 'express';
 import * as cors from 'cors';
 
-import {ApolloServer, gql} from 'apollo-server-express';
+import {ApolloServer} from 'apollo-server-express';
 import {schema} from './graphql/schema';
 
-const PORT = 4000;
+const PORT = process.env.PORT || 3000;
 
 const expressApp = express();
 expressApp.use('*', cors({origin: 'http://localhost:4200'}));
