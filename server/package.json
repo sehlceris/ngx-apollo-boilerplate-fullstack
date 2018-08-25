@@ -15,12 +15,13 @@
     "core-js": "^2.5.7",
     "cors": "^2.8.4",
     "express": "^4.16.3",
+    "graphql": "^0.13.2",
     "mongoose": "^5.2.9",
     "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
     "typescript": "^3.0.1"
   },
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.3",
+    "tslint": "^5.11.0"
   }
 }
