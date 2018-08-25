@@ -2,6 +2,7 @@ try {
   require('dotenv').config();
 }
 catch (e) {
+  console.error('DOTENV initialization failed');
 }
 
 import * as express from 'express';
