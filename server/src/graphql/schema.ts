@@ -1,12 +1,16 @@
 import {
   mergeSchemas,
 } from 'graphql-tools';
-import {taskSchema} from './task/schema';
-import {userSchema} from './user/schema';
+import {taskResolvers, taskSchema} from './task';
+import {userResolvers, userSchema} from './user';
 
 export const schema = mergeSchemas({
   schemas: [
     userSchema,
     taskSchema,
   ],
+  resolvers: [
+    userResolvers,
+    taskResolvers
+  ]
 });

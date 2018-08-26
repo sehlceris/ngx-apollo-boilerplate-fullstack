@@ -20,4 +20,4 @@ export const taskSchema = makeExecutableSchema({
   `
 });
 
-addMockFunctionsToSchema({ schema: taskSchema });
+addMockFunctionsToSchema({ schema: taskSchema, preserveResolvers: true });
