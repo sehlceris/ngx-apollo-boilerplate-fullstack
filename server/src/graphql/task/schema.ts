@@ -20,7 +20,7 @@ export const taskSchema = makeExecutableSchema({
     }
 
     type Mutation {
-      addTask(name: String!, description: String): Task
+      createTask(name: String!, description: String): Task
       deleteTaskById(id: ID!): Task
       updateTaskById(id: ID!, name: String, description: String, done: Boolean): Task
       markTaskAsDoneById(id: ID!): Task

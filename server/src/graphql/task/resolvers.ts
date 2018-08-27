@@ -33,7 +33,7 @@ export const taskResolvers = {
     },
   },
   Mutation: {
-    addTask(obj, args, context, info) {
+    createTask(obj, args, context, info) {
       const newTask = {
         ...args,
         done: false,
