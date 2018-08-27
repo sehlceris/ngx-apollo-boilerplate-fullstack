@@ -48,7 +48,7 @@ export const taskResolvers = {
         mockTasks = mockTasks.filter((task) => task.id !== foundTask.id);
         return foundTask;
       }
-      return null;
+      throw new Error(`could not find task with id ${args.id}`);
     },
     updateTaskById(obj, args, context, info) {
       const foundTask = mockTasks.find((task) => task.id === args.id);
@@ -58,7 +58,7 @@ export const taskResolvers = {
         });
         return foundTask;
       }
-      return null;
+      throw new Error(`could not find task with id ${args.id}`);
     },
     markTaskAsDoneById(obj, args, context, info) {
       const foundTask = mockTasks.find((task) => task.id === args.id);
@@ -66,7 +66,7 @@ export const taskResolvers = {
         foundTask.done = true;
         return foundTask;
       }
-      return null;
+      throw new Error(`could not find task with id ${args.id}`);
     },
   },
   Task: {
