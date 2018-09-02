@@ -1,10 +1,18 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "declaration": false,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "target": "es6",
     "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "allowJs": true,
+    "outDir": "./dist",
+    "baseUrl": "./src"
   },
   "include": [
     "src/**/*"
@@ -14,4 +22,3 @@
     "**/*.spec.ts"
   ]
 }
-

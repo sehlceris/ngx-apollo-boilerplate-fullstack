@@ -3,9 +3,6 @@
 .DS_Store
 node_modules/
 
-# local environment
-.env
-
 # local files and folders devs can use for whatever they want
 local/
 scratch/
@@ -13,3 +10,7 @@ scratch.json
 scratch.ts
 scratch.js
 scratch.html
+
+config/
+dist/
+old/
