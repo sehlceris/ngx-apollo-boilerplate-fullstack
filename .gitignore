@@ -11,5 +11,8 @@ scratch.ts
 scratch.js
 scratch.html
 
-config/
+# generated files
 dist/
+
+# config
+config/
