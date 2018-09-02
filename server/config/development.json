@@ -7,5 +7,5 @@
   "MONGODB_PASSWORD": "example",
   "MONGODB_DATABASE_NAME": "apolloboilerplate",
   "MONGODB_AUTH_SOURCE": "admin",
-  "JWT_SECRET_KEY": null
+  "JWT_SECRET_KEY": "b67g76g7rv685v8ib687b6rcwe45hmzsv7"
 }

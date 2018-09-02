@@ -8,23 +8,25 @@ import { JwtPayload } from './jwt-payload.model';
 
 @Injectable()
 export class AuthService {
-    private readonly jwtOptions: SignOptions;
-    private readonly jwtKey: string;
+  private readonly jwtOptions: SignOptions;
+  private readonly jwtKey: string;
 
-    constructor(
-        @Inject(forwardRef(() => UserService))
-        readonly _userService: UserService,
-        private readonly _configurationService: ConfigurationService,
-    ) {
-        this.jwtOptions = { expiresIn: '12h' };
-        this.jwtKey = _configurationService.get(Configuration.JWT_SECRET_KEY);
-    }
+  constructor(
+    @Inject(forwardRef(() => UserService))
+    readonly _userService: UserService,
+    private readonly _configurationService: ConfigurationService
+  ) {
+    this.jwtOptions = { expiresIn: '12h' };
+    this.jwtKey = _configurationService.get(Configuration.JWT_SECRET_KEY);
+  }
 
-    async signPayload(payload: JwtPayload): Promise<string> {
-        return sign(payload, this.jwtKey, this.jwtOptions);
-    }
+  async signPayload(payload: JwtPayload): Promise<string> {
+    return sign(payload, this.jwtKey, this.jwtOptions);
+  }
 
-    async validateUser(validatePayload: JwtPayload): Promise<User> {
-        return this._userService.findOne({ username: validatePayload.username.toLowerCase() });
-    }
+  async validateUser(validatePayload: JwtPayload): Promise<User> {
+    return this._userService.findOne({
+      username: validatePayload.username.toLowerCase(),
+    });
+  }
 }
