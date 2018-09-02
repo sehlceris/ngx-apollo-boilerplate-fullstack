@@ -5,7 +5,7 @@ export class AppService {
   root(): any {
     return {
       success: 200,
-      data: 'Hello NestJS',
+      data: 'Hello NestJS!',
     };
   }
 }

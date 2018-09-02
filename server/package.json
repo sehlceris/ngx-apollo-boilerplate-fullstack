@@ -4,7 +4,6 @@
   "description": "Nest MEAN Server",
   "license": "MIT",
   "scripts": {
-    "format": "prettier --write \"**/*.ts\"",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
     "prestart:prod": "rm -rf dist && tsc -p ./tsconfig.json",
@@ -14,7 +13,13 @@
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "webpack": "webpack --config webpack.config.js",
+    "prettier": "prettier {src,e2e}/**/*.{ts,json,md,scss} --write",
     "postinstall": "tsc -p ./tsconfig.json"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier && npm run lint"
+    }
   },
   "dependencies": {
     "@nestjs/common": "5.1.0",
@@ -52,6 +57,7 @@
     "@types/passport": "0.4.5",
     "@types/passport-jwt": "3.0.1",
     "@types/supertest": "2.0.4",
+    "husky": "^0.14.3",
     "jest": "23.1.0",
     "nodemon": "1.17.5",
     "prettier": "1.13.5",
