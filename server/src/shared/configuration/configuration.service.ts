@@ -1,6 +1,6 @@
-import {Injectable} from '@nestjs/common';
-import {get} from 'config';
-import {Configuration} from './configuration.enum';
+import { Injectable } from '@nestjs/common';
+import { get } from 'config';
+import { Configuration } from './configuration.enum';
 
 export enum Environment {
   DEVELOPMENT = 'development',
@@ -10,7 +10,6 @@ export enum Environment {
 
 @Injectable()
 export class ConfigurationService {
-
   static environment: string = process.env.NODE_ENV || Environment.DEVELOPMENT;
 
   static get(name: string): string {

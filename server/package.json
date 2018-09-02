@@ -13,7 +13,7 @@
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "webpack": "webpack --config webpack.config.js",
-    "prettier": "prettier {src,e2e}/**/*.{ts,json,md,scss} --write",
+    "prettier": "prettier '{src,e2e}/**/*.{ts,json,md,scss}' --write",
     "postinstall": "tsc -p ./tsconfig.json"
   },
   "husky": {
@@ -24,12 +24,18 @@
   "dependencies": {
     "@nestjs/common": "5.1.0",
     "@nestjs/core": "5.1.0",
+    "@nestjs/graphql": "^5.1.0",
     "@nestjs/mongoose": "5.1.0",
     "@nestjs/passport": "1.1.0",
     "@nestjs/swagger": "2.3.0",
+    "apollo-server-express": "^2.0.4",
     "automapper-ts": "1.9.0",
     "bcryptjs": "2.4.3",
     "config": "1.30.0",
+    "graphql": "^14.0.0",
+    "graphql-subscriptions": "^0.5.8",
+    "graphql-tools": "^3.1.1",
+    "graphql-type-json": "^0.2.1",
     "jsonwebtoken": "8.3.0",
     "lodash": "4.17.10",
     "mongoose": "5.1.6",
@@ -37,8 +43,10 @@
     "passport-jwt": "4.0.0",
     "reflect-metadata": "0.1.12",
     "rxjs": "6.2.1",
+    "subscriptions-transport-ws": "^0.9.14",
     "typegoose": "5.2.1",
-    "typescript": "2.9.2"
+    "typescript": "2.9.2",
+    "ws": "^6.0.0"
   },
   "resolutions": {
     "@types/express": "4.16.0",
