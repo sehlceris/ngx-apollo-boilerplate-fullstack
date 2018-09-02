@@ -8,7 +8,7 @@ export const userSchema = makeExecutableSchema({
     type User {
       id: ID!
       username: String!
-      emailAddress: String!
+      email: String!
       hashedPassword: String!
       firstName: String
       lastName: String
@@ -22,7 +22,7 @@ export const userSchema = makeExecutableSchema({
     type Mutation {
       createUser(
         username: String!
-        emailAddress: String!
+        email: String!
         password: String!
         firstName: String
         lastName: String
@@ -30,7 +30,7 @@ export const userSchema = makeExecutableSchema({
       updateUserById(
         id: ID!
         username: String
-        emailAddress: String
+        email: String
         password: String
         firstName: String
         lastName: String

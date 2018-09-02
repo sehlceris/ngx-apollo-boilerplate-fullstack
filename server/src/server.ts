@@ -7,6 +7,7 @@ catch (e) {
 
 import * as express from 'express';
 import * as cors from 'cors';
+import './mongoose-models/index';
 
 import {ApolloServer} from 'apollo-server-express';
 import {schema} from './graphql/schema';

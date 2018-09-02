@@ -15,11 +15,11 @@ import {instanceMethod, pre, prop, Typegoose} from 'typegoose';
 })
 export class User extends Typegoose {
 
-  @prop({required: true})
+  @prop({required: true, unique: true})
   email: string;
 
-  @prop({required: true})
-  username: boolean;
+  @prop({required: true, unique: true})
+  username: string;
 
   @prop({required: true})
   hashedPassword?: string;

@@ -1,19 +1,19 @@
 import * as mongoose from 'mongoose';
-import {UserModel} from './user';
-import {TaskModel} from './task';
 
-const username = process.env.DATABASE_USERNAME;
-const password = process.env.DATABASE_PASSWORD;
-const host = process.env.DATABASE_HOST;
-const port = process.env.DATABASE_PORT;
-const databaseName = process.env.DATABASE_NAME;
+const dbUsername = process.env.DATABASE_USERNAME;
+const dbPassword = process.env.DATABASE_PASSWORD;
+const dbHost = process.env.DATABASE_HOST;
+const dbPort = process.env.DATABASE_PORT;
+const dbName = process.env.DATABASE_NAME;
+const dbAuthSource = process.env.DATABASE_AUTH_SOURCE;
 
-const databaseUri = `mongodb://${username}:${password}@${host}:${port}/${databaseName}`;
+const databaseUri = `mongodb://${dbUsername}:${dbPassword}@${dbHost}:${dbPort}/${dbName}?authSource=${dbAuthSource}`;
 
 console.log(`connecting to ${databaseUri}`);
 mongoose.connect(databaseUri, {
+  useNewUrlParser: true,
   keepAlive: 30000,
   reconnectTries: Number.MAX_VALUE,
-});
-
-export {UserModel, TaskModel};
+})
+.then((val) => console.log('mongoose connected', val))
+.catch((err) => console.log('mongoose FAILED to connect', err));
