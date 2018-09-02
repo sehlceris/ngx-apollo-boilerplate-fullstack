@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 import {Observable, Subscription} from 'rxjs';
-import {TodoTask} from '../../../../../common/models';
+import {ITodoTask} from '../../../../../common/models';
 import {TasksService} from './tasks.service';
 import {map} from 'rxjs/operators';
 import {createAnimatedListItemTriggers} from '@app/core/animations/animated-list-items';
@@ -17,7 +17,7 @@ import {AppConfig} from '@app/app.config';
 })
 export class TasksComponent implements OnInit, OnDestroy {
 
-  public notDoneTasks$: Observable<TodoTask[]>;
+  public notDoneTasks$: Observable<ITodoTask[]>;
   deletedSiblingIndex = Infinity;
 
   subscriptions: Subscription[] = [];
@@ -31,8 +31,8 @@ export class TasksComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.notDoneTasks$ = this.tasksService.tasks$
       .pipe(
-        map((tasks: TodoTask[]) => {
-          return tasks.filter((task: TodoTask) => !task.done);
+        map((tasks: ITodoTask[]) => {
+          return tasks.filter((task: ITodoTask) => !task.done);
         }),
       );
   }
@@ -45,7 +45,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     this.tasksService.addTask(name).subscribe();
   }
 
-  markTaskAsDone(task: TodoTask, index: number) {
+  markTaskAsDone(task: ITodoTask, index: number) {
     this.deletedSiblingIndex = index;
     this.tasksService.markTaskAsDone(task._id).subscribe(
       () => {
@@ -61,7 +61,7 @@ export class TasksComponent implements OnInit, OnDestroy {
     );
   }
 
-  editTask(task: TodoTask) {
+  editTask(task: ITodoTask) {
 
   }
 

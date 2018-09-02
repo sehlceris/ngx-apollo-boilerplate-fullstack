@@ -1,6 +1,4 @@
-import SimpleSchema from 'simpl-schema';
-
-export interface PersistedModel {
+export interface IPersistedModel {
   _id?: string;
   _created: Date;
 }
@@ -15,5 +13,3 @@ export const PersistedModelProps = {
     optional: true,
   },
 };
-
-export const PersistedModelSchema = new SimpleSchema(PersistedModelProps);

@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {TodoTask} from '../../../../../common/models';
+import {ITodoTask} from '../../../../../common/models';
 import {NEVER, Observable} from 'rxjs';
 import {BoundLogger, LogService} from '@app/core/services/log-service';
 
 @Injectable()
 export class TasksService {
 
-  public tasks$: Observable<TodoTask[]> = NEVER;
+  public tasks$: Observable<ITodoTask[]> = NEVER;
   private log: BoundLogger = this.logService.bindToNamespace('TasksService');
 
   constructor(
@@ -30,7 +30,7 @@ export class TasksService {
     return NEVER;
   }
 
-  public updateTask(task: TodoTask) {
+  public updateTask(task: ITodoTask) {
     return NEVER;
   }
 

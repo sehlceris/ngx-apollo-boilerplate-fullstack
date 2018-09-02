@@ -1,6 +1,4 @@
-import SimpleSchema from 'simpl-schema';
-
-export interface OwnedModel {
+export interface IOwnedModel {
   ownerId: string;
 }
 
@@ -10,5 +8,3 @@ export const OwnedModelProps = {
     optional: true,
   },
 };
-
-export const OwnedModelSchema = new SimpleSchema(OwnedModelProps);

@@ -1,8 +1,7 @@
-import {PersistedModel, PersistedModelSchema} from "./persisted-model";
-import {OwnedModel, OwnedModelSchema} from './owned-model';
-import SimpleSchema from 'simpl-schema';
+import {IPersistedModel} from './persisted-model';
+import {IOwnedModel} from './owned-model';
 
-export interface TodoTask extends PersistedModel, OwnedModel {
+export interface ITodoTask extends IPersistedModel {
   name: string;
   done: boolean;
   detail?: string;
@@ -20,7 +19,3 @@ export const TodoTaskProps = {
     optional: true,
   },
 };
-
-export const TodoTaskSchema = new SimpleSchema(TodoTaskProps);
-TodoTaskSchema.extend(PersistedModelSchema);
-TodoTaskSchema.extend(OwnedModelSchema);

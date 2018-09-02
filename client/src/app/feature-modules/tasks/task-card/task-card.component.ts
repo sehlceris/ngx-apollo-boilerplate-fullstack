@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-// import {TodoTask} from '@common/models';
-import {TodoTask} from '../../../../../../common/models';
+// import {ITodoTask} from '@common/models';
+import {ITodoTask} from '../../../../../../common/models';
 
 @Component({
   selector: 'anms-task-card',
@@ -11,7 +11,7 @@ import {TodoTask} from '../../../../../../common/models';
 })
 export class TaskCardComponent {
 
-  @Input() task: TodoTask;
+  @Input() task: ITodoTask;
 
   @Output() done: EventEmitter<void> = new EventEmitter<void>();
   @Output() edit: EventEmitter<void> = new EventEmitter<void>();
