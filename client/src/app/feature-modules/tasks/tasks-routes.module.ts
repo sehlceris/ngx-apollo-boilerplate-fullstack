@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 // import {AuthGuard} from '../../shared-services/auth-guard.service';
-import {TasksComponent} from './tasks.component';
+import { TasksComponent } from './tasks.component';
 
 export const TASKS_ROUTE_NAMES = {
   Root: '',
@@ -20,13 +20,8 @@ const TASKS_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(TASKS_ROUTES),
-  ],
-  exports: [
-    RouterModule,
-  ],
+  imports: [RouterModule.forChild(TASKS_ROUTES)],
+  exports: [RouterModule],
   declarations: [],
 })
-export class TasksRoutingModule {
-}
+export class TasksRoutingModule {}

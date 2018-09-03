@@ -9,14 +9,14 @@ describe('StockMarketService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, CoreModule],
-      providers: [StockMarketService]
+      providers: [StockMarketService],
     });
   });
 
-  it(
-    'should be created',
-    inject([StockMarketService], (service: StockMarketService) => {
+  it('should be created', inject(
+    [StockMarketService],
+    (service: StockMarketService) => {
       expect(service).toBeTruthy();
-    })
-  );
+    }
+  ));
 });

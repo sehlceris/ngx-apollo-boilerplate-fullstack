@@ -9,7 +9,7 @@ export enum SettingsActionTypes {
   CHANGE_ANIMATIONS_PAGE = '[Settings] Change Animations Page',
   CHANGE_ANIMATIONS_PAGE_DISABLED = '[Settings] Change Animations Page Disabled',
   CHANGE_ANIMATIONS_ELEMENTS = '[Settings] Change Animations Elements',
-  PERSIST = '[Settings] Persist'
+  PERSIST = '[Settings] Persist',
 }
 
 export type Language = 'en' | 'sk';
@@ -73,10 +73,10 @@ export const initialState: SettingsState = {
   autoNightMode: false,
   pageAnimations: true,
   pageAnimationsDisabled: false,
-  elementsAnimations: true
+  elementsAnimations: true,
 };
 
-export const selectorSettings = state =>
+export const selectorSettings = (state) =>
   <SettingsState>(state.settings || { theme: '' });
 
 export function settingsReducer(
@@ -95,7 +95,7 @@ export function settingsReducer(
       return {
         ...state,
         pageAnimations: false,
-        pageAnimationsDisabled: action.payload.pageAnimationsDisabled
+        pageAnimationsDisabled: action.payload.pageAnimationsDisabled,
       };
 
     default:

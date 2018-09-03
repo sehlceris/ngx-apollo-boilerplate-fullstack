@@ -12,7 +12,7 @@ import { selectorSettings, SettingsState } from '@app/settings';
   selector: 'anms-examples',
   templateUrl: './examples.component.html',
   styleUrls: ['./examples.component.scss'],
-  animations: [routeAnimations]
+  animations: [routeAnimations],
 })
 export class ExamplesComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();
@@ -21,7 +21,7 @@ export class ExamplesComponent implements OnInit, OnDestroy {
     { link: 'todos', label: 'anms.examples.menu.todos' },
     { link: 'stock-market', label: 'anms.examples.menu.stocks' },
     { link: 'theming', label: 'anms.examples.menu.theming' },
-    { link: 'authenticated', label: 'anms.examples.menu.auth' }
+    { link: 'authenticated', label: 'anms.examples.menu.auth' },
   ];
 
   constructor(
@@ -58,11 +58,11 @@ export class ExamplesComponent implements OnInit, OnDestroy {
     );
     this.router.events
       .pipe(
-        filter(event => event instanceof ActivationEnd),
+        filter((event) => event instanceof ActivationEnd),
         map((event: ActivationEnd) => event.snapshot),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe(snapshot =>
+      .subscribe((snapshot) =>
         this.titleService.setTitle(snapshot, this.translate)
       );
   }

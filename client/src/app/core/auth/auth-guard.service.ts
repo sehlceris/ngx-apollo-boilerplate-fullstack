@@ -11,7 +11,7 @@ export class AuthGuardService implements CanActivate {
   constructor(private store: Store<any>) {
     this.store
       .select(selectorAuth)
-      .subscribe(auth => (this.isAuthenticated = auth.isAuthenticated));
+      .subscribe((auth) => (this.isAuthenticated = auth.isAuthenticated));
   }
   canActivate(): boolean {
     return this.isAuthenticated;

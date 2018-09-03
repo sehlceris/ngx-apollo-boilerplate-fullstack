@@ -8,7 +8,7 @@ import { LocalStorageService } from '@app/core';
 import {
   ActionTodosPersist,
   TODOS_KEY,
-  TodosActionTypes
+  TodosActionTypes,
 } from './todos.reducer';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class TodosEffects {
   persistTodos() {
     return this.actions$.pipe(
       ofType<ActionTodosPersist>(TodosActionTypes.PERSIST),
-      tap(action =>
+      tap((action) =>
         this.localStorageService.setItem(TODOS_KEY, action.payload.todos)
       )
     );

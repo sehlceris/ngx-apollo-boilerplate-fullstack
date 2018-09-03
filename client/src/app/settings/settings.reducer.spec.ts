@@ -5,7 +5,7 @@ import {
   ActionSettingsChangeAnimationsPage,
   ActionSettingsChangeAnimationsPageDisabled,
   ActionSettingsChangeAnimationsElements,
-  ActionSettingsChangeAutoNightMode
+  ActionSettingsChangeAutoNightMode,
 } from './settings.reducer';
 
 describe('SettingsReducer', () => {
@@ -23,7 +23,7 @@ describe('SettingsReducer', () => {
 
   it('should update pageAnimations', () => {
     const action = new ActionSettingsChangeAnimationsPage({
-      pageAnimations: false
+      pageAnimations: false,
     });
     const state = settingsReducer(undefined, action);
     expect(state.pageAnimations).toEqual(false);
@@ -31,7 +31,7 @@ describe('SettingsReducer', () => {
 
   it('should update pageAnimationsDisabled and pageAnimations', () => {
     const action = new ActionSettingsChangeAnimationsPageDisabled({
-      pageAnimationsDisabled: true
+      pageAnimationsDisabled: true,
     });
     const state = settingsReducer(undefined, action);
     expect(state.pageAnimationsDisabled).toEqual(true);
@@ -40,7 +40,7 @@ describe('SettingsReducer', () => {
 
   it('should update elementsAnimations', () => {
     const action = new ActionSettingsChangeAnimationsElements({
-      elementsAnimations: false
+      elementsAnimations: false,
     });
     const state = settingsReducer(undefined, action);
     expect(state.elementsAnimations).toEqual(false);
@@ -48,7 +48,7 @@ describe('SettingsReducer', () => {
 
   it('should update autoNightMode', () => {
     const action = new ActionSettingsChangeAutoNightMode({
-      autoNightMode: true
+      autoNightMode: true,
     });
     const state = settingsReducer(undefined, action);
     expect(state.autoNightMode).toEqual(true);

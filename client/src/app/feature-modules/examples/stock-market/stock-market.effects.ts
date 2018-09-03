@@ -8,7 +8,7 @@ import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
-  catchError
+  catchError,
 } from 'rxjs/operators';
 
 import { LocalStorageService } from '@app/core';
@@ -18,7 +18,7 @@ import {
   ActionStockMarketRetrieveError,
   ActionStockMarketRetrieveSuccess,
   STOCK_MARKET_KEY,
-  StockMarketActionTypes
+  StockMarketActionTypes,
 } from './stock-market.reducer';
 import { StockMarketService } from './stock-market.service';
 
@@ -34,22 +34,20 @@ export class StockMarketEffects {
   retrieveStock() {
     return this.actions$.pipe(
       ofType<ActionStockMarketRetrieve>(StockMarketActionTypes.RETRIEVE),
-      tap(action =>
+      tap((action) =>
         this.localStorageService.setItem(STOCK_MARKET_KEY, {
-          symbol: action.payload.symbol
+          symbol: action.payload.symbol,
         })
       ),
       distinctUntilChanged(),
       debounceTime(500),
       switchMap((action: ActionStockMarketRetrieve) =>
-        this.service
-          .retrieveStock(action.payload.symbol)
-          .pipe(
-            map(stock => new ActionStockMarketRetrieveSuccess({ stock })),
-            catchError(error =>
-              of(new ActionStockMarketRetrieveError({ error }))
-            )
+        this.service.retrieveStock(action.payload.symbol).pipe(
+          map((stock) => new ActionStockMarketRetrieveSuccess({ stock })),
+          catchError((error) =>
+            of(new ActionStockMarketRetrieveError({ error }))
           )
+        )
       )
     );
   }

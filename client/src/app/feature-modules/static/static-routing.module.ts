@@ -8,12 +8,12 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
-    data: { title: 'anms.menu.about' }
+    data: { title: 'anms.menu.about' },
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class StaticRoutingModule {}

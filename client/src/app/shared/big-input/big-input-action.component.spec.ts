@@ -6,7 +6,7 @@ import { SharedModule } from '@app/shared';
 
 @Component({
   selector: 'host-for-test',
-  template: ''
+  template: '',
 })
 class HostComponent {
   actionHandler = () => {};
@@ -34,9 +34,8 @@ describe('BigInputActionComponent', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       declarations: [HostComponent],
-      imports: [SharedModule]
-    })
-  );
+      imports: [SharedModule],
+    }));
 
   it('should be created', () => {
     const template = '<anms-big-input-action></anms-big-input-action>';

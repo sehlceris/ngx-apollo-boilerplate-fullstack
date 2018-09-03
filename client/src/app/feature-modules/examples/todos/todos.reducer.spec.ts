@@ -5,7 +5,7 @@ import {
   ActionTodosToggle,
   TodosState,
   todosReducer,
-  initialState
+  initialState,
 } from './todos.reducer';
 
 describe('TodoReducer', () => {
@@ -19,7 +19,7 @@ describe('TodoReducer', () => {
   it('should add a todo', () => {
     const TEST_INITIAL_STATE: TodosState = {
       items: [],
-      filter: 'ALL'
+      filter: 'ALL',
     };
     const action = new ActionTodosAdd({ name: 'Mercuccio' });
     const state = todosReducer(TEST_INITIAL_STATE, action);
@@ -31,10 +31,10 @@ describe('TodoReducer', () => {
   it('should toggle selected todo', () => {
     const TEST_INITIAL_STATE: TodosState = {
       items: [{ id: '1', name: 'Tibald', done: false }],
-      filter: 'ALL'
+      filter: 'ALL',
     };
     const action = new ActionTodosToggle({
-      id: TEST_INITIAL_STATE.items[0].id
+      id: TEST_INITIAL_STATE.items[0].id,
     });
     const state = todosReducer(TEST_INITIAL_STATE, action);
     expect(state.items[0].done).toEqual(true);
@@ -44,9 +44,9 @@ describe('TodoReducer', () => {
     const TEST_INITIAL_STATE: TodosState = {
       items: [
         { id: '1', name: 'Romeo', done: false },
-        { id: '2', name: 'Juliet', done: true }
+        { id: '2', name: 'Juliet', done: true },
       ],
-      filter: 'ALL'
+      filter: 'ALL',
     };
     const action = new ActionTodosRemoveDone();
     const state = todosReducer(TEST_INITIAL_STATE, action);
@@ -60,9 +60,9 @@ describe('TodoReducer', () => {
       items: [
         { id: '1', name: 'Friar Laurence', done: false },
         { id: '2', name: 'Friar John', done: false },
-        { id: '3', name: 'Baltasar', done: true }
+        { id: '3', name: 'Baltasar', done: true },
       ],
-      filter: 'ALL'
+      filter: 'ALL',
     };
     const action = new ActionTodosFilter({ filter: 'DONE' });
     const state = todosReducer(TEST_INITIAL_STATE, action);

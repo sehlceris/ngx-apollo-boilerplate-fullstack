@@ -10,7 +10,7 @@ import {
   ActionAuthLogin,
   ActionAuthLogout,
   AUTH_KEY,
-  AuthActionTypes
+  AuthActionTypes,
 } from './auth.reducer';
 
 @Injectable()

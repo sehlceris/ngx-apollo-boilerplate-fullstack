@@ -2,7 +2,7 @@ import {
   async,
   ComponentFixture,
   TestBed,
-  inject
+  inject,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
@@ -15,7 +15,7 @@ import {
   ActionTodosFilter,
   ActionTodosToggle,
   ActionTodosRemoveDone,
-  TodosState
+  TodosState,
 } from './todos.reducer';
 
 describe('TodosComponent', () => {
@@ -48,24 +48,20 @@ describe('TodosComponent', () => {
       By.css('anms-big-input-action[fontIcon="fa-plus"] > button')
     );
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        declarations: [TodosComponent],
-        imports: [TestingModule]
-      }).compileComponents();
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [TodosComponent],
+      imports: [TestingModule],
+    }).compileComponents();
+  }));
 
-  beforeEach(
-    inject([Store], (testStore: TestStore<TodosState>) => {
-      store = testStore;
-      store.setState({ items: [], filter: 'ALL' });
-      fixture = TestBed.createComponent(TodosComponent);
-      component = fixture.componentInstance;
-      fixture.detectChanges();
-    })
-  );
+  beforeEach(inject([Store], (testStore: TestStore<TodosState>) => {
+    store = testStore;
+    store.setState({ items: [], filter: 'ALL' });
+    fixture = TestBed.createComponent(TodosComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  }));
 
   it('should be created with 0 todos', () => {
     expect(component).toBeTruthy();
@@ -76,7 +72,7 @@ describe('TodosComponent', () => {
   it('should display todos', () => {
     store.setState({
       items: [{ id: '1', name: 'test', done: false }],
-      filter: 'ALL'
+      filter: 'ALL',
     });
 
     fixture.detectChanges();
@@ -88,9 +84,9 @@ describe('TodosComponent', () => {
     store.setState({
       items: [
         { id: '1', name: 'test 1', done: true },
-        { id: '2', name: 'test 2', done: false }
+        { id: '2', name: 'test 2', done: false },
       ],
-      filter: 'DONE'
+      filter: 'DONE',
     });
 
     fixture.detectChanges();
@@ -102,9 +98,9 @@ describe('TodosComponent', () => {
     store.setState({
       items: [
         { id: '1', name: 'test 1', done: true },
-        { id: '2', name: 'test 2', done: false }
+        { id: '2', name: 'test 2', done: false },
       ],
-      filter: 'DONE'
+      filter: 'DONE',
     });
 
     fixture.detectChanges();
@@ -143,7 +139,7 @@ describe('TodosComponent', () => {
   it('should dispatch toggle todo action', () => {
     store.setState({
       items: [{ id: '1', name: 'test 1', done: true }],
-      filter: 'ALL'
+      filter: 'ALL',
     });
 
     fixture.detectChanges();
@@ -162,7 +158,7 @@ describe('TodosComponent', () => {
   it('should disable remove done todos button if no todo is done', () => {
     store.setState({
       items: [{ id: '1', name: 'test 1', done: true }],
-      filter: 'ALL'
+      filter: 'ALL',
     });
 
     fixture.detectChanges();

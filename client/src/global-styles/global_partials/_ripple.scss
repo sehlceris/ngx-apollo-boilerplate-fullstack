@@ -1,5 +1,4 @@
 .ripple {
-
   overflow: hidden;
   position: relative;
 
@@ -24,7 +23,7 @@
   }
 
   &:active:after {
-    animation: rippleIn 0.5s cubic-bezier(.25, .74, .25, .88) forwards;
+    animation: rippleIn 0.5s cubic-bezier(0.25, 0.74, 0.25, 0.88) forwards;
   }
 
   &:not(:active):after {

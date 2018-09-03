@@ -20,11 +20,11 @@ import { TitleService } from './title/title.service';
 import { DomAbstractionService } from '@app/core/services/dom-abstraction.service';
 import { FormValidationService } from '@app/core/services/form-validation.service';
 import { LogService } from '@app/core/services/log-service';
-import {LoadingOverlayComponent} from '@app/core/loading-overlay/loading-overlay.component';
-import {LoadingOverlayService} from '@app/core/loading-overlay/loading-overlay.service';
-import {SharedModule} from '@app/shared';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import { LoadingOverlayComponent } from '@app/core/loading-overlay/loading-overlay.component';
+import { LoadingOverlayService } from '@app/core/loading-overlay/loading-overlay.service';
+import { SharedModule } from '@app/shared';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 export const metaReducers: MetaReducer<any>[] = [initStateFromLocalStorage];
 
@@ -46,9 +46,7 @@ const SERVICES = [
   LoadingOverlayService,
 ];
 
-const COMPONENTS = [
-  LoadingOverlayComponent,
-];
+const COMPONENTS = [LoadingOverlayComponent];
 
 @NgModule({
   imports: [
@@ -62,43 +60,37 @@ const COMPONENTS = [
     // ngrx
     StoreModule.forRoot(
       {
-        auth: authReducer
+        auth: authReducer,
       },
       { metaReducers }
     ),
     EffectsModule.forRoot([AuthEffects]),
     StoreRouterConnectingModule,
 
-    environment.envName === 'DEV' ?
-      StoreDevtoolsModule.instrument({
-        maxAge: 20
-      }) : [],
+    environment.envName === 'DEV'
+      ? StoreDevtoolsModule.instrument({
+          maxAge: 20,
+        })
+      : [],
 
     // 3rd party
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+        deps: [HttpClient],
+      },
+    }),
   ],
-  declarations: [
-    ...COMPONENTS,
-  ],
-  providers: [
-    ...SERVICES
-  ],
-  exports: [
-    TranslateModule,
-    ...COMPONENTS,
-  ]
+  declarations: [...COMPONENTS],
+  providers: [...SERVICES],
+  exports: [TranslateModule, ...COMPONENTS],
 })
 export class CoreModule {
   constructor(
     @Optional()
     @SkipSelf()
-      parentModule: CoreModule
+    parentModule: CoreModule
   ) {
     if (parentModule) {
       throw new Error('CoreModule is already loaded. Import only in AppModule');

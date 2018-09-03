@@ -11,13 +11,13 @@ import {
   ActionSettingsChangeAnimationsPage,
   ActionSettingsChangeAnimationsElements,
   SettingsState,
-  ActionSettingsPersist
+  ActionSettingsPersist,
 } from '../settings.reducer';
 
 @Component({
   selector: 'anms-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();
@@ -26,7 +26,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   themes = [
     { value: 'DEFAULT-THEME', label: 'default' },
     { value: 'LIGHT-THEME', label: 'light' },
-    { value: 'BLACK-THEME', label: 'dark' }
+    { value: 'BLACK-THEME', label: 'dark' },
   ];
 
   languages = [{ value: 'en', label: 'en' }, { value: 'sk', label: 'sk' }];
@@ -35,7 +35,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     store
       .select(selectorSettings)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(settings => (this.settings = settings));
+      .subscribe((settings) => (this.settings = settings));
   }
 
   ngOnInit() {}

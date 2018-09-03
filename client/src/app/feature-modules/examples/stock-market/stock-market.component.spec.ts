@@ -2,7 +2,7 @@ import {
   async,
   ComponentFixture,
   inject,
-  TestBed
+  TestBed,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,7 +18,7 @@ import { ExamplesModule } from '../examples.module';
 import { StockMarketComponent } from './stock-market.component';
 import {
   StockMarketState,
-  ActionStockMarketRetrieve
+  ActionStockMarketRetrieve,
 } from './stock-market.reducer';
 
 describe('StockMarketComponent', () => {
@@ -47,24 +47,20 @@ describe('StockMarketComponent', () => {
     );
 
   describe('given component booted', () => {
-    beforeEach(
-      async(() => {
-        TestBed.configureTestingModule({
-          imports: [TestingModule, CoreModule, ExamplesModule],
-          providers: [{ provide: Store, useClass: TestStore }]
-        }).compileComponents();
-      })
-    );
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        imports: [TestingModule, CoreModule, ExamplesModule],
+        providers: [{ provide: Store, useClass: TestStore }],
+      }).compileComponents();
+    }));
 
-    beforeEach(
-      inject([Store], (testStore: TestStore<StockMarketState>) => {
-        store = testStore;
-        store.setState({ symbol: '', loading: true });
-        fixture = TestBed.createComponent(StockMarketComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-      })
-    );
+    beforeEach(inject([Store], (testStore: TestStore<StockMarketState>) => {
+      store = testStore;
+      store.setState({ symbol: '', loading: true });
+      fixture = TestBed.createComponent(StockMarketComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    }));
 
     it('should be created', () => {
       expect(component).toBeTruthy();
@@ -115,7 +111,7 @@ describe('StockMarketComponent', () => {
         store.setState({
           symbol: 'TDD',
           loading: false,
-          error: new HttpErrorResponse({})
+          error: new HttpErrorResponse({}),
         });
         fixture.detectChanges();
       });
@@ -145,8 +141,8 @@ describe('StockMarketComponent', () => {
             change,
             changePercent,
             changeNegative: true,
-            changePositive: false
-          }
+            changePositive: false,
+          },
         });
 
         fixture.detectChanges();

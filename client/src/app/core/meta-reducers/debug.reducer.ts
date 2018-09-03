@@ -6,7 +6,7 @@ export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
     console.log(`[DEBUG] action: ${action.type}`, {
       payload: (<any>action).payload,
       oldState: state,
-      newState
+      newState,
     });
     return newState;
   };

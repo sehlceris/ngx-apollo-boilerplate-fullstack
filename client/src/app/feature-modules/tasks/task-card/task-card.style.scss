@@ -1,11 +1,9 @@
 .card-container {
-
   background-color: white;
   display: flex;
   flex-direction: column;
 
   .card-content {
-
     background-color: var(--theme-color-background-base);
     color: var(--theme-color-contrast-background-base-primary);
 

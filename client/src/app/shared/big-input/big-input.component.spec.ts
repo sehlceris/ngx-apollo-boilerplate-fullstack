@@ -11,7 +11,7 @@ import { SharedModule } from '@app/shared';
   (keyup.enter)="onKeyEvent($event)"
   (keyup.escape)="onKeyEvent($event)">
 </anms-big-input>
-`
+`,
 })
 class HostComponent {
   newValue: string;
@@ -27,7 +27,7 @@ describe('BigInputComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [HostComponent],
-      imports: [SharedModule]
+      imports: [SharedModule],
     });
     fixture = TestBed.createComponent(HostComponent);
     component = fixture.componentInstance;

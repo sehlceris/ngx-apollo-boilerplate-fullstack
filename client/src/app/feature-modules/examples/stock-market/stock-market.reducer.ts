@@ -6,7 +6,7 @@ export const STOCK_MARKET_KEY = 'EXAMPLES.STOCKS';
 export enum StockMarketActionTypes {
   RETRIEVE = '[Todos] Retrieve',
   RETRIEVE_SUCCESS = '[Todos] Retrieve Success',
-  RETRIEVE_ERROR = '[Todos] Retrieve Error'
+  RETRIEVE_ERROR = '[Todos] Retrieve Error',
 }
 
 export class ActionStockMarketRetrieve implements Action {
@@ -34,10 +34,10 @@ export type StockMarketActions =
 
 export const initialState: StockMarketState = {
   symbol: 'GOOGL',
-  loading: false
+  loading: false,
 };
 
-export const selectorStocks = state => state.examples.stocks;
+export const selectorStocks = (state) => state.examples.stocks;
 
 export function stockMarketReducer(
   state: StockMarketState = initialState,
@@ -50,7 +50,7 @@ export function stockMarketReducer(
         loading: true,
         stock: null,
         error: null,
-        symbol: action.payload.symbol
+        symbol: action.payload.symbol,
       };
 
     case StockMarketActionTypes.RETRIEVE_SUCCESS:
@@ -58,7 +58,7 @@ export function stockMarketReducer(
         ...state,
         loading: false,
         stock: action.payload.stock,
-        error: null
+        error: null,
       };
 
     case StockMarketActionTypes.RETRIEVE_ERROR:
@@ -66,7 +66,7 @@ export function stockMarketReducer(
         ...state,
         loading: false,
         stock: null,
-        error: action.payload.error
+        error: action.payload.error,
       };
 
     default:
