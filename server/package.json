@@ -14,7 +14,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "webpack": "webpack --config webpack.config.js",
     "prettier": "prettier '{src,e2e}/**/*.{ts,json,md,scss}' --write",
-    "postinstall": "tsc -p ./tsconfig.json"
+    "postinstall": "tsc -p ./tsconfig.json",
+    "mongodb": "cd dev-tools/mongodb-docker && docker-compose up"
   },
   "husky": {
     "hooks": {
