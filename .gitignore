@@ -16,3 +16,5 @@ dist/
 
 # config
 config/
+config/development.json
+
