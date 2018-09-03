@@ -7,6 +7,6 @@ import { AboutComponent } from './about/about.component';
 
 @NgModule({
   imports: [SharedModule, StaticRoutingModule],
-  declarations: [AboutComponent]
+  declarations: [AboutComponent],
 })
 export class StaticModule {}

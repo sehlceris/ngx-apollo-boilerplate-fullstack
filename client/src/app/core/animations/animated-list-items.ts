@@ -1,4 +1,4 @@
-import {animate, style, transition, trigger} from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 /**
  * @example
@@ -27,7 +27,9 @@ import {animate, style, transition, trigger} from '@angular/animations';
  * }
  */
 
-export const createAnimatedListItemTriggers = function (listItemMargin: string = '0px') {
+export const createAnimatedListItemTriggers = function(
+  listItemMargin: string = '0px'
+) {
   return [
     trigger('animatedListItemIn', [
       transition('void => *', [
@@ -35,10 +37,13 @@ export const createAnimatedListItemTriggers = function (listItemMargin: string =
           opacity: 0,
           transform: 'translateX(-5%) scale(0.92)',
         }),
-        animate(300, style({
-          opacity: 1,
-          transform: 'translateX(0) scale(1.0)',
-        })),
+        animate(
+          300,
+          style({
+            opacity: 1,
+            transform: 'translateX(0) scale(1.0)',
+          })
+        ),
       ]),
     ]),
     trigger('animatedListItemOut', [
@@ -48,10 +53,13 @@ export const createAnimatedListItemTriggers = function (listItemMargin: string =
           transform: 'translateX(0) scale(1.0)',
           boxShadow: 'none',
         }),
-        animate(300, style({
-          opacity: 0,
-          transform: 'translateX(50%) scale(0.5)',
-        })),
+        animate(
+          300,
+          style({
+            opacity: 0,
+            transform: 'translateX(50%) scale(0.5)',
+          })
+        ),
       ]),
     ]),
     trigger('animatedListItemBelowRemovedSibling', [
@@ -59,9 +67,12 @@ export const createAnimatedListItemTriggers = function (listItemMargin: string =
         style({
           transform: 'translateY(0px)',
         }),
-        animate(300, style({
-          transform: `translateY(calc(-100% - ${listItemMargin})`,
-        })),
+        animate(
+          300,
+          style({
+            transform: `translateY(calc(-100% - ${listItemMargin})`,
+          })
+        ),
       ]),
       transition('true => false', [
         style({

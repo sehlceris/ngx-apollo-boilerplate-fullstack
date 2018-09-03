@@ -4,7 +4,7 @@ export const AUTH_KEY = 'AUTH';
 
 export enum AuthActionTypes {
   LOGIN = '[Auth] Login',
-  LOGOUT = '[Auth] Logout'
+  LOGOUT = '[Auth] Logout',
 }
 
 export class ActionAuthLogin implements Action {
@@ -18,10 +18,10 @@ export class ActionAuthLogout implements Action {
 export type AuthActions = ActionAuthLogin | ActionAuthLogout;
 
 export const initialState: AuthState = {
-  isAuthenticated: false
+  isAuthenticated: false,
 };
 
-export const selectorAuth = state => state.auth;
+export const selectorAuth = (state) => state.auth;
 
 export function authReducer(
   state: AuthState = initialState,

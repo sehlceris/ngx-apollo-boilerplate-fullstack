@@ -8,7 +8,7 @@ export enum TodosActionTypes {
   TOGGLE = '[Todos] Toggle',
   REMOVE_DONE = '[Todos] Remove Done',
   FILTER = '[Todos] Filter',
-  PERSIST = '[Todos] Persist'
+  PERSIST = '[Todos] Persist',
 }
 
 export class ActionTodosAdd implements Action {
@@ -53,13 +53,13 @@ export const initialState: TodosState = {
     {
       id: uuid(),
       name: 'Use Angular ngRx Material Starter in your project',
-      done: false
-    }
+      done: false,
+    },
   ],
-  filter: 'ALL'
+  filter: 'ALL',
 };
 
-export const selectorTodos = state => state.examples.todos;
+export const selectorTodos = (state) => state.examples.todos;
 
 export function todosReducer(
   state: TodosState = initialState,
@@ -73,9 +73,9 @@ export function todosReducer(
           {
             id: uuid(),
             name: action.payload.name,
-            done: false
-          }
-        ].concat(state.items)
+            done: false,
+          },
+        ].concat(state.items),
       };
 
     case TodosActionTypes.TOGGLE:
@@ -84,13 +84,13 @@ export function todosReducer(
         items: state.items.map(
           (item: Todo) =>
             item.id === action.payload.id ? { ...item, done: !item.done } : item
-        )
+        ),
       };
 
     case TodosActionTypes.REMOVE_DONE:
       return {
         ...state,
-        items: state.items.filter((item: Todo) => !item.done)
+        items: state.items.filter((item: Todo) => !item.done),
       };
 
     case TodosActionTypes.FILTER:

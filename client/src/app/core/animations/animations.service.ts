@@ -17,7 +17,11 @@ export class AnimationsService {
     AnimationsService.routeAnimationType =
       pageAnimations && elementsAnimations
         ? 'ALL'
-        : pageAnimations ? 'PAGE' : elementsAnimations ? 'ELEMENTS' : 'NONE';
+        : pageAnimations
+          ? 'PAGE'
+          : elementsAnimations
+            ? 'ELEMENTS'
+            : 'NONE';
   }
 }
 

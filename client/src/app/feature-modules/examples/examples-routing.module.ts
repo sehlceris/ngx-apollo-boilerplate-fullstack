@@ -17,35 +17,35 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'todos',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'todos',
         component: TodosComponent,
-        data: { title: 'anms.examples.menu.todos' }
+        data: { title: 'anms.examples.menu.todos' },
       },
       {
         path: 'stock-market',
         component: StockMarketComponent,
-        data: { title: 'anms.examples.menu.stocks' }
+        data: { title: 'anms.examples.menu.stocks' },
       },
       {
         path: 'theming',
         component: ParentComponent,
-        data: { title: 'anms.examples.menu.theming' }
+        data: { title: 'anms.examples.menu.theming' },
       },
       {
         path: 'authenticated',
         component: AuthenticatedComponent,
         canActivate: [AuthGuardService],
-        data: { title: 'anms.examples.menu.auth' }
-      }
-    ]
-  }
+        data: { title: 'anms.examples.menu.auth' },
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class ExamplesRoutingModule {}

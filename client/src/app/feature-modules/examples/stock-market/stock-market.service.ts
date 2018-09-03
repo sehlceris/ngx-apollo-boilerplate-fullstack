@@ -23,7 +23,7 @@ export class StockMarketService {
           change: stock.close,
           changePositive: stock.change.toString().indexOf('+') === 0,
           changeNegative: stock.change.toString().indexOf('-') === 0,
-          changePercent: stock.changePercent.toFixed(2)
+          changePercent: stock.changePercent.toFixed(2),
         }))
       );
   }

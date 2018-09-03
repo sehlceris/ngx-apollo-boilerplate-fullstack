@@ -8,7 +8,7 @@ import { LocalStorageService, AnimationsService } from '@app/core';
 import {
   SETTINGS_KEY,
   SettingsActionTypes,
-  ActionSettingsPersist
+  ActionSettingsPersist,
 } from './settings.reducer';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class SettingsEffects {
   persistSettings() {
     return this.actions$.pipe(
       ofType<ActionSettingsPersist>(SettingsActionTypes.PERSIST),
-      tap(action => {
+      tap((action) => {
         const { settings } = action.payload;
         const { pageAnimations, elementsAnimations } = settings;
         this.localStorageService.setItem(SETTINGS_KEY, settings);

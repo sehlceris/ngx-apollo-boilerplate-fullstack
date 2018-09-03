@@ -12,8 +12,8 @@ import { SettingsComponent } from './settings/settings.component';
   imports: [
     SharedModule,
     StoreModule.forFeature('settings', settingsReducer),
-    EffectsModule.forFeature([SettingsEffects])
+    EffectsModule.forFeature([SettingsEffects]),
   ],
-  declarations: [SettingsComponent]
+  declarations: [SettingsComponent],
 })
 export class SettingsModule {}

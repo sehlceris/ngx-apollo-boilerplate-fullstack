@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {OperatorFunction} from 'rxjs/internal/types';
-import {tap} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { OperatorFunction } from 'rxjs/internal/types';
+import { tap } from 'rxjs/operators';
 
 export enum LogLevel {
   DEBUG = 4,
@@ -10,18 +10,24 @@ export enum LogLevel {
   ERROR = 1,
 }
 
-export const logLevelToString: Map<LogLevel, string> = new Map<LogLevel, string>();
+export const logLevelToString: Map<LogLevel, string> = new Map<
+  LogLevel,
+  string
+>();
 logLevelToString.set(LogLevel.DEBUG, 'DEBUG');
 logLevelToString.set(LogLevel.INFO, 'INFO');
 logLevelToString.set(LogLevel.WARN, 'WARN');
 logLevelToString.set(LogLevel.ERROR, 'ERROR');
 
 export type LogFunction = (message) => void;
-export type LogFormatter = (namespace: string, message: string, level: LogLevel) => string;
+export type LogFormatter = (
+  namespace: string,
+  message: string,
+  level: LogLevel
+) => string;
 
 @Injectable()
 export class LogService {
-
   private logLevel: LogLevel = LogLevel.INFO;
   private logFn: LogFunction = LogService.defaultLogFunction;
   private logFormatter: LogFormatter = LogService.defaultLogFormatter;
@@ -56,7 +62,11 @@ export class LogService {
     console.log(message);
   }
 
-  public static defaultLogFormatter(namespace: string, message: string, level: LogLevel): string {
+  public static defaultLogFormatter(
+    namespace: string,
+    message: string,
+    level: LogLevel
+  ): string {
     return `[${LogService.logLevelToString(level)}] [${namespace}] ${message}`;
   }
 
@@ -75,8 +85,7 @@ export class LogService {
   public objToMessage(obj: any): string {
     if (typeof obj === 'string') {
       return obj;
-    }
-    else {
+    } else {
       return JSON.stringify(obj, null, 2);
     }
   }
@@ -86,23 +95,30 @@ export class LogService {
     name: string,
     nextLevel: LogLevel = LogLevel.INFO,
     errLevel: LogLevel = LogLevel.ERROR,
-    completeLevel: LogLevel = LogLevel.INFO,
+    completeLevel: LogLevel = LogLevel.INFO
   ): OperatorFunction<T, T> {
     return (source$: Observable<T>): Observable<T> => {
-      return source$
-        .pipe(
-          tap(
-            (next: any) => {
-              this.log(namespace, `${name} next: ${this.objToMessage(next)}`, nextLevel);
-            },
-            (err: any) => {
-              this.log(namespace, `${name} err: ${this.objToMessage(err)}`, errLevel);
-            },
-            () => {
-              this.log(namespace, `${name} complete`, completeLevel);
-            },
-          ),
-        );
+      return source$.pipe(
+        tap(
+          (next: any) => {
+            this.log(
+              namespace,
+              `${name} next: ${this.objToMessage(next)}`,
+              nextLevel
+            );
+          },
+          (err: any) => {
+            this.log(
+              namespace,
+              `${name} err: ${this.objToMessage(err)}`,
+              errLevel
+            );
+          },
+          () => {
+            this.log(namespace, `${name} complete`, completeLevel);
+          }
+        )
+      );
     };
   }
 
@@ -112,11 +128,7 @@ export class LogService {
 }
 
 export class BoundLogger {
-  constructor(
-    private namespace: string,
-    private logger: LogService,
-  ) {
-  }
+  constructor(private namespace: string, private logger: LogService) {}
 
   public debug(message: any) {
     this.log(message, LogLevel.DEBUG);
@@ -142,14 +154,14 @@ export class BoundLogger {
     name: string = 'observable',
     nextLevel: LogLevel = LogLevel.INFO,
     errLevel: LogLevel = LogLevel.ERROR,
-    completeLevel: LogLevel = LogLevel.INFO,
+    completeLevel: LogLevel = LogLevel.INFO
   ) {
     return this.logger.tapObservableForLogging(
       this.namespace,
       name,
       nextLevel,
       errLevel,
-      completeLevel,
+      completeLevel
     );
   }
 }

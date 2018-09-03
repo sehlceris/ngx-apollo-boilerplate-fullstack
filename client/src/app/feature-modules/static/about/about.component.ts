@@ -5,7 +5,7 @@ import { ROUTE_ANIMATIONS_ELEMENTS } from 'app/core/index';
 @Component({
   selector: 'anms-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent implements OnInit {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;

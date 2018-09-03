@@ -5,13 +5,13 @@ import { takeUntil } from 'rxjs/operators';
 
 import {
   ActionStockMarketRetrieve,
-  selectorStocks
+  selectorStocks,
 } from './stock-market.reducer';
 
 @Component({
   selector: 'anms-stock-market',
   templateUrl: './stock-market.component.html',
-  styleUrls: ['./stock-market.component.scss']
+  styleUrls: ['./stock-market.component.scss'],
 })
 export class StockMarketComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<void> = new Subject<void>();

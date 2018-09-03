@@ -29,7 +29,9 @@ export class Utils {
     if (typeof padString !== 'string') {
       padString = '0';
     }
-    return original.length >= width ? original : new Array(width - original.length + 1).join(padString) + original;
+    return original.length >= width
+      ? original
+      : new Array(width - original.length + 1).join(padString) + original;
   }
 
   /**
@@ -41,10 +43,10 @@ export class Utils {
   static integerDivision(numerator: number, denominator: number) {
     const quo = Math.floor(numerator / denominator);
     const rem = numerator % denominator;
-    return ({
+    return {
       quotient: quo,
       remainder: rem,
-    });
+    };
   }
 
   static asyncDelay(ms: number = 1000): Promise<void> {
@@ -61,18 +63,21 @@ export class Utils {
    * @param promises
    * @returns {Promise<Array<TResult>>}
    */
-  static allResolvedPromises<T>(promises: Array<Promise<T>>): Promise<Array<T | Error>> {
-    const settledPromise = Promise.all(promises.map((p) => {
-      return p.catch((e) => {
-        // we use 'instanceof Error' as a marker to filter out rejected promises - and therefore must wrap all Promise rejections in the Error object
-        if (e instanceof Error) {
-          return e;
-        }
-        else {
-          return new Error(e);
-        }
-      });
-    }));
+  static allResolvedPromises<T>(
+    promises: Array<Promise<T>>
+  ): Promise<Array<T | Error>> {
+    const settledPromise = Promise.all(
+      promises.map((p) => {
+        return p.catch((e) => {
+          // we use 'instanceof Error' as a marker to filter out rejected promises - and therefore must wrap all Promise rejections in the Error object
+          if (e instanceof Error) {
+            return e;
+          } else {
+            return new Error(e);
+          }
+        });
+      })
+    );
 
     const successfulResultsPromise = settledPromise.then((results) => {
       return results.filter((result) => {
@@ -88,18 +93,21 @@ export class Utils {
    * @param promises
    * @returns {Promise<Array<TResult>>}
    */
-  static allRejectedPromises<T>(promises: Array<Promise<T>>): Promise<Array<Error>> {
-    const settledPromise = Promise.all(promises.map((p) => {
-      return p.catch((e) => {
-        // we use 'instanceof Error' as a marker to filter out rejected promises - and therefore must wrap all Promise rejections in the Error object=
-        if (e instanceof Error) {
-          return e;
-        }
-        else {
-          return new Error(e);
-        }
-      });
-    }));
+  static allRejectedPromises<T>(
+    promises: Array<Promise<T>>
+  ): Promise<Array<Error>> {
+    const settledPromise = Promise.all(
+      promises.map((p) => {
+        return p.catch((e) => {
+          // we use 'instanceof Error' as a marker to filter out rejected promises - and therefore must wrap all Promise rejections in the Error object=
+          if (e instanceof Error) {
+            return e;
+          } else {
+            return new Error(e);
+          }
+        });
+      })
+    );
 
     const rejectedResultsPromise = settledPromise.then((results) => {
       const erroredResults: Array<Error> = [];
@@ -122,13 +130,16 @@ export class Utils {
    */
   static setPromiseTimeout(promise: Promise<any>, timeout: number) {
     if (typeof timeout !== 'number') {
-      throw new Error(('no promise timeout value specified'));
+      throw new Error('no promise timeout value specified');
     }
-    return Promise.race([promise, new Promise((resolve, reject) => {
-      setTimeout(() => {
-        reject('promise timed out');
-      }, timeout);
-    })]);
+    return Promise.race([
+      promise,
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject('promise timed out');
+        }, timeout);
+      }),
+    ]);
   }
 
   /**
@@ -149,16 +160,13 @@ export class Utils {
   static parseBoolean(input: any, defaultOutcome?: boolean): boolean {
     if (typeof input === 'boolean') {
       return input;
-    }
-    else if (typeof input === 'number') {
+    } else if (typeof input === 'number') {
       if (input > 0) {
         return true;
-      }
-      else {
+      } else {
         return false;
       }
-    }
-    else if (typeof input === 'string') {
+    } else if (typeof input === 'string') {
       switch (input.toLowerCase().trim()) {
         case 'true':
         case 'yes':
@@ -172,8 +180,7 @@ export class Utils {
     }
     if (typeof defaultOutcome === 'boolean') {
       return defaultOutcome;
-    }
-    else {
+    } else {
       throw new TypeError('failed to parse boolean from ' + input);
     }
   }

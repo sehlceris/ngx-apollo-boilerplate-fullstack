@@ -7,7 +7,7 @@ describe('Todos Actions', () => {
 
       expect({ ...action }).toEqual({
         type: fromTodos.TodosActionTypes.ADD,
-        payload: { name: 'test' }
+        payload: { name: 'test' },
       });
     });
   });
@@ -18,7 +18,7 @@ describe('Todos Actions', () => {
 
       expect({ ...action }).toEqual({
         type: fromTodos.TodosActionTypes.TOGGLE,
-        payload: { id: '1' }
+        payload: { id: '1' },
       });
     });
   });
@@ -28,7 +28,7 @@ describe('Todos Actions', () => {
       const action = new fromTodos.ActionTodosRemoveDone();
 
       expect({ ...action }).toEqual({
-        type: fromTodos.TodosActionTypes.REMOVE_DONE
+        type: fromTodos.TodosActionTypes.REMOVE_DONE,
       });
     });
   });
@@ -39,7 +39,7 @@ describe('Todos Actions', () => {
 
       expect({ ...action }).toEqual({
         type: fromTodos.TodosActionTypes.FILTER,
-        payload: { filter: 'DONE' }
+        payload: { filter: 'DONE' },
       });
     });
   });
@@ -50,7 +50,7 @@ describe('Todos Actions', () => {
 
       expect({ ...action }).toEqual({
         type: fromTodos.TodosActionTypes.PERSIST,
-        payload: { todos: [] }
+        payload: { todos: [] },
       });
     });
   });

@@ -1,8 +1,7 @@
 import * as moment from 'moment';
-import {Utils} from './utils';
+import { Utils } from './utils';
 
 export class TimeUtils {
-
   private static flatTimeOffsetRegex: RegExp = /\s*(\d+):(\d+):(\d+):?\.?(\d+)?\s*/;
 
   /**
@@ -11,20 +10,21 @@ export class TimeUtils {
    * @returns {any}
    */
   static convertHMSToMS(hmsString) {
-
     if (typeof hmsString !== 'string') {
       return hmsString;
     }
 
     if (TimeUtils.flatTimeOffsetRegex.test(hmsString)) {
       const timeArray = TimeUtils.flatTimeOffsetRegex.exec(hmsString);
-      let ms = parseInt(timeArray[3], 10) * 1000 + parseInt(timeArray[2], 10) * 1000 * 60 + parseInt(timeArray[1], 10) * 1000 * 60 * 60; // convert HH:MM:SS to millis
+      let ms =
+        parseInt(timeArray[3], 10) * 1000 +
+        parseInt(timeArray[2], 10) * 1000 * 60 +
+        parseInt(timeArray[1], 10) * 1000 * 60 * 60; // convert HH:MM:SS to millis
       if (timeArray[4]) {
         ms += parseInt(timeArray[4], 10);
       } // ms parameter is optional, HH:MM:SS is not
       return ms;
-    }
-    else {
+    } else {
       return null;
     }
   }
@@ -35,7 +35,6 @@ export class TimeUtils {
    * @returns {any}
    */
   static convertMSToHMS(ms) {
-
     if (typeof ms !== 'number') {
       return ms;
     }
@@ -58,8 +57,7 @@ export class TimeUtils {
     if (temp.remainder) {
       ms = Utils.padNumber(temp.remainder, 3);
       hmsString = hours + ':' + minutes + ':' + seconds + '.' + ms;
-    }
-    else {
+    } else {
       hmsString = hours + ':' + minutes + ':' + seconds;
     }
     return hmsString;
@@ -73,7 +71,9 @@ export class TimeUtils {
    */
   static weeksSinceEpoch(floor: boolean = true, date?: Date): number {
     const momentToCompare = date ? moment(date) : moment();
-    const weeksSinceEpoch = moment.duration(momentToCompare.diff(moment(0))).asWeeks();
+    const weeksSinceEpoch = moment
+      .duration(momentToCompare.diff(moment(0)))
+      .asWeeks();
     return floor ? Math.floor(weeksSinceEpoch) : weeksSinceEpoch;
   }
 }

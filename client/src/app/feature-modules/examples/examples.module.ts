@@ -27,17 +27,17 @@ import { environment } from '@env/environment';
     ExamplesRoutingModule,
     StoreModule.forFeature('examples', {
       todos: todosReducer,
-      stocks: stockMarketReducer
+      stocks: stockMarketReducer,
     }),
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
+        deps: [HttpClient],
       },
-      isolate: true
+      isolate: true,
     }),
-    EffectsModule.forFeature([TodosEffects, StockMarketEffects])
+    EffectsModule.forFeature([TodosEffects, StockMarketEffects]),
   ],
   declarations: [
     ExamplesComponent,
@@ -45,9 +45,9 @@ import { environment } from '@env/environment';
     StockMarketComponent,
     ParentComponent,
     ChildComponent,
-    AuthenticatedComponent
+    AuthenticatedComponent,
   ],
-  providers: [StockMarketService]
+  providers: [StockMarketService],
 })
 export class ExamplesModule {
   constructor() {}

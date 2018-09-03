@@ -3,23 +3,29 @@ import {
   Input,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 @Component({
   selector: 'anms-big-input-action',
   templateUrl: './big-input-action.component.html',
   styleUrls: ['./big-input-action.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BigInputActionComponent {
-  @Input() disabled = false;
-  @Input() fontSet = '';
-  @Input() fontIcon = '';
-  @Input() label = '';
-  @Input() color = '';
+  @Input()
+  disabled = false;
+  @Input()
+  fontSet = '';
+  @Input()
+  fontIcon = '';
+  @Input()
+  label = '';
+  @Input()
+  color = '';
 
-  @Output() action = new EventEmitter<void>();
+  @Output()
+  action = new EventEmitter<void>();
 
   hasFocus = false;
 
