@@ -4,7 +4,6 @@ import { TodoLevel } from '../todo-level.enum';
 
 export class TodoVm extends BaseModelVm {
   @ApiModelProperty() content: string;
-  @ApiModelProperty({ enum: TodoLevel })
-  level: TodoLevel;
+  @ApiModelProperty({ enum: TodoLevel }) level: TodoLevel;
   @ApiModelProperty() isCompleted: boolean;
 }

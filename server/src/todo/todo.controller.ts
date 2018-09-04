@@ -1,5 +1,5 @@
 import {
-  Body, CanActivate,
+  Body,
   Controller,
   Delete,
   Get,
@@ -80,7 +80,7 @@ export class TodoController {
       filter['level'] = { $in: isArray(level) ? [...level] : [level] };
     }
 
-    if (isCompleted !== null) {
+    if (typeof(isCompleted) === 'boolean') {
       if (filter['level']) {
         filter = { $and: [{ level: filter['level'] }, { isCompleted }] };
       } else {

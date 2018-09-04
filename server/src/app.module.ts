@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Configuration } from './shared/configuration/configuration.enum';
@@ -14,6 +15,10 @@ import { UserModule } from './user/user.module';
     MongooseModule.forRoot(ConfigurationService.getMongoDbConnectionString(), {
       retryDelay: 500,
       retryAttempts: 3,
+    }),
+    GraphQLModule.forRoot({
+      typePaths: ['./src/**/*.graphql'],
+      installSubscriptionHandlers: true,
     }),
     UserModule,
     TodoModule,
