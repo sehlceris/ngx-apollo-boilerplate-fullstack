@@ -1,0 +1,20 @@
+type Query {
+  getTodos(level: String, isCompleted: Boolean): [Todo]
+}
+
+type Mutation {
+  createTodo(content: String!, level: String): Todo
+  updateTodo(content: String, level: String): Todo
+  deleteTodo(id: String!): Todo
+}
+
+type Subscription {
+  todoCreated: Todo
+}
+
+type Todo {
+  id: String
+  content: String
+  isCompleted: Boolean
+  level: String
+}

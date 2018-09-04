@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Todo } from './models/todo.model';
 import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
+import {TodoResolvers} from './todo.resolvers';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { TodoService } from './todo.service';
     ]),
   ],
   controllers: [TodoController],
-  providers: [TodoService],
+  providers: [TodoService, TodoResolvers],
 })
 export class TodoModule {}
