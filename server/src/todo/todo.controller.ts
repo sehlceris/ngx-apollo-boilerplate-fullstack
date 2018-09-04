@@ -1,5 +1,5 @@
 import {
-  Body,
+  Body, CanActivate,
   Controller,
   Delete,
   Get,
@@ -9,7 +9,7 @@ import {
   Param,
   Post,
   Put,
-  Query,
+  Query, UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -30,6 +30,10 @@ import { Todo } from './models/todo.model';
 import { TodoParams } from './models/view-models/todo-params.model';
 import { TodoVm } from './models/view-models/todo-vm.model';
 import { TodoService } from './todo.service';
+import {UserRole} from '../user/models/user-role.enum';
+import {RolesGuard} from '../shared/guards/roles.guard';
+import {AuthGuard} from '@nestjs/passport';
+import {Roles} from '../shared/decorators/roles.decorator';
 
 @Controller('todos')
 @ApiUseTags(Todo.modelName)
@@ -38,8 +42,8 @@ export class TodoController {
   constructor(private readonly _todoService: TodoService) {}
 
   @Post()
-  // @Roles(UserRole.Admin)
-  // @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.Admin, UserRole.User)
+  @UseGuards(<any>AuthGuard('jwt'), RolesGuard)
   @ApiCreatedResponse({ type: TodoVm })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(Todo.modelName, 'Create'))
@@ -53,8 +57,8 @@ export class TodoController {
   }
 
   @Get()
-  // @Roles(UserRole.Admin, UserRole.User)
-  // @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.Admin, UserRole.User)
+  @UseGuards(<any>AuthGuard('jwt'), RolesGuard)
   @ApiOkResponse({ type: TodoVm, isArray: true })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(Todo.modelName, 'GetAll'))
@@ -95,8 +99,8 @@ export class TodoController {
   }
 
   @Put()
-  // @Roles(UserRole.Admin, UserRole.User)
-  // @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.Admin, UserRole.User)
+  @UseGuards(<any>AuthGuard('jwt'), RolesGuard)
   @ApiOkResponse({ type: TodoVm })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(Todo.modelName, 'Update'))
@@ -130,8 +134,8 @@ export class TodoController {
   }
 
   @Delete(':id')
-  // @Roles(UserRole.Admin)
-  // @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.Admin)
+  @UseGuards(<any>AuthGuard('jwt'), RolesGuard)
   @ApiOkResponse({ type: TodoVm })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(Todo.modelName, 'Delete'))
