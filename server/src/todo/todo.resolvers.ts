@@ -11,11 +11,11 @@ import { TodoParams } from './models/view-models/todo-params.model';
 import { TodoVm } from './models/view-models/todo-vm.model';
 import { TodoService } from './todo.service';
 import {UserRole} from '../user/models/user-role.enum';
-import {RolesGuard} from '../shared/guards/roles.guard';
-import {AuthGuard} from '@nestjs/passport';
 import {Roles} from '../shared/decorators/roles.decorator';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import {PubSub} from 'graphql-subscriptions';
+import {GraphQLJwtAuthGuard} from '../shared/guards/graphql/graphql-jwt-auth-guard.service';
+import {GraphQLRolesGuard} from '../shared/guards/graphql/graphql-roles-guard.service';
 
 const pubSub = new PubSub();
 
@@ -25,7 +25,7 @@ export class TodoResolvers {
 
   @Query()
   @Roles(UserRole.Admin, UserRole.User)
-  // @UseGuards(<any>AuthGuard('jwt'), RolesGuard)
+  @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async getTodos(
     @Args('level') level?: TodoLevel,
     @Args('isCompleted', new ToBooleanPipe()) isCompleted?: boolean

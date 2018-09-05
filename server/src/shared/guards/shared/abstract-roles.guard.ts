@@ -3,16 +3,17 @@ import {
   ExecutionContext,
   HttpException,
   HttpStatus,
-  Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { InstanceType } from 'typegoose';
-import { UserRole } from '../../user/models/user-role.enum';
-import { User } from '../../user/models/user.model';
+import { UserRole } from '../../../user/models/user-role.enum';
+import { User } from '../../../user/models/user.model';
 
-@Injectable()
-export class RolesGuard implements CanActivate {
-  constructor(private readonly _reflector: Reflector) {}
+export abstract class AbstractRolesGuard implements CanActivate {
+
+  constructor(protected readonly _reflector: Reflector) {}
+
+  abstract getUserFromContext(context: ExecutionContext): InstanceType<User>;
 
   canActivate(context: ExecutionContext): boolean {
     const roles = this._reflector.get<UserRole[]>(
@@ -24,8 +25,7 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest();
-    const user: InstanceType<User> = request.user;
+    const user: InstanceType<User> = this.getUserFromContext(context);
 
     const hasRole = () => roles.indexOf(user.role) >= 0;
 

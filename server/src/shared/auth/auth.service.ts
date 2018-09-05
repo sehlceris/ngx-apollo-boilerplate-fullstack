@@ -8,6 +8,7 @@ import { JwtPayload } from './jwt-payload.model';
 
 @Injectable()
 export class AuthService {
+
   private readonly jwtOptions: SignOptions;
   private readonly jwtKey: string;
 
