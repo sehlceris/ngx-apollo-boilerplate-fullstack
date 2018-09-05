@@ -34,12 +34,17 @@ import {UserRole} from '../user/models/user-role.enum';
 import {HttpRolesGuard} from '../shared/guards/http/http-roles.guard';
 import {AuthGuard} from '@nestjs/passport';
 import {Roles} from '../shared/decorators/roles.decorator';
+import {TodoApiBase} from './todo.api.base';
 
 @Controller('todos')
 @ApiUseTags(Todo.modelName)
 @ApiBearerAuth()
-export class TodoController {
-  constructor(private readonly _todoService: TodoService) {}
+export class TodoController extends TodoApiBase {
+  constructor(
+    protected readonly todoService: TodoService
+  ) {
+    super(todoService);
+  }
 
   @Post()
   @Roles(UserRole.Admin, UserRole.User)
@@ -49,8 +54,8 @@ export class TodoController {
   @ApiOperation(GetOperationId(Todo.modelName, 'Create'))
   async create(@Body() params: TodoParams): Promise<TodoVm> {
     try {
-      const newTodo = await this._todoService.createTodo(params);
-      return this._todoService.map<TodoVm>(newTodo);
+      const newTodo = await this.todoService.createTodo(params);
+      return this.todoService.map<TodoVm>(newTodo);
     } catch (e) {
       throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -89,8 +94,8 @@ export class TodoController {
     }
 
     try {
-      const todos = await this._todoService.findAll(filter);
-      return this._todoService.map<TodoVm[]>(
+      const todos = await this.todoService.findAll(filter);
+      return this.todoService.map<TodoVm[]>(
         map(todos, (todo) => todo.toJSON())
       );
     } catch (e) {
@@ -111,7 +116,7 @@ export class TodoController {
       throw new HttpException('Missing parameters', HttpStatus.BAD_REQUEST);
     }
 
-    const exist = await this._todoService.findById(id);
+    const exist = await this.todoService.findById(id);
 
     if (!exist) {
       throw new HttpException(`${id} Not found`, HttpStatus.NOT_FOUND);
@@ -126,8 +131,8 @@ export class TodoController {
     exist.level = level;
 
     try {
-      const updated = await this._todoService.update(id, exist);
-      return this._todoService.map<TodoVm>(updated.toJSON());
+      const updated = await this.todoService.update(id, exist);
+      return this.todoService.map<TodoVm>(updated.toJSON());
     } catch (e) {
       throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -141,8 +146,8 @@ export class TodoController {
   @ApiOperation(GetOperationId(Todo.modelName, 'Delete'))
   async delete(@Param('id') id: string): Promise<TodoVm> {
     try {
-      const deleted = await this._todoService.delete(id);
-      return this._todoService.map<TodoVm>(deleted.toJSON());
+      const deleted = await this.todoService.delete(id);
+      return this.todoService.map<TodoVm>(deleted.toJSON());
     } catch (e) {
       throw new InternalServerErrorException(e);
     }

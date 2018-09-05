@@ -4,7 +4,7 @@ type Query {
 
 type Mutation {
   createTodo(content: String!, level: String): Todo
-  updateTodo(content: String, level: String): Todo
+  updateTodo(id: String!, content: String, isCompleted: Boolean, level: String): Todo
   deleteTodo(id: String!): Todo
 }
 
