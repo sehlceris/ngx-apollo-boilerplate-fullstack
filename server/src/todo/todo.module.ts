@@ -4,6 +4,7 @@ import { Todo } from './models/todo.model';
 import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
 import {TodoResolvers} from './todo.resolvers';
+import {TodoApiService} from './todo-api.service';
 
 @Module({
   imports: [
@@ -12,6 +13,10 @@ import {TodoResolvers} from './todo.resolvers';
     ]),
   ],
   controllers: [TodoController],
-  providers: [TodoService, TodoResolvers],
+  providers: [
+    TodoService,
+    TodoApiService,
+    TodoResolvers
+  ],
 })
 export class TodoModule {}

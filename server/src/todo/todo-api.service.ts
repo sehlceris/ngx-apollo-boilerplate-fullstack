@@ -1,18 +1,18 @@
 import {TodoService} from './todo.service';
 import {isArray, map} from 'lodash';
 import {TodoVm} from './models/view-models/todo-vm.model';
-import {Args} from '@nestjs/graphql';
 import {TodoLevel} from './models/todo-level.enum';
-import {ToBooleanPipe} from '../shared/pipes/to-boolean.pipe';
 import {TodoParams} from './models/view-models/todo-params.model';
-import {HttpException, HttpStatus} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 
-export abstract class TodoApiBase {
-  protected constructor(
+@Injectable()
+export class TodoApiService {
+
+  constructor(
     protected readonly todoService: TodoService
   ) {}
 
-  protected async getTodos(
+  async getTodos(
     level?: TodoLevel,
     isCompleted?: boolean
   ): Promise<TodoVm[]> {
@@ -36,13 +36,13 @@ export abstract class TodoApiBase {
     );
   }
 
-  protected async createTodo(args: TodoParams): Promise<TodoVm> {
-    const newTodo = await this.todoService.createTodo(args);
+  async createTodo(params: TodoParams): Promise<TodoVm> {
+    const newTodo = await this.todoService.createTodo(params);
     const mappedTodo = this.todoService.map<TodoVm>(newTodo);
     return mappedTodo;
   }
 
-  protected async updateTodo(vm: TodoVm): Promise<TodoVm> {
+  async updateTodo(vm: TodoVm): Promise<TodoVm> {
     const {id, content, level, isCompleted} = vm;
 
     if (!vm || !id) {
@@ -67,7 +67,7 @@ export abstract class TodoApiBase {
     return this.todoService.map<TodoVm>(updated.toJSON());
   }
 
-  protected async deleteTodo(id: string): Promise<TodoVm> {
+  async deleteTodo(id: string): Promise<TodoVm> {
     const deleted = await this.todoService.delete(id);
     if (!deleted) {
       throw new HttpException(`${id} Not found`, HttpStatus.BAD_REQUEST);
