@@ -6,24 +6,21 @@ import {TodoLevel} from './models/todo-level.enum';
 import {Todo} from './models/todo.model';
 import {TodoParams} from './models/view-models/todo-params.model';
 import {TodoVm} from './models/view-models/todo-vm.model';
-import {TodoService} from './todo.service';
 import {UserRole} from '../user/models/user-role.enum';
 import {Roles} from '../shared/decorators/roles.decorator';
 import {Args, Mutation, Query, Resolver, Subscription} from '@nestjs/graphql';
 import {PubSub} from 'graphql-subscriptions';
 import {GraphQLJwtAuthGuard} from '../shared/guards/graphql/graphql-jwt-auth-guard.service';
 import {GraphQLRolesGuard} from '../shared/guards/graphql/graphql-roles-guard.service';
-import {TodoApiBase} from './todo.api.base';
+import {TodoApiService} from './todo-api.service';
 
 const pubSub = new PubSub();
 
 @Resolver('Todo')
-export class TodoResolvers extends TodoApiBase {
+export class TodoResolvers {
   constructor(
-    protected readonly todoService: TodoService,
-  ) {
-    super(todoService);
-  }
+    protected readonly todoApiService: TodoApiService,
+  ) {}
 
   @Query()
   @Roles(UserRole.Admin, UserRole.User)
@@ -32,16 +29,16 @@ export class TodoResolvers extends TodoApiBase {
     @Args('level') level?: TodoLevel,
     @Args('isCompleted', new ToBooleanPipe()) isCompleted?: boolean,
   ): Promise<TodoVm[]> {
-    return super.getTodos(level, isCompleted);
+    return this.todoApiService.getTodos(level, isCompleted);
   }
 
   @Mutation('createTodo')
   @Roles(UserRole.Admin, UserRole.User)
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async createTodo(
-    @Args() args: TodoParams,
+    @Args() params: TodoParams,
   ): Promise<TodoVm> {
-    const todoPromise = super.createTodo(args);
+    const todoPromise = this.todoApiService.createTodo(params);
     todoPromise
       .then((mappedTodo) => {
         // TODO: this publish must also somehow happen upon creation from the REST endpoints
@@ -54,14 +51,14 @@ export class TodoResolvers extends TodoApiBase {
   @Roles(UserRole.Admin, UserRole.User)
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async update(@Args() vm: TodoVm): Promise<TodoVm> {
-    return super.updateTodo(vm);
+    return this.todoApiService.updateTodo(vm);
   }
 
   @Mutation('deleteTodo')
   @Roles(UserRole.Admin, UserRole.User)
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async delete(@Args('id') id: string): Promise<TodoVm> {
-    return super.deleteTodo(id);
+    return this.todoApiService.deleteTodo(id);
   }
 
   @Subscription('todoCreated')
