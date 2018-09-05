@@ -31,7 +31,7 @@ import { TodoParams } from './models/view-models/todo-params.model';
 import { TodoVm } from './models/view-models/todo-vm.model';
 import { TodoService } from './todo.service';
 import {UserRole} from '../user/models/user-role.enum';
-import {RolesGuard} from '../shared/guards/roles.guard';
+import {HttpRolesGuard} from '../shared/guards/http/http-roles.guard';
 import {AuthGuard} from '@nestjs/passport';
 import {Roles} from '../shared/decorators/roles.decorator';
 
@@ -43,7 +43,7 @@ export class TodoController {
 
   @Post()
   @Roles(UserRole.Admin, UserRole.User)
-  @UseGuards(<any>AuthGuard('jwt'), RolesGuard)
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
   @ApiCreatedResponse({ type: TodoVm })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(Todo.modelName, 'Create'))
@@ -58,7 +58,7 @@ export class TodoController {
 
   @Get()
   @Roles(UserRole.Admin, UserRole.User)
-  @UseGuards(<any>AuthGuard('jwt'), RolesGuard)
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
   @ApiOkResponse({ type: TodoVm, isArray: true })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(Todo.modelName, 'GetAll'))
@@ -100,7 +100,7 @@ export class TodoController {
 
   @Put()
   @Roles(UserRole.Admin, UserRole.User)
-  @UseGuards(<any>AuthGuard('jwt'), RolesGuard)
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
   @ApiOkResponse({ type: TodoVm })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(Todo.modelName, 'Update'))
@@ -135,7 +135,7 @@ export class TodoController {
 
   @Delete(':id')
   @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), RolesGuard)
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
   @ApiOkResponse({ type: TodoVm })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(Todo.modelName, 'Delete'))
