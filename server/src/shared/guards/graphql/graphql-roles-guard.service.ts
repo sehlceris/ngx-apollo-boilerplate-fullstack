@@ -15,7 +15,6 @@ export class GraphQLRolesGuard extends AbstractRolesGuard {
   }
 
   getUserFromContext(executionContext: ExecutionContext): InstanceType<User> {
-    console.log('GraphQLRolesGuard getUserFromContext');
     const ctx = GqlExecutionContext.create(executionContext);
     const graphqlContext = ctx.getContext();
     return graphqlContext.user;
