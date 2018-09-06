@@ -16,7 +16,6 @@ export abstract class AbstractRolesGuard implements CanActivate {
   abstract getUserFromContext(context: ExecutionContext): InstanceType<User>;
 
   canActivate(context: ExecutionContext): boolean {
-    console.log('AbstractRolesGuard canActivate');
     const roles = this._reflector.get<UserRole[]>(
       'roles',
       context.getHandler()
