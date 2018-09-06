@@ -30,6 +30,7 @@ type User {
   firstName: String
   lastName: String
   role: UserRole!
+  todos: [Todo]
 }
 
 type LoginResponse {

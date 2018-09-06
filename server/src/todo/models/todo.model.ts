@@ -18,6 +18,8 @@ export class Todo extends Typegoose {
   @prop({ default: Date.now() })
   updatedAt?: Date;
   id?: string;
+  @prop({ required: [true, 'ownerId is required'] })
+  ownerId: string;
 
   static get model(): ModelType<Todo> {
     return new Todo().getModelForClass(Todo, { schemaOptions });

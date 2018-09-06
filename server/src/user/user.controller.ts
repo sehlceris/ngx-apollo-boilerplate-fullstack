@@ -21,11 +21,16 @@ import {Roles} from '../shared/decorators/roles.decorator';
 import {UserRole} from './models/user-role.enum';
 import {AuthGuard} from '@nestjs/passport';
 import {HttpRolesGuard} from '../shared/guards/http/http-roles.guard';
+import {TodoApiService} from '../todo/todo-api.service';
+import {TodoVm} from '../todo/models/view-models/todo-vm.model';
 
 @Controller('user')
 @ApiUseTags(User.modelName)
 export class UserController {
-  constructor(private readonly userApiService: UserApiService) {}
+  constructor(
+    private readonly userApiService: UserApiService,
+    private readonly todoApiService: TodoApiService,
+  ) {}
 
   @Post('register')
   @ApiCreatedResponse({ type: UserVm })
@@ -50,6 +55,15 @@ export class UserController {
   @ApiOperation(GetOperationId(User.modelName, 'getUserById'))
   async getUserById(@Param('id') id: string): Promise<UserVm> {
     return this.userApiService.getUserById(id);
+  }
+
+  @Get(':id/todos')
+  @Roles(UserRole.Admin)
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
+  @ApiBearerAuth()
+  @ApiOperation(GetOperationId(User.modelName, 'getUserTodos'))
+  async getUserTodos(@Param('id') id: string): Promise<TodoVm[]> {
+    return this.todoApiService.getTodosForUser(id);
   }
 
   @Get('getUsers')

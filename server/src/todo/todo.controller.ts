@@ -6,7 +6,7 @@ import {
   Param,
   Post,
   Put,
-  Query, UseGuards,
+  Query, Req, UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -66,8 +66,13 @@ export class TodoController {
   @ApiCreatedResponse({ type: TodoVm })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(Todo.modelName, 'Create'))
-  async create(@Body() params: TodoParams): Promise<TodoVm> {
-    return this.todoApiService.createTodo(params);
+  async create(
+    @Req() request,
+    @Body() params: TodoParams
+  ): Promise<TodoVm> {
+    const {user} = request;
+    const userId = user.id;
+    return this.todoApiService.createTodo(userId, params);
   }
 
   @Put()
