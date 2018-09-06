@@ -6,4 +6,5 @@ export class TodoVm extends BaseModelVm {
   @ApiModelProperty() content: string;
   @ApiModelProperty({ enum: TodoLevel }) level: TodoLevel;
   @ApiModelProperty() isCompleted: boolean;
+  @ApiModelProperty() ownerId: string;
 }

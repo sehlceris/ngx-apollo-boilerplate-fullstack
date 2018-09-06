@@ -18,5 +18,9 @@ import {TodoApiService} from './todo-api.service';
     TodoApiService,
     TodoResolvers
   ],
+  exports: [
+    TodoService,
+    TodoApiService
+  ]
 })
 export class TodoModule {}

@@ -12,6 +12,15 @@ export class TodoApiService {
     protected readonly todoService: TodoService
   ) {}
 
+  async getTodosForUser(
+    ownerId: string,
+  ): Promise<TodoVm[]> {
+    const todos = await this.todoService.findAll({ownerId});
+    return this.todoService.map<TodoVm[]>(
+      map(todos, (todo) => todo.toJSON())
+    );
+  }
+
   async getTodos(
     level?: TodoLevel,
     isCompleted?: boolean
@@ -36,8 +45,9 @@ export class TodoApiService {
     );
   }
 
-  async createTodo(params: TodoParams): Promise<TodoVm> {
-    const newTodo = await this.todoService.createTodo(params);
+  async createTodo(ownerId: string, params: TodoParams): Promise<TodoVm> {
+
+    const newTodo = await this.todoService.createTodo(ownerId, params);
     const mappedTodo = this.todoService.map<TodoVm>(newTodo);
     return mappedTodo;
   }

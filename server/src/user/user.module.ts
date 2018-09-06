@@ -5,12 +5,14 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import {UserApiService} from './user-api.service';
 import {UserResolvers} from './user.resolvers';
+import {TodoModule} from '../todo/todo.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: User.modelName, schema: User.model.schema },
     ]),
+    TodoModule,
   ],
   providers: [
     UserService,

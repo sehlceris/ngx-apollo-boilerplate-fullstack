@@ -17,4 +17,5 @@ type Todo {
   content: String!
   isCompleted: Boolean!
   level: String
+  ownerId: String!
 }

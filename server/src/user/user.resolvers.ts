@@ -1,4 +1,4 @@
-import {Args, Query, Mutation, Resolver} from '@nestjs/graphql';
+import {Args, ResolveProperty, Parent, Query, Mutation, Resolver} from '@nestjs/graphql';
 import {UserApiService} from './user-api.service';
 import {UserVm} from './models/view-models/user-vm.model';
 import {RegisterVm} from './models/view-models/register-vm.model';
@@ -9,11 +9,13 @@ import {UserRole} from './models/user-role.enum';
 import {UseGuards} from '@nestjs/common';
 import {GraphQLJwtAuthGuard} from '../shared/guards/graphql/graphql-jwt-auth-guard.service';
 import {GraphQLRolesGuard} from '../shared/guards/graphql/graphql-roles-guard.service';
+import {TodoApiService} from '../todo/todo-api.service';
 
 @Resolver('User')
 export class UserResolvers {
   constructor(
     protected readonly userApiService: UserApiService,
+    protected readonly todoApiService: TodoApiService,
   ) {}
 
   @Mutation('register')
@@ -71,5 +73,12 @@ export class UserResolvers {
     @Args() id: string
   ): Promise<UserVm> {
     return this.userApiService.deleteUserById(id);
+  }
+
+  @ResolveProperty()
+  @Roles(UserRole.Admin)
+  @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
+  todos(@Parent() user: UserVm) {
+    return this.todoApiService.getTodosForUser(user.id);
   }
 }

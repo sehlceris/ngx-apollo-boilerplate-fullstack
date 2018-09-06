@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {BadRequestException, Injectable, InternalServerErrorException} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ModelType } from 'typegoose';
 import { BaseService } from '../shared/base.service';
@@ -17,11 +17,16 @@ export class TodoService extends BaseService<Todo> {
     this._mapper = mapperService.mapper;
   }
 
-  async createTodo(params: TodoParams): Promise<Todo> {
+  async createTodo(ownerId: string, params: TodoParams): Promise<Todo> {
     const { content, level } = params;
+
+    if (!ownerId) {
+      throw new BadRequestException('No ownerId provided');
+    }
 
     const newTodo = new TodoModel();
 
+    newTodo.ownerId = ownerId;
     newTodo.content = content;
 
     if (level) {

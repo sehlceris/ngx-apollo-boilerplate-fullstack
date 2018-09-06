@@ -8,7 +8,7 @@ import {TodoParams} from './models/view-models/todo-params.model';
 import {TodoVm} from './models/view-models/todo-vm.model';
 import {UserRole} from '../user/models/user-role.enum';
 import {Roles} from '../shared/decorators/roles.decorator';
-import {Args, Mutation, Query, Resolver, Subscription} from '@nestjs/graphql';
+import {Args, Context, Mutation, Query, Resolver, Subscription} from '@nestjs/graphql';
 import {PubSub} from 'graphql-subscriptions';
 import {GraphQLJwtAuthGuard} from '../shared/guards/graphql/graphql-jwt-auth-guard.service';
 import {GraphQLRolesGuard} from '../shared/guards/graphql/graphql-roles-guard.service';
@@ -36,9 +36,12 @@ export class TodoResolvers {
   @Roles(UserRole.Admin, UserRole.User)
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async createTodo(
+    @Context() context: any,
     @Args() params: TodoParams,
   ): Promise<TodoVm> {
-    const todoPromise = this.todoApiService.createTodo(params);
+    const {user} = context;
+    const userId = user.id;
+    const todoPromise = this.todoApiService.createTodo(userId, params);
     todoPromise
       .then((mappedTodo) => {
         // TODO: this publish must also somehow happen upon creation from the REST endpoints
