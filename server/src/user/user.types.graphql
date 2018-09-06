@@ -1,26 +1,43 @@
 type Query {
-  getTodos(level: String, isCompleted: Boolean): [User]
+  getUsers: [User]
+  getUserById(id: String!): User
+  getUserByUsername(username: String!): User
 }
 
 type Mutation {
+
   login(username: String!, password: String!): LoginResponse
+
   register(
     username: String!,
     password: String!,
     firstName: String,
     lastName: String
   ): User
+
+  updateUser(
+    id: String!,
+    firstName: String,
+    lastName: String
+  ): User
+
+  deleteUserById(id: String!): User
 }
 
 type User {
   id: String!
   username: String!
-  password: String
   firstName: String
   lastName: String
+  role: UserRole!
 }
 
 type LoginResponse {
   token: String!
   user: User!
+}
+
+enum UserRole {
+  Admin
+  User
 }

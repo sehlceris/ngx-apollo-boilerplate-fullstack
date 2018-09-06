@@ -23,6 +23,7 @@ import {UserResolvers} from './user.resolvers';
   exports: [
     UserService,
     UserApiService,
+    UserResolvers,
   ],
 })
 export class UserModule {}
