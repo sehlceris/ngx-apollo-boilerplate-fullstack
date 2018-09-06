@@ -22,7 +22,7 @@ export class TodoResolvers {
     protected readonly todoApiService: TodoApiService,
   ) {}
 
-  @Query()
+  @Query('getTodos')
   @Roles(UserRole.Admin, UserRole.User)
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async getTodos(

@@ -9,11 +9,38 @@ import {LoginResponseVm} from './models/view-models/login-response-vm.model';
 export class UserApiService {
 
   constructor(
-    protected readonly userService: UserService
-  ) {}
+    protected readonly userService: UserService,
+  ) {
+  }
+
+  async getUsers(): Promise<UserVm[]> {
+    try {
+      const unmappedUsers = await this.userService.findAll({});
+      const userVmsPromise = this.userService.map<UserVm[]>(unmappedUsers);
+      return userVmsPromise;
+    }
+    catch (e) {
+      throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getUserById(id: string, throwIfNotFound: boolean = true): Promise<UserVm> {
+    if (!id) {
+      throw new HttpException('No ID provided', HttpStatus.BAD_REQUEST);
+    }
+    return this.getExistingUser({id}, throwIfNotFound);
+  }
+
+  async getUserByUsername(username: string, throwIfNotFound: boolean = true): Promise<UserVm> {
+    if (!username) {
+      throw new HttpException('No username provided', HttpStatus.BAD_REQUEST);
+    }
+    return this.getExistingUser({username}, throwIfNotFound);
+  }
+
 
   async register(vm: RegisterVm): Promise<UserVm> {
-    const { username, password } = vm;
+    const {username, password} = vm;
 
     if (!username) {
       throw new HttpException('Username is required', HttpStatus.BAD_REQUEST);
@@ -23,14 +50,8 @@ export class UserApiService {
       throw new HttpException('Password is required', HttpStatus.BAD_REQUEST);
     }
 
-    let exist;
-    try {
-      exist = await this.userService.findOne({ username });
-    } catch (e) {
-      throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    if (exist) {
+    const unmappedExistingUser = await this.getUserByUsername(username, false);
+    if (unmappedExistingUser) {
       throw new HttpException(`${username} exists`, HttpStatus.BAD_REQUEST);
     }
 
@@ -38,7 +59,7 @@ export class UserApiService {
     return this.userService.map<UserVm>(newUser);
   }
 
-  async login( vm: LoginVm): Promise<LoginResponseVm> {
+  async login(vm: LoginVm): Promise<LoginResponseVm> {
     const fields = Object.keys(vm);
     fields.forEach((field) => {
       if (!vm[field]) {
@@ -47,5 +68,55 @@ export class UserApiService {
     });
 
     return this.userService.login(vm);
+  }
+
+  async updateUser(vm: UserVm): Promise<UserVm> {
+
+    const {
+      id,
+      firstName,
+      lastName,
+    } = vm;
+    // TODO: allow updating of password and username
+
+    const unmappedExistingUser = await this.userService.findById(id);
+    if (!unmappedExistingUser) {
+      throw new HttpException(`${id} Not found`, HttpStatus.NOT_FOUND);
+    }
+
+    if (firstName) {
+      unmappedExistingUser.firstName = firstName;
+    }
+    if (lastName) {
+      unmappedExistingUser.firstName = firstName;
+    }
+
+    const unmappedUpdatedUser = await this.userService.update(id, unmappedExistingUser);
+    return this.userService.map<UserVm>(unmappedUpdatedUser.toJSON());
+  }
+
+  async deleteUserById(id: string): Promise<UserVm> {
+    const unmappedDeletedUser = await this.userService.delete(id);
+    if (!unmappedDeletedUser) {
+      throw new HttpException(`${id} Not found`, HttpStatus.BAD_REQUEST);
+    }
+    return this.userService.map<UserVm>(unmappedDeletedUser.toJSON());
+  }
+
+  private async getExistingUser(filter: Partial<UserVm>, throwIfNotFound: boolean = true): Promise<UserVm> {
+    try {
+      const unmappedExistingUser = await this.userService.findOne(filter);
+      if (!unmappedExistingUser) {
+        if (throwIfNotFound === false) {
+          return null;
+        }
+        throw new HttpException(`user ${JSON.stringify(filter)} does not exist`, HttpStatus.BAD_REQUEST);
+      }
+      const userVmPromise = this.userService.map<UserVm>(unmappedExistingUser);
+      return userVmPromise;
+    }
+    catch (e) {
+      throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }
