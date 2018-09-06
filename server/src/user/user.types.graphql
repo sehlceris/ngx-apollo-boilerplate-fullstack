@@ -1,0 +1,26 @@
+type Query {
+  getTodos(level: String, isCompleted: Boolean): [User]
+}
+
+type Mutation {
+  login(username: String!, password: String!): LoginResponse
+  register(
+    username: String!,
+    password: String!,
+    firstName: String,
+    lastName: String
+  ): User
+}
+
+type User {
+  id: String!
+  username: String!
+  password: String
+  firstName: String
+  lastName: String
+}
+
+type LoginResponse {
+  token: String!
+  user: User!
+}

@@ -4,6 +4,7 @@ import { User } from './models/user.model';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import {UserApiService} from './user-api.service';
+import {UserResolvers} from './user.resolvers';
 
 @Module({
   imports: [
@@ -11,8 +12,17 @@ import {UserApiService} from './user-api.service';
       { name: User.modelName, schema: User.model.schema },
     ]),
   ],
-  providers: [UserService, UserApiService],
-  controllers: [UserController],
-  exports: [UserService, UserApiService],
+  providers: [
+    UserService,
+    UserApiService,
+    UserResolvers,
+  ],
+  controllers: [
+    UserController,
+  ],
+  exports: [
+    UserService,
+    UserApiService,
+  ],
 })
 export class UserModule {}

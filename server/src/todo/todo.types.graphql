@@ -13,8 +13,8 @@ type Subscription {
 }
 
 type Todo {
-  id: String
-  content: String
-  isCompleted: Boolean
+  id: String!
+  content: String!
+  isCompleted: Boolean!
   level: String
 }
