@@ -5,10 +5,10 @@ import {
 import { Reflector } from '@nestjs/core';
 import { InstanceType } from 'typegoose';
 import { User } from '../../../user/models/user.model';
-import { AbstractRolesGuard } from '../shared/abstract-roles.guard';
+import { AbstractUserRoleGuard } from '../shared/abstract-user-role.guard';
 
 @Injectable()
-export class HttpRolesGuard extends AbstractRolesGuard {
+export class HttpRolesGuard extends AbstractUserRoleGuard {
   protected constructor(protected readonly _reflector: Reflector) {
     super(_reflector);
   }

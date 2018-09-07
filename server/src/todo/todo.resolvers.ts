@@ -23,7 +23,7 @@ export class TodoResolvers {
   ) {}
 
   @Query('getTodos')
-  @Roles(UserRole.Admin, UserRole.User)
+  @Roles(UserRole.Admin)
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async getTodos(
     @Args('level') level?: TodoLevel,
