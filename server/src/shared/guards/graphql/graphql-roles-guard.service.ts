@@ -5,11 +5,11 @@ import {
 import { Reflector } from '@nestjs/core';
 import { InstanceType } from 'typegoose';
 import { User } from '../../../user/models/user.model';
-import { AbstractRolesGuard } from '../shared/abstract-roles.guard';
+import { AbstractUserRoleGuard } from '../shared/abstract-user-role.guard';
 import {GqlExecutionContext} from '@nestjs/graphql';
 
 @Injectable()
-export class GraphQLRolesGuard extends AbstractRolesGuard {
+export class GraphQLRolesGuard extends AbstractUserRoleGuard {
   protected constructor(protected readonly _reflector: Reflector) {
     super(_reflector);
   }
