@@ -10,6 +10,8 @@ import {UseGuards} from '@nestjs/common';
 import {GraphQLJwtAuthGuard} from '../shared/guards/graphql/graphql-jwt-auth-guard.service';
 import {GraphQLRolesGuard} from '../shared/guards/graphql/graphql-roles-guard.service';
 import {TodoApiService} from '../todo/todo-api.service';
+import {SameUserGuard} from '../shared/guards/graphql/same-user.guard';
+import {LogTargetUserId, TargetUserId} from '../shared/decorators/user-id-mapper.decorator';
 
 @Resolver('User')
 export class UserResolvers {
@@ -41,10 +43,13 @@ export class UserResolvers {
 
   @Query('getUserById')
   @Roles(UserRole.Admin, UserRole.User)
-  @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
+  @LogTargetUserId()
+  @UseGuards(GraphQLJwtAuthGuard, SameUserGuard)
   async getUserById(
+    @TargetUserId
     @Args('id') id: string
   ): Promise<UserVm> {
+    console.log('getUserById');
     return this.userApiService.getUserById(id);
   }
 
