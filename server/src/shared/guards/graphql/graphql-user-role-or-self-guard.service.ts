@@ -6,9 +6,14 @@ import { InstanceType } from 'typegoose';
 import { User } from '../../../user/models/user.model';
 import {AbstractUserRoleOrSelfGuard} from '../shared/abstract-user-role-or-self.guard';
 import {GraphQLGuardHelpers} from './helpers';
+import {Reflector} from '@nestjs/core';
 
 @Injectable()
 export abstract class GraphqlUserRoleOrSelfGuard extends AbstractUserRoleOrSelfGuard {
+
+  constructor(protected readonly _reflector: Reflector) {
+    super(_reflector);
+  }
 
   static forArgumentKey(key: string) {
     const newClass = class extends GraphqlUserRoleOrSelfGuard {
@@ -24,11 +29,5 @@ export abstract class GraphqlUserRoleOrSelfGuard extends AbstractUserRoleOrSelfG
 
   protected getUserFromContext(executionContext: ExecutionContext): InstanceType<User> {
     return GraphQLGuardHelpers.getUserFromContext(executionContext);
-  }
-
-  protected async checkCanActivate(context: ExecutionContext): Promise<boolean> {
-    const targetUserId = this.getTargetUserIdFromContext(context);
-    const user: InstanceType<User> = this.getUserFromContext(context);
-    return (user && targetUserId && user.id === targetUserId);
   }
 }
