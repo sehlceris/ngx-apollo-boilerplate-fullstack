@@ -46,7 +46,6 @@ export class UserResolvers {
   async getUserById(
     @Args('id') id: string
   ): Promise<UserVm> {
-    console.log('getUserById');
     return this.userApiService.getUserById(id);
   }
 
