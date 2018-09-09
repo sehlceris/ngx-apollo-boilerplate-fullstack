@@ -28,8 +28,6 @@ export class GraphQLJwtAuthGuard implements CanActivate {
 
   async canActivate(executionContext: ExecutionContext): Promise<boolean> {
 
-    console.log('GraphQLJwtAuthGuard canActivate');
-
     const ctx = GqlExecutionContext.create(executionContext);
     const graphqlContext = ctx.getContext();
     const headers = graphqlContext.headers;

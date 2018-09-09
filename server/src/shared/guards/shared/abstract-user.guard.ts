@@ -10,13 +10,12 @@ import { User } from '../../../user/models/user.model';
 
 export abstract class AbstractUserGuard implements CanActivate {
 
-  constructor(protected readonly _reflector: Reflector) {}
+  protected constructor(protected readonly _reflector: Reflector) {}
 
   protected abstract getUserFromContext(context: ExecutionContext): InstanceType<User>;
   protected abstract async checkCanActivate(context: ExecutionContext): Promise<boolean>;
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    console.log('AbstractUserGuard canActivate');
     let canActivate;
     try {
       canActivate = await this.checkCanActivate(context);

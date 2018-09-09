@@ -6,7 +6,7 @@ import { Reflector } from '@nestjs/core';
 import { InstanceType } from 'typegoose';
 import { User } from '../../../user/models/user.model';
 import { AbstractUserRoleGuard } from '../shared/abstract-user-role.guard';
-import {GqlExecutionContext} from '@nestjs/graphql';
+import {GraphQLGuardHelpers} from './helpers';
 
 @Injectable()
 export class GraphQLRolesGuard extends AbstractUserRoleGuard {
@@ -14,9 +14,7 @@ export class GraphQLRolesGuard extends AbstractUserRoleGuard {
     super(_reflector);
   }
 
-  getUserFromContext(executionContext: ExecutionContext): InstanceType<User> {
-    const ctx = GqlExecutionContext.create(executionContext);
-    const graphqlContext = ctx.getContext();
-    return graphqlContext.user;
+  protected getUserFromContext(executionContext: ExecutionContext): InstanceType<User> {
+    return GraphQLGuardHelpers.getUserFromContext(executionContext);
   }
 }
