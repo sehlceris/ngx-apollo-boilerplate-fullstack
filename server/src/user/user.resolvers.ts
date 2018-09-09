@@ -1,4 +1,4 @@
-import {Args, ResolveProperty, Parent, Query, Mutation, Resolver} from '@nestjs/graphql';
+import {Args, Mutation, Parent, Query, ResolveProperty, Resolver} from '@nestjs/graphql';
 import {UserApiService} from './user-api.service';
 import {UserVm} from './models/view-models/user-vm.model';
 import {RegisterVm} from './models/view-models/register-vm.model';
@@ -40,7 +40,7 @@ export class UserResolvers {
   }
 
   @Query('getUserById')
-  @Roles(UserRole.Admin)
+  @Roles(UserRole.Admin, UserRole.User)
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async getUserById(
     @Args('id') id: string
@@ -52,7 +52,7 @@ export class UserResolvers {
   @Roles(UserRole.Admin)
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async getUserByUsername(
-    @Args() username: string
+    @Args('username') username: string
   ): Promise<UserVm> {
     return this.userApiService.getUserByUsername(username);
   }
@@ -70,7 +70,7 @@ export class UserResolvers {
   @Roles(UserRole.Admin)
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async deleteUserById(
-    @Args() id: string
+    @Args('id') id: string
   ): Promise<UserVm> {
     return this.userApiService.deleteUserById(id);
   }
