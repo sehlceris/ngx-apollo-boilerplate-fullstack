@@ -28,14 +28,14 @@ export class UserApiService {
     if (!id) {
       throw new HttpException('No ID provided', HttpStatus.BAD_REQUEST);
     }
-    return this.getExistingUser({id}, throwIfNotFound);
+    return this.getExistingUserById(id, throwIfNotFound);
   }
 
   async getUserByUsername(username: string, throwIfNotFound: boolean = true): Promise<UserVm> {
     if (!username) {
       throw new HttpException('No username provided', HttpStatus.BAD_REQUEST);
     }
-    return this.getExistingUser({username}, throwIfNotFound);
+    return this.getExistingUserByFilter({username: username}, throwIfNotFound);
   }
 
 
@@ -103,7 +103,7 @@ export class UserApiService {
     return this.userService.map<UserVm>(unmappedDeletedUser.toJSON());
   }
 
-  private async getExistingUser(filter: Partial<UserVm>, throwIfNotFound: boolean = true): Promise<UserVm> {
+  private async getExistingUserByFilter(filter: Partial<UserVm>, throwIfNotFound: boolean = true): Promise<UserVm> {
     try {
       const unmappedExistingUser = await this.userService.findOne(filter);
       if (!unmappedExistingUser) {
@@ -112,10 +112,35 @@ export class UserApiService {
         }
         throw new HttpException(`user ${JSON.stringify(filter)} does not exist`, HttpStatus.BAD_REQUEST);
       }
-      const userVmPromise = this.userService.map<UserVm>(unmappedExistingUser);
+      console.log('unmappedExistingUser', unmappedExistingUser);
+      const userVmPromise = this.userService.map<UserVm>(unmappedExistingUser.toJSON());
       return userVmPromise;
     }
     catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      }
+      throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  private async getExistingUserById(id: string, throwIfNotFound: boolean = true): Promise<UserVm> {
+    try {
+      const unmappedExistingUser = await this.userService.findById(id);
+      if (!unmappedExistingUser) {
+        if (throwIfNotFound === false) {
+          return null;
+        }
+        throw new HttpException(`user ${id} does not exist`, HttpStatus.BAD_REQUEST);
+      }
+      console.log('unmappedExistingUser', unmappedExistingUser);
+      const userVmPromise = this.userService.map<UserVm>(unmappedExistingUser.toJSON());
+      return userVmPromise;
+    }
+    catch (e) {
+      if (e instanceof HttpException) {
+        throw e;
+      }
       throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
