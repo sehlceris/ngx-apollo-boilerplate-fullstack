@@ -16,6 +16,7 @@ export abstract class AbstractUserGuard implements CanActivate {
   protected abstract async checkCanActivate(context: ExecutionContext): Promise<boolean>;
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    console.log('AbstractUserGuard canActivate');
     let canActivate;
     try {
       canActivate = await this.checkCanActivate(context);

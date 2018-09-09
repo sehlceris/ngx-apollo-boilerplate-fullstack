@@ -112,7 +112,6 @@ export class UserApiService {
         }
         throw new HttpException(`user ${JSON.stringify(filter)} does not exist`, HttpStatus.BAD_REQUEST);
       }
-      console.log('unmappedExistingUser', unmappedExistingUser);
       const userVmPromise = this.userService.map<UserVm>(unmappedExistingUser.toJSON());
       return userVmPromise;
     }
@@ -133,7 +132,6 @@ export class UserApiService {
         }
         throw new HttpException(`user ${id} does not exist`, HttpStatus.BAD_REQUEST);
       }
-      console.log('unmappedExistingUser', unmappedExistingUser);
       const userVmPromise = this.userService.map<UserVm>(unmappedExistingUser.toJSON());
       return userVmPromise;
     }
