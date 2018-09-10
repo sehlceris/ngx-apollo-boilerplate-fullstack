@@ -6,6 +6,5 @@ export class UserVm extends BaseModelVm {
   @ApiModelProperty() username: string;
   @ApiModelPropertyOptional() firstName?: string;
   @ApiModelPropertyOptional() lastName?: string;
-  @ApiModelPropertyOptional() fullName?: string;
   @ApiModelPropertyOptional({ enum: UserRole }) role?: UserRole;
 }

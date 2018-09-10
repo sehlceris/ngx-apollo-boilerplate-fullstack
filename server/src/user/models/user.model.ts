@@ -35,11 +35,6 @@ export class User extends Typegoose {
 
   id?: string;
 
-  @prop()
-  get fullName(): string {
-    return `${this.firstName} ${this.lastName}`;
-  }
-
   static get model(): ModelType<User> {
     return new User().getModelForClass(User, { schemaOptions });
   }
