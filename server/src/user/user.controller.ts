@@ -23,6 +23,7 @@ import {AuthGuard} from '@nestjs/passport';
 import {HttpRolesGuard} from '../shared/guards/http/http-roles.guard';
 import {TodoApiService} from '../todo/todo-api.service';
 import {TodoVm} from '../todo/models/view-models/todo-vm.model';
+import {HttpUserRoleOrSelfGuard} from '../shared/guards/http/http-user-role-or-self-guard.service';
 
 @Controller('user')
 @ApiUseTags(User.modelName)
@@ -50,7 +51,7 @@ export class UserController {
 
   @Get(':id')
   @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
+  @UseGuards(<any>AuthGuard('jwt'), HttpUserRoleOrSelfGuard.forParamKey('id'))
   @ApiBearerAuth()
   @ApiOperation(GetOperationId(User.modelName, 'getUserById'))
   async getUserById(@Param('id') id: string): Promise<UserVm> {
@@ -59,7 +60,7 @@ export class UserController {
 
   @Get(':id/todos')
   @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
+  @UseGuards(<any>AuthGuard('jwt'), HttpUserRoleOrSelfGuard.forParamKey('id'))
   @ApiBearerAuth()
   @ApiOperation(GetOperationId(User.modelName, 'getUserTodos'))
   async getUserTodos(@Param('id') id: string): Promise<TodoVm[]> {
@@ -79,7 +80,7 @@ export class UserController {
 
   @Get('getUserByUsername')
   @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
+  @UseGuards(<any>AuthGuard('jwt'), HttpUserRoleOrSelfGuard.forParamKey('id'))
   @ApiBearerAuth()
   @ApiCreatedResponse({ type: UserVm })
   @ApiBadRequestResponse({ type: ApiException })
@@ -90,7 +91,7 @@ export class UserController {
 
   @Put()
   @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
+  @UseGuards(<any>AuthGuard('jwt'), HttpUserRoleOrSelfGuard.forParamKey('id'))
   @ApiBearerAuth()
   @ApiOperation(GetOperationId(User.modelName, 'updateUser'))
   async updateUser(@Body() vm: UserVm): Promise<UserVm> {
@@ -100,7 +101,7 @@ export class UserController {
 
   @Delete(':id')
   @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
+  @UseGuards(<any>AuthGuard('jwt'), HttpUserRoleOrSelfGuard.forParamKey('id'))
   @ApiBearerAuth()
   @ApiOperation(GetOperationId(User.modelName, 'deleteUserById'))
   async deleteUserById(@Param('id') id: string): Promise<UserVm> {
