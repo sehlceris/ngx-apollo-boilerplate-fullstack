@@ -6,6 +6,7 @@ import { Reflector } from '@nestjs/core';
 import { InstanceType } from 'typegoose';
 import { User } from '../../../user/models/user.model';
 import { AbstractUserRoleGuard } from '../shared/abstract-user-role.guard';
+import {HttpGuardHelpers} from './helpers';
 
 @Injectable()
 export class HttpRolesGuard extends AbstractUserRoleGuard {
@@ -14,7 +15,6 @@ export class HttpRolesGuard extends AbstractUserRoleGuard {
   }
 
   getUserFromContext(context: ExecutionContext): InstanceType<User> {
-    const request = context.switchToHttp().getRequest();
-    return request.user;
+    return HttpGuardHelpers.getUserFromContext(context);
   }
 }
