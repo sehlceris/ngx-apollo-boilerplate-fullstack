@@ -94,7 +94,7 @@ export class UserService extends BaseService<User> {
     };
   }
 
-  async changePasswordById(id: string, newPassword: string): Promise<UserVm> {
+  async updatePasswordById(id: string, newPassword: string): Promise<UserVm> {
 
     const user = await this.findById(id);
     if (!user) {

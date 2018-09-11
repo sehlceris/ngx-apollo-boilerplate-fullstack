@@ -14,11 +14,9 @@ export class UserApiService {
   }
 
   async getUsers(): Promise<UserVm[]> {
-    console.log('api service getUsers')
     try {
       const unmappedUsers = await this.userService.findAll({});
-      const userVmsPromise = this.userService.map<UserVm[]>(unmappedUsers);
-      return userVmsPromise;
+      return this.userService.map<UserVm[]>(unmappedUsers.map(u => u.toJSON()));
     }
     catch (e) {
       throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -117,12 +115,12 @@ export class UserApiService {
     return this.userService.map<UserVm>(unmappedUpdatedUser.toJSON());
   }
 
-  async changePasswordById(id: string, currentPassword: string, newPassword: string): Promise<UserVm> {
+  async updatePasswordById(id: string, currentPassword: string, newPassword: string): Promise<UserVm> {
     await this.userService.loginWithId({
       id,
       password: currentPassword
     });
-    return this.userService.changePasswordById(id, newPassword);
+    return this.userService.updatePasswordById(id, newPassword);
   }
 
   async deleteUserById(id: string): Promise<UserVm> {
