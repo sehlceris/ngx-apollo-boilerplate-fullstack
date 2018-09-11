@@ -14,7 +14,7 @@ import { BaseService } from '../shared/base.service';
 import { MapperService } from '../shared/mapper/mapper.service';
 import { User, UserModel } from './models/user.model';
 import { LoginResponseVm } from './models/view-models/login-response-vm.model';
-import { LoginVm } from './models/view-models/login-vm.model';
+import {LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm} from './models/view-models/login-vm.model';
 import { RegisterVm } from './models/view-models/register-vm.model';
 import { UserVm } from './models/view-models/user-vm.model';
 
@@ -32,10 +32,11 @@ export class UserService extends BaseService<User> {
   }
 
   async register(vm: RegisterVm) {
-    const { username, password, firstName, lastName } = vm;
+    const { username, email, password, firstName, lastName } = vm;
 
     const newUser = new UserModel();
     newUser.username = username.trim().toLowerCase();
+    newUser.email = email.trim().toLowerCase();
     newUser.firstName = firstName;
     newUser.lastName = lastName;
 
@@ -50,16 +51,30 @@ export class UserService extends BaseService<User> {
     }
   }
 
-  async login(vm: LoginVm): Promise<LoginResponseVm> {
+  async loginWithUsername(vm: LoginWithUsernameVm): Promise<LoginResponseVm> {
     const { username, password } = vm;
-
     const user = await this.findOne({ username });
+    return this.performCommonLoginSequence(user, password);
+  }
 
+  async loginWithEmail(vm: LoginWithEmailVm): Promise<LoginResponseVm> {
+    const { email, password } = vm;
+    const user = await this.findOne({ email });
+    return this.performCommonLoginSequence(user, password);
+  }
+
+  async loginWithId(vm: LoginWithIdVm): Promise<LoginResponseVm> {
+    const { id, password } = vm;
+    const user = await this.findById(id);
+    return this.performCommonLoginSequence(user, password);
+  }
+
+  private async performCommonLoginSequence(user, passwordToTest: string): Promise<LoginResponseVm> {
     if (!user) {
       throw new HttpException('Invalid crendentials', HttpStatus.NOT_FOUND);
     }
 
-    const isMatch = await compare(password, user.password);
+    const isMatch = await compare(passwordToTest, user.password);
 
     if (!isMatch) {
       throw new HttpException('Invalid crendentials', HttpStatus.BAD_REQUEST);
@@ -77,5 +92,23 @@ export class UserService extends BaseService<User> {
       token,
       user: userVm,
     };
+  }
+
+  async changePasswordById(id: string, newPassword: string): Promise<UserVm> {
+
+    const user = await this.findById(id);
+    if (!user) {
+      throw new HttpException(`No user with id ${id}`, HttpStatus.NOT_FOUND);
+    }
+
+    const salt = await genSalt(10);
+    user.password = await hash(newPassword, salt);
+
+    try {
+      const updatedUser = await this.update(id, user);
+      return updatedUser.toJSON() as User;
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

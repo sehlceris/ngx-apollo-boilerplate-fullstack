@@ -6,10 +6,15 @@ type Query {
 
 type Mutation {
 
-  login(username: String!, password: String!): LoginResponse
+  loginWithUsername(username: String!, password: String!): LoginResponse
+
+  loginWithEmail(email: String!, password: String!): LoginResponse
+
+  loginWithId(id: String!, password: String!): LoginResponse
 
   register(
     username: String!,
+    email: String!,
     password: String!,
     firstName: String,
     lastName: String
@@ -27,6 +32,7 @@ type Mutation {
 type User {
   id: String!
   username: String!
+  email: String!
   firstName: String
   lastName: String
   role: UserRole!
