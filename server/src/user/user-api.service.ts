@@ -2,7 +2,7 @@ import {UserService} from './user.service';
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {RegisterVm} from './models/view-models/register-vm.model';
 import {UserVm} from './models/view-models/user-vm.model';
-import {LoginVm} from './models/view-models/login-vm.model';
+import {LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm} from './models/view-models/login-vm.model';
 import {LoginResponseVm} from './models/view-models/login-response-vm.model';
 
 @Injectable()
@@ -14,6 +14,7 @@ export class UserApiService {
   }
 
   async getUsers(): Promise<UserVm[]> {
+    console.log('api service getUsers')
     try {
       const unmappedUsers = await this.userService.findAll({});
       const userVmsPromise = this.userService.map<UserVm[]>(unmappedUsers);
@@ -59,7 +60,7 @@ export class UserApiService {
     return this.userService.map<UserVm>(newUser);
   }
 
-  async login(vm: LoginVm): Promise<LoginResponseVm> {
+  async loginWithUsername(vm: LoginWithUsernameVm): Promise<LoginResponseVm> {
     const fields = Object.keys(vm);
     fields.forEach((field) => {
       if (!vm[field]) {
@@ -67,7 +68,29 @@ export class UserApiService {
       }
     });
 
-    return this.userService.login(vm);
+    return this.userService.loginWithUsername(vm);
+  }
+
+  async loginWithEmail(vm: LoginWithEmailVm): Promise<LoginResponseVm> {
+    const fields = Object.keys(vm);
+    fields.forEach((field) => {
+      if (!vm[field]) {
+        throw new HttpException(`${field} is required`, HttpStatus.BAD_REQUEST);
+      }
+    });
+
+    return this.userService.loginWithEmail(vm);
+  }
+
+  async loginWithId(vm: LoginWithIdVm): Promise<LoginResponseVm> {
+    const fields = Object.keys(vm);
+    fields.forEach((field) => {
+      if (!vm[field]) {
+        throw new HttpException(`${field} is required`, HttpStatus.BAD_REQUEST);
+      }
+    });
+
+    return this.userService.loginWithId(vm);
   }
 
   async updateUser(vm: UserVm): Promise<UserVm> {
@@ -77,7 +100,6 @@ export class UserApiService {
       firstName,
       lastName,
     } = vm;
-    // TODO: allow updating of password and username
 
     const unmappedExistingUser = await this.userService.findById(id);
     if (!unmappedExistingUser) {
@@ -93,6 +115,14 @@ export class UserApiService {
 
     const unmappedUpdatedUser = await this.userService.update(id, unmappedExistingUser);
     return this.userService.map<UserVm>(unmappedUpdatedUser.toJSON());
+  }
+
+  async changePasswordById(id: string, currentPassword: string, newPassword: string): Promise<UserVm> {
+    await this.userService.loginWithId({
+      id,
+      password: currentPassword
+    });
+    return this.userService.changePasswordById(id, newPassword);
   }
 
   async deleteUserById(id: string): Promise<UserVm> {

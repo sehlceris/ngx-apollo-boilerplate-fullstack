@@ -2,7 +2,7 @@ import {Args, Mutation, Parent, Query, ResolveProperty, Resolver} from '@nestjs/
 import {UserApiService} from './user-api.service';
 import {UserVm} from './models/view-models/user-vm.model';
 import {RegisterVm} from './models/view-models/register-vm.model';
-import {LoginVm} from './models/view-models/login-vm.model';
+import {LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm} from './models/view-models/login-vm.model';
 import {LoginResponseVm} from './models/view-models/login-response-vm.model';
 import {Roles} from '../shared/decorators/roles.decorator';
 import {UserRole} from './models/user-role.enum';
@@ -26,11 +26,25 @@ export class UserResolvers {
     return this.userApiService.register(vm);
   }
 
-  @Mutation('login')
-  async login(
-    @Args() vm: LoginVm,
+  @Mutation('loginWithUsername')
+  async loginWithUsername(
+    @Args() vm: LoginWithUsernameVm,
   ): Promise<LoginResponseVm> {
-    return this.userApiService.login(vm);
+    return this.userApiService.loginWithUsername(vm);
+  }
+
+  @Mutation('loginWithEmail')
+  async loginWithEmail(
+    @Args() vm: LoginWithEmailVm,
+  ): Promise<LoginResponseVm> {
+    return this.userApiService.loginWithEmail(vm);
+  }
+
+  @Mutation('loginWithId')
+  async loginWithId(
+    @Args() vm: LoginWithIdVm,
+  ): Promise<LoginResponseVm> {
+    return this.userApiService.loginWithId(vm);
   }
 
   @Query('getUsers')

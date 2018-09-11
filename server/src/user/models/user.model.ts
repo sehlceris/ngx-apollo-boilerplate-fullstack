@@ -15,6 +15,11 @@ export class User extends Typegoose {
   username: string;
 
   @prop({
+    required: [true, 'Email is required']
+  })
+  email: string;
+
+  @prop({
     required: [true, 'Password is required'],
     minlength: [6, 'Must be at least 6 characters'],
   })
