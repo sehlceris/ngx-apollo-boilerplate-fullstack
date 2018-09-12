@@ -25,6 +25,7 @@ import { LoadingOverlayService } from '@app/core/loading-overlay/loading-overlay
 import { SharedModule } from '@app/shared';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import {UserHttpApiService} from '@app/core/services/api/user-http-api.service';
 
 export const metaReducers: MetaReducer<any>[] = [initStateFromLocalStorage];
 
@@ -44,6 +45,7 @@ const SERVICES = [
   AnimationsService,
   TitleService,
   LoadingOverlayService,
+  UserHttpApiService,
 ];
 
 const COMPONENTS = [LoadingOverlayComponent];
