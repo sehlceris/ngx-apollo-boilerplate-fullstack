@@ -1,5 +1,5 @@
 import { ElementRef, Injectable } from '@angular/core';
-import { BoundLogger, LogService } from './log-service';
+import { BoundLogger, LogService } from './log.service';
 
 @Injectable()
 export class DomAbstractionService {

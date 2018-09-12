@@ -44,6 +44,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api');
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.enableCors(); // TODO: filter CORS origins
 
   await app.listen(AppModule.port);
 }
