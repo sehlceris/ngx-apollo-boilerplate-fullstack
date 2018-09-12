@@ -23,9 +23,9 @@ import {AuthGuard} from '@nestjs/passport';
 import {HttpRolesGuard} from '../shared/guards/http/http-roles.guard';
 import {TodoApiService} from '../todo/todo-api.service';
 import {TodoVm} from '../todo/models/view-models/todo-vm.model';
-import {HttpUserRoleOrSelfGuard} from '../shared/guards/http/http-user-role-or-self-guard.service';
+import {HttpRolesOrSelfGuard} from '../shared/guards/http/http-user-role-or-self-guard.service';
 
-@Controller('user')
+@Controller('users')
 @ApiUseTags(User.modelName)
 export class UserController {
   constructor(
@@ -67,46 +67,16 @@ export class UserController {
 
   @Get(':id')
   @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpUserRoleOrSelfGuard.forParamKey('id'))
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesOrSelfGuard.forParamIdKey('id'))
   @ApiBearerAuth()
   @ApiOperation(GetOperationId(User.modelName, 'getUserById'))
   async getUserById(@Param('id') id: string): Promise<UserVm> {
     return this.userApiService.getUserById(id);
   }
 
-  @Get(':id/todos')
-  @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpUserRoleOrSelfGuard.forParamKey('id'))
-  @ApiBearerAuth()
-  @ApiOperation(GetOperationId(User.modelName, 'getUserTodos'))
-  async getUserTodos(@Param('id') id: string): Promise<TodoVm[]> {
-    return this.todoApiService.getTodosForUser(id);
-  }
-
-  @Get('getUsers')
-  @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
-  @ApiBearerAuth()
-  @ApiBadRequestResponse({ type: ApiException })
-  @ApiOperation(GetOperationId(User.modelName, 'getUsers'))
-  async getUsers(): Promise<UserVm[]> {
-    return this.userApiService.getUsers();
-  }
-
-  @Get('getUserByUsername')
-  @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpUserRoleOrSelfGuard.forParamKey('id'))
-  @ApiBearerAuth()
-  @ApiCreatedResponse({ type: UserVm })
-  @ApiBadRequestResponse({ type: ApiException })
-  @ApiOperation(GetOperationId(User.modelName, 'getUserByUsername'))
-  async getUserByUsername(@Query('username') username: string): Promise<UserVm> {
-    return this.userApiService.getUserByUsername(username);
-  }
-
   @Put()
   @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpUserRoleOrSelfGuard.forParamKey('id'))
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesOrSelfGuard.forBodyIdKey('id'))
   @ApiBearerAuth()
   @ApiOperation(GetOperationId(User.modelName, 'updateUser'))
   async updateUser(@Body() vm: UserVm): Promise<UserVm> {
@@ -116,10 +86,51 @@ export class UserController {
 
   @Delete(':id')
   @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpUserRoleOrSelfGuard.forParamKey('id'))
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
   @ApiBearerAuth()
   @ApiOperation(GetOperationId(User.modelName, 'deleteUserById'))
   async deleteUserById(@Param('id') id: string): Promise<UserVm> {
     return this.userApiService.deleteUserById(id);
+  }
+
+  @Get(':id/todos')
+  @Roles(UserRole.Admin)
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesOrSelfGuard.forParamIdKey('id'))
+  @ApiBearerAuth()
+  @ApiOperation(GetOperationId(User.modelName, 'getUserTodos'))
+  async getUserTodos(@Param('id') id: string): Promise<TodoVm[]> {
+    return this.todoApiService.getTodosForUser(id);
+  }
+
+  @Get()
+  @Roles(UserRole.Admin)
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
+  @ApiBearerAuth()
+  @ApiBadRequestResponse({ type: ApiException })
+  @ApiOperation(GetOperationId(User.modelName, 'getUsers'))
+  async getUsers(): Promise<UserVm[]> {
+    return this.userApiService.getUsers();
+  }
+
+  @Get('byUsername/:username')
+  @Roles(UserRole.Admin)
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
+  @ApiBearerAuth()
+  @ApiCreatedResponse({ type: UserVm })
+  @ApiBadRequestResponse({ type: ApiException })
+  @ApiOperation(GetOperationId(User.modelName, 'getUserByUsername'))
+  async getUserByUsername(@Param('username') username: string): Promise<UserVm> {
+    return this.userApiService.getUserByUsername(username);
+  }
+
+  @Get('byRole')
+  @Roles(UserRole.Admin)
+  @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
+  @ApiBearerAuth()
+  @ApiCreatedResponse({ type: UserVm })
+  @ApiBadRequestResponse({ type: ApiException })
+  @ApiOperation(GetOperationId(User.modelName, 'getUsersByRole'))
+  async getUsersByRole(@Query('role') role: UserRole): Promise<UserVm[]> {
+    return this.userApiService.getUsers( { role } );
   }
 }
