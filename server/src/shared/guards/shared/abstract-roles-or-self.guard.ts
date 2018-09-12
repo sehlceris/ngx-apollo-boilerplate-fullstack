@@ -7,7 +7,7 @@ import { UserRole } from '../../../user/models/user-role.enum';
 import { User } from '../../../user/models/user.model';
 import {AbstractUserGuard} from './abstract-user.guard';
 
-export abstract class AbstractUserRoleOrSelfGuard extends AbstractUserGuard {
+export abstract class AbstractRolesOrSelfGuard extends AbstractUserGuard {
 
   constructor(protected readonly _reflector: Reflector) {
     super(_reflector);
@@ -22,6 +22,7 @@ export abstract class AbstractUserRoleOrSelfGuard extends AbstractUserGuard {
       'roles',
       context.getHandler()
     );
+    console.log('checkCanActivate');
     const user: InstanceType<User> = this.getUserFromContext(context);
     const targetUserId = this.getTargetUserIdFromContext(context);
     const hasRole = () => roles && roles.length && roles.indexOf(user.role) >= 0;

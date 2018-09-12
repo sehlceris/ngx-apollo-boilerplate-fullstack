@@ -13,7 +13,7 @@ export class UserApiService {
   ) {
   }
 
-  async getUsers(): Promise<UserVm[]> {
+  async getUsers(filter: Partial<UserVm> = {}): Promise<UserVm[]> {
     try {
       const unmappedUsers = await this.userService.findAll({});
       return this.userService.map<UserVm[]>(unmappedUsers.map(u => u.toJSON()));
@@ -108,7 +108,7 @@ export class UserApiService {
       unmappedExistingUser.firstName = firstName;
     }
     if (lastName) {
-      unmappedExistingUser.firstName = firstName;
+      unmappedExistingUser.lastName = lastName;
     }
 
     const unmappedUpdatedUser = await this.userService.update(id, unmappedExistingUser);
