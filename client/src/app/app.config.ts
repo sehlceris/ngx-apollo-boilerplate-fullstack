@@ -1,5 +1,5 @@
 export const AppConfig = {
-  BaseHttpUrl: '/api',
+  BaseHttpUrl: 'http://localhost:3000/api',
 
   SnackDismissText: 'Ok',
   SnackDuration: 6000,

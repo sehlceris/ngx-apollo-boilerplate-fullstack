@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ITodoTask } from '../../../../../common/models';
 import { NEVER, Observable } from 'rxjs';
-import { BoundLogger, LogService } from '@app/core/services/log-service';
+import { BoundLogger, LogService } from '@app/core/services/log.service';
 
 @Injectable()
 export class TasksService {

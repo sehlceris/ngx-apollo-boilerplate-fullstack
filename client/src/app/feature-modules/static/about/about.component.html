@@ -7,6 +7,13 @@
            mat-raised-button class="actions-main" color="primary" routerLink="../features">
           {{ 'anms.menu.features' | translate }}
         </a>
+        <a
+          [ngClass]="routeAnimationsElements"
+          mat-raised-button class="actions-main" color="primary"
+          (click)="userHttpApiService.loginWithUsername('000000', '000000')"
+        >
+          Login
+        </a>
         <a mat-raised-button class="actions-main" color="accent" routerLink="../examples"
            [ngClass]="routeAnimationsElements">
           {{ 'anms.menu.examples' | translate }}

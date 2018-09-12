@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormValidationService } from '@app/core/services/form-validation.service';
-import { LogService } from '@app/core/services/log-service';
+import { LogService } from '@app/core/services/log.service';
 
 @Component({
   selector: 'anms-add-task-card',
