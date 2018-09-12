@@ -13,12 +13,24 @@ import {parse} from 'url';
 @Injectable()
 export abstract class HttpRolesOrSelfGuard extends AbstractRolesOrSelfGuard {
 
+  private static forQueryStringIdKeyCache: Map<string, any> =
+    new Map<string, any>();
+
+  private static forParamIdKeyCache: Map<string, any> =
+    new Map<string, any>();
+
+  private static forBodyIdKeyCache: Map<string, any> =
+    new Map<string, any>();
+
   constructor(protected readonly _reflector: Reflector) {
     super(_reflector);
   }
 
   static forQueryStringIdKey(key: string) {
-    return class HttpRolesOrSelfFromQueryStringGuard extends HttpRolesOrSelfGuard {
+    if (this.forQueryStringIdKeyCache.has(key)) {
+      return this.forQueryStringIdKeyCache.get(key);
+    }
+    const c = class HttpRolesOrSelfFromQueryStringGuard extends HttpRolesOrSelfGuard {
       getTargetUserIdFromContext(executionContext: ExecutionContext): string {
         const incomingMessage: IncomingMessage = executionContext.getArgByIndex(0);
         const parsedUrl = parse(incomingMessage.url, true);
@@ -26,24 +38,36 @@ export abstract class HttpRolesOrSelfGuard extends AbstractRolesOrSelfGuard {
         return id;
       }
     };
+    this.forQueryStringIdKeyCache.set(key, c);
+    return c;
   }
 
   static forParamIdKey(key: string) {
-    return class HttpRolesOrSelfFromParamGuard extends HttpRolesOrSelfGuard {
+    if (this.forParamIdKeyCache.has(key)) {
+      return this.forParamIdKeyCache.get(key);
+    }
+    const c = class HttpRolesOrSelfFromParamGuard extends HttpRolesOrSelfGuard {
       getTargetUserIdFromContext(executionContext: ExecutionContext): string {
         const id = executionContext.switchToHttp().getRequest().params[key];
         return id;
       }
     };
+    this.forParamIdKeyCache.set(key, c);
+    return c;
   }
 
   static forBodyIdKey(key: string) {
-    return class HttpRolesOrSelfFromBodyGuard extends HttpRolesOrSelfGuard {
+    if (this.forBodyIdKeyCache.has(key)) {
+      return this.forBodyIdKeyCache.get(key);
+    }
+    const c = class HttpRolesOrSelfFromBodyGuard extends HttpRolesOrSelfGuard {
       getTargetUserIdFromContext(executionContext: ExecutionContext): string {
         const id = executionContext.switchToHttp().getRequest().body[key];
         return id;
       }
     };
+    this.forBodyIdKeyCache.set(key, c);
+    return c;
   }
 
   abstract getTargetUserIdFromContext(executionContext: ExecutionContext): string;
