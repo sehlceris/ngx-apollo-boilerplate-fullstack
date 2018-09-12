@@ -56,7 +56,7 @@ export class UserResolvers {
 
   @Query('getUserById')
   @Roles(UserRole.Admin)
-  @UseGuards(GraphQLJwtAuthGuard, GraphqlUserRoleOrSelfGuard.forArgumentKey('id'))
+  @UseGuards(GraphQLJwtAuthGuard, GraphqlUserRoleOrSelfGuard.forIdFromArgumentKey('id'))
   async getUserById(
     @Args('id') id: string
   ): Promise<UserVm> {
@@ -92,7 +92,7 @@ export class UserResolvers {
 
   @ResolveProperty()
   @Roles(UserRole.Admin)
-  @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
+  @UseGuards(GraphQLJwtAuthGuard, GraphqlUserRoleOrSelfGuard.forIdFromArgumentKey('id'))
   todos(@Parent() user: UserVm) {
     return this.todoApiService.getTodosForUser(user.id);
   }
