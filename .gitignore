@@ -13,6 +13,7 @@ scratch.html
 
 # generated files
 dist/
+generated/
 
 # config
 config/

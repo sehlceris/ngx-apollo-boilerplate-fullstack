@@ -15,7 +15,9 @@
     "webpack": "webpack --config webpack.config.js",
     "prettier": "prettier '{src,e2e}/**/*.{ts,json,md,scss}' --write",
     "postinstall": "tsc -p ./tsconfig.json",
-    "mongodb": "cd dev-tools/mongodb-docker && docker-compose up"
+    "mongodb": "cd dev-tools/mongodb-docker && docker-compose up",
+    "generate:types": "rm ./generated/anms.typings.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-typescript-template --out ./generated/anms.typings.ts './src/**/*.queries.graphql'",
+    "generate:client:graphql": "rm ./generated/anms-graphql-client.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-apollo-angular-template --out ./generated/anms-graphql-client.ts './src/**/*.queries.graphql'"
   },
   "husky": {
     "hooks": {
@@ -66,6 +68,9 @@
     "@types/passport": "0.4.6",
     "@types/passport-jwt": "3.0.1",
     "@types/supertest": "2.0.6",
+    "graphql-code-generator": "^0.11.0",
+    "graphql-codegen-apollo-angular-template": "^0.11.0",
+    "graphql-codegen-typescript-template": "^0.11.0",
     "husky": "^0.14.3",
     "jest": "23.6.0",
     "nodemon": "1.18.4",
