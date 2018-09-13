@@ -1,22 +1,14 @@
+#import "./user.fragments.graphql"
+
 query GetUsers {
   getUsers {
-    id,
-    username,
-    email,
-    firstName,
-    lastName,
-    role,
+    ...BasicUserInfo
   }
 }
 
 query GetUserById($id: String!) {
   getUserById(id: $id) {
-    id,
-    username,
-    email,
-    firstName,
-    lastName,
-    role,
+    ...BasicUserInfo
   }
 }
 
@@ -24,12 +16,16 @@ mutation LoginWithUsername($username: String! $password: String!) {
   loginWithUsername(username: $username, password: $password) {
     token,
     user {
-      id,
-      username,
-      email,
-      firstName,
-      lastName,
-      role,
+      ...BasicUserInfo
     }
   }
+}
+
+fragment BasicUserInfo on User {
+  id,
+  username,
+  email,
+  firstName,
+  lastName,
+  role,
 }

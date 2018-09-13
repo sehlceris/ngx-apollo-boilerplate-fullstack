@@ -20,8 +20,8 @@
     "prettier:ci": "prettier '{src,e2e}/**/*.{ts,json,md,scss}' --list-different",
     "analyze": "npm run clean && npm run build:prod -- --stats-json && webpack-bundle-analyzer ./dist/stats.json",
     "generate": "npm run generate:types && npm run generate:client:apollo",
-    "generate:types": "rm src/app/generated/anms.typings.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-typescript-template --out src/app/generated/anms.typings.ts 'src/app/**/*.graphql'",
-    "generate:client:apollo": "rm src/app/generated/anms-graphql-client.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-apollo-angular-template --out src/app/generated/anms-graphql-client.ts 'src/app/**/*.graphql'"
+    "generate:types": "rm src/app/generated/anms.typings.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-typescript-template --out src/app/generated/anms.typings.ts 'src/app/graphql/operations/**/*.graphql'",
+    "generate:client:apollo": "rm src/app/generated/anms-graphql-client.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-apollo-angular-template --out src/app/generated/anms-graphql-client.ts 'src/app/graphql/operations/**/*.graphql'"
   },
   "husky": {
     "hooks": {
