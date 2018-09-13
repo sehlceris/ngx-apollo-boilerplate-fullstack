@@ -26,7 +26,7 @@ import { SharedModule } from '@app/shared';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { UserHttpApiService } from '@app/core/services/api/user-http-api.service';
-import {AuthModule} from '@app/core/auth/auth.module';
+import { AuthModule } from '@app/core/auth/auth.module';
 
 export const metaReducers: MetaReducer<any>[] = [initStateFromLocalStorage];
 
@@ -49,9 +49,7 @@ const SERVICES = [
   UserHttpApiService,
 ];
 
-const COMPONENTS = [
-  LoadingOverlayComponent
-];
+const COMPONENTS = [LoadingOverlayComponent];
 
 @NgModule({
   imports: [
@@ -90,16 +88,9 @@ const COMPONENTS = [
       },
     }),
   ],
-  declarations: [
-    ...COMPONENTS,
-  ],
-  providers: [
-    ...SERVICES,
-  ],
-  exports: [
-    TranslateModule,
-    ...COMPONENTS
-  ],
+  declarations: [...COMPONENTS],
+  providers: [...SERVICES],
+  exports: [TranslateModule, ...COMPONENTS],
 })
 export class CoreModule {
   constructor(

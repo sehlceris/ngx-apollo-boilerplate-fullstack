@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {AuthComponent} from '@app/core/auth/auth.component';
-import {LoginComponent} from '@app/core/auth/login/login.component';
-import {ForgotPasswordComponent} from '@app/core/auth/forgot-password/forgot-password.component';
+import { AuthComponent } from '@app/core/auth/auth.component';
+import { LoginComponent } from '@app/core/auth/login/login.component';
+import { ForgotPasswordComponent } from '@app/core/auth/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {
@@ -14,24 +14,24 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'login',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'login',
         component: LoginComponent,
-        data: { title: 'anms.auth.login' }
+        data: { title: 'anms.auth.login' },
       },
       {
         path: 'register',
         component: LoginComponent,
-        data: { title: 'anms.auth.register' }
+        data: { title: 'anms.auth.register' },
       },
       {
         path: 'forgot-password',
         component: ForgotPasswordComponent,
-        data: { title: 'anms.auth.forgot' }
-      }
-    ]
+        data: { title: 'anms.auth.forgot' },
+      },
+    ],
   },
 ];
 
