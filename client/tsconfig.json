@@ -13,8 +13,12 @@
       "node_modules/@types"
     ],
     "paths": {
-      "@app/*": ["app/*"],
-      "@common/*": ["../common/*"],
+      "@app/*": [
+        "app/*"
+      ],
+      "@common/*": [
+        "../common/*"
+      ],
       "@env/*": [
         "environments/*"
       ],
@@ -24,7 +28,8 @@
     },
     "lib": [
       "es2017",
-      "dom"
+      "dom",
+      "esnext.asynciterable"
     ]
   }
 }

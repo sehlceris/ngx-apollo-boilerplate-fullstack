@@ -12,3 +12,9 @@ scratch.html
 
 # local files
 local/
+
+# generated files
+dist/
+generated/
+src/generated/
+src/app/generated/

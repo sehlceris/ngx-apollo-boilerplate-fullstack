@@ -11,6 +11,8 @@ import { StaticModule } from './feature-modules/static';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -29,6 +31,10 @@ import { AppComponent } from './app.component';
 
     // app
     AppRoutingModule,
+
+    GraphQLModule,
+
+    HttpClientModule,
   ],
   declarations: [AppComponent],
   providers: [],

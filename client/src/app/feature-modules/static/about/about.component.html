@@ -12,7 +12,14 @@
           mat-raised-button class="actions-main" color="primary"
           (click)="userHttpApiService.loginWithUsername('000000', '000000')"
         >
-          Login
+          Login w/ REST
+        </a>
+        <a
+          [ngClass]="routeAnimationsElements"
+          mat-raised-button class="actions-main" color="primary"
+          (click)="userHttpApiService.loginWithUsername('000000', '000000')"
+        >
+          Login w/ GraphQL
         </a>
         <a mat-raised-button class="actions-main" color="accent" routerLink="../examples"
            [ngClass]="routeAnimationsElements">

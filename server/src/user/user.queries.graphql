@@ -2,6 +2,34 @@ query GetUsers {
   getUsers {
     id,
     username,
-    email
+    email,
+    firstName,
+    lastName,
+    role,
+  }
+}
+
+query GetUserById($id: String!) {
+  getUserById(id: $id) {
+    id,
+    username,
+    email,
+    firstName,
+    lastName,
+    role,
+  }
+}
+
+mutation LoginWithUsername($username: String! $password: String!) {
+  loginWithUsername(username: $username, password: $password) {
+    token,
+    user {
+      id,
+      username,
+      email,
+      firstName,
+      lastName,
+      role,
+    }
   }
 }
