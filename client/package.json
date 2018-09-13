@@ -18,7 +18,10 @@
     "release": "standard-version && git push --follow-tags origin master",
     "prettier": "prettier '{src,e2e}/**/*.{ts,json,md,scss}' --write",
     "prettier:ci": "prettier '{src,e2e}/**/*.{ts,json,md,scss}' --list-different",
-    "analyze": "npm run clean && npm run build:prod -- --stats-json && webpack-bundle-analyzer ./dist/stats.json"
+    "analyze": "npm run clean && npm run build:prod -- --stats-json && webpack-bundle-analyzer ./dist/stats.json",
+    "generate": "npm run generate:types && npm run generate:client:apollo",
+    "generate:types": "rm src/app/generated/anms.typings.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-typescript-template --out src/app/generated/anms.typings.ts '../server/src/**/*.queries.graphql'",
+    "generate:client:apollo": "rm src/app/generated/anms-graphql-client.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-apollo-angular-template --out src/app/generated/anms-graphql-client.ts '../server/src/**/*.queries.graphql'"
   },
   "husky": {
     "hooks": {
@@ -71,6 +74,9 @@
     "@types/jasmine": "~2.8.3",
     "@types/node": "~9.4.0",
     "codelyzer": "~4.4.2",
+    "graphql-code-generator": "^0.11.0",
+    "graphql-codegen-apollo-angular-template": "^0.11.0",
+    "graphql-codegen-typescript-template": "^0.11.0",
     "husky": "^1.0.0-rc.13",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
