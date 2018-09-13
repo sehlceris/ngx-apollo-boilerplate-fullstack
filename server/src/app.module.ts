@@ -17,7 +17,7 @@ import { UserModule } from './user/user.module';
       retryAttempts: 3,
     }),
     GraphQLModule.forRoot({
-      typePaths: ['./src/**/*.graphql'],
+      typePaths: ['./src/**/*.types.graphql'],
       installSubscriptionHandlers: true,
       context: ({req}) => {
         return {
