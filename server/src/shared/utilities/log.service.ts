@@ -91,9 +91,9 @@ export class LogService {
   public tapObservableForLogging<T>(
     namespace: string,
     name: string,
-    nextLevel: LogLevel = LogLevel.INFO,
+    nextLevel: LogLevel = LogLevel.DEBUG,
     errLevel: LogLevel = LogLevel.ERROR,
-    completeLevel: LogLevel = LogLevel.INFO,
+    completeLevel: LogLevel = LogLevel.DEBUG,
   ): OperatorFunction<T, T> {
     return (source$: Observable<T>): Observable<T> => {
       return source$.pipe(
