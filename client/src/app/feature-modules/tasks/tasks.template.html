@@ -15,19 +15,5 @@
       (@animatedListItemOut.done)="handleTaskRemovalComplete($event)"
       [@animatedListItemBelowRemovedSibling]="(deletedSiblingIndex <= i).toString()"
     ></anms-task-card>
-    <anms-task-card
-      [task]="{'name': 'TestTask1', 'done': false, 'detail': 'whee'}"
-      [@animatedListItemIn]
-      [@animatedListItemOut]
-      (@animatedListItemOut.done)="handleTaskRemovalComplete($event)"
-      [@animatedListItemBelowRemovedSibling]="(deletedSiblingIndex <= i).toString()"
-    ></anms-task-card>
-    <anms-task-card
-      [task]="{'name': 'TestTask2', 'done': false, 'detail': 'whee'}"
-      [@animatedListItemIn]
-      [@animatedListItemOut]
-      (@animatedListItemOut.done)="handleTaskRemovalComplete($event)"
-      [@animatedListItemBelowRemovedSibling]="(deletedSiblingIndex <= i).toString()"
-    ></anms-task-card>
   </div>
 </div>
