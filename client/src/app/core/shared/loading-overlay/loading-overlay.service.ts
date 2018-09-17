@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { RandomUtils } from '@app/static-utils/random-utils';
+import { RandomUtils } from '../../../static-utils/random-utils';
 
 interface LoadingOverlayStackItem {
   referenceId: string;
