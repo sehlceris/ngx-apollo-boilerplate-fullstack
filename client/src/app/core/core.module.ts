@@ -20,12 +20,13 @@ import { TitleService } from './services/title.service';
 import { DomAbstractionService } from '@app/core/services/dom-abstraction.service';
 import { FormValidationService } from '@app/core/services/form-validation.service';
 import { LogService } from '@app/core/services/log.service';
-import { LoadingOverlayComponent } from '@app/core/loading-overlay/loading-overlay.component';
-import { LoadingOverlayService } from '@app/core/loading-overlay/loading-overlay.service';
+import { LoadingOverlayComponent } from '@app/core/shared/loading-overlay/loading-overlay.component';
+import { LoadingOverlayService } from '@app/core/shared/loading-overlay/loading-overlay.service';
 import { SharedModule } from '@app/shared';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { UserHttpApiService } from '@app/core/services/api/user-http-api.service';
+import { AuthModule } from '@app/core/auth/auth.module';
 
 export const metaReducers: MetaReducer<any>[] = [initStateFromLocalStorage];
 
@@ -58,6 +59,9 @@ const COMPONENTS = [LoadingOverlayComponent];
 
     // shared module
     SharedModule,
+
+    // core modules
+    AuthModule,
 
     // ngrx
     StoreModule.forRoot(
