@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { ROUTE_ANIMATIONS_ELEMENTS } from 'app/core/index';
 import { UserHttpApiService } from '@app/core/services/api/user-http-api.service';
-import {LoginWithUsername, LoginWithUsernameGQL} from '@app/generated/anms-graphql-client';
+import {
+  LoginWithUsername,
+  LoginWithUsernameGQL,
+} from '@app/generated/anms-graphql-client';
 import { BoundLogger, LogService } from '@app/core/services';
-import {ExecutionResult, FetchResult} from 'apollo-link';
-import {map} from 'rxjs/operators';
-import {AuthService} from '@app/core/auth/auth.service';
+import { ExecutionResult, FetchResult } from 'apollo-link';
+import { map } from 'rxjs/operators';
+import { AuthService } from '@app/core/auth/auth.service';
 
 @Component({
   selector: 'anms-about',
@@ -24,9 +27,7 @@ export class AboutComponent implements OnInit {
     private logService: LogService
   ) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   loginWithGraphQl() {
     this.authService.loginWithUsername('000000', '000000').subscribe();
