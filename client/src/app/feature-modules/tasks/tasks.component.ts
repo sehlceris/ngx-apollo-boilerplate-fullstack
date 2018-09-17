@@ -7,11 +7,13 @@ import { map } from 'rxjs/operators';
 import { createAnimatedListItemTriggers } from '@app/core/animations/animated-list-items';
 import { AppConfig } from '@app/app.config';
 
+const animations = [...createAnimatedListItemTriggers('1em')];
+
 @Component({
   selector: 'anms-tasks',
   templateUrl: 'tasks.template.html',
   styleUrls: ['tasks.style.scss'],
-  animations: [...createAnimatedListItemTriggers('1em')],
+  animations
 })
 export class TasksComponent implements OnInit, OnDestroy {
   public notDoneTasks$: Observable<ITodoTask[]>;
