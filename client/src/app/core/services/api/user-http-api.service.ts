@@ -6,13 +6,18 @@ import { BoundLogger, LogService } from '@app/core/services';
 
 const USERS_BASE_URI = `${AppConfig.BaseHttpUrl}/users`;
 
+/**
+ * This is a sample HTTP API service in case you want to use REST instead of GraphQL
+ */
 @Injectable()
 export class UserHttpApiService {
-  private log: BoundLogger = this.logService.bindToNamespace(
-    'UserHttpApiService'
-  );
 
-  constructor(private httpClient: HttpClient, private logService: LogService) {}
+  private log: BoundLogger = this.logService.bindToNamespace(UserHttpApiService.name);
+
+  constructor(
+    private httpClient: HttpClient,
+    private logService: LogService
+  ) {}
 
   loginWithUsername(username: string, password: string) {
     return this.httpClient.post<UserVm>(`${USERS_BASE_URI}/loginWithUsername`, {
