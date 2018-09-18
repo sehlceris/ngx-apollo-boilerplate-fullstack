@@ -15,14 +15,10 @@ export class UserHttpApiService {
   constructor(private httpClient: HttpClient, private logService: LogService) {}
 
   loginWithUsername(username: string, password: string) {
-    this.httpClient
+    return this.httpClient
       .post<UserVm>(`${USERS_BASE_URI}/loginWithUsername`, {
         username,
         password,
-      })
-      .pipe(this.log.tapObservableForLogging('loginWithUsername'))
-      .subscribe((user: UserVm) => {
-        console.log('login successful', user);
       });
   }
 }
