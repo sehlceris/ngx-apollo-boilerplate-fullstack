@@ -15,7 +15,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
  * // component
  * ...
  * animations: [
- *   ...createAnimatedListItemTriggers('1em') // input double the margin of your list items
+ *   ...AnimatedListItems.buildTriggers('1em') // input double the margin of your list items
  * ]
  * ...
  * handleTaskRemovalComplete(event) {
