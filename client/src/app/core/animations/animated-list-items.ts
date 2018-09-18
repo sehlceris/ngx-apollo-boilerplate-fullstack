@@ -27,7 +27,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
  * }
  */
 export const AnimatedListItems = {
-
   buildTriggers(listItemMargin = '0px') {
     return [
       trigger('animatedListItemIn', [
@@ -79,6 +78,6 @@ export const AnimatedListItems = {
           }),
         ]),
       ]),
-    ]
-  }
+    ];
+  },
 };
