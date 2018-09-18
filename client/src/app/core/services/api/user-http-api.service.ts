@@ -15,10 +15,9 @@ export class UserHttpApiService {
   constructor(private httpClient: HttpClient, private logService: LogService) {}
 
   loginWithUsername(username: string, password: string) {
-    return this.httpClient
-      .post<UserVm>(`${USERS_BASE_URI}/loginWithUsername`, {
-        username,
-        password,
-      });
+    return this.httpClient.post<UserVm>(`${USERS_BASE_URI}/loginWithUsername`, {
+      username,
+      password,
+    });
   }
 }
