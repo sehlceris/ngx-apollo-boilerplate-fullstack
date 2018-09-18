@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { UserVm } from "../../../../../server/src/user/models/view-models/user-vm.model";
+import { UserVm } from '../../../../../server/src/user/models/view-models/user-vm.model';
 
 export const AUTH_KEY = 'AUTH';
 
@@ -12,25 +12,17 @@ export enum AuthActionTypes {
 }
 
 export class ActionAuthLoginRequest implements Action {
-  constructor(
-    readonly username: string,
-    readonly password: string,
-  ) {}
+  constructor(readonly username: string, readonly password: string) {}
   readonly type = AuthActionTypes.LOGIN_REQUEST;
 }
 
 export class ActionAuthLoginSuccess implements Action {
-  constructor(
-    readonly token: string,
-    readonly user: UserVm,
-  ) {}
+  constructor(readonly token: string, readonly user: UserVm) {}
   readonly type = AuthActionTypes.LOGIN_SUCCESS;
 }
 
 export class ActionAuthLoginFailure implements Action {
-  constructor(
-    readonly loginError: string,
-  ) {}
+  constructor(readonly loginError: string) {}
   readonly type = AuthActionTypes.LOGIN_FAILURE;
 }
 
@@ -43,11 +35,11 @@ export class ActionAuthLogoutSuccess implements Action {
 }
 
 export type AuthActions =
-  ActionAuthLoginRequest |
-  ActionAuthLoginSuccess |
-  ActionAuthLoginFailure |
-  ActionAuthLogoutRequest |
-  ActionAuthLogoutSuccess;
+  | ActionAuthLoginRequest
+  | ActionAuthLoginSuccess
+  | ActionAuthLoginFailure
+  | ActionAuthLogoutRequest
+  | ActionAuthLogoutSuccess;
 
 export interface AuthState {
   loggingIn: boolean;
@@ -87,13 +79,13 @@ export function authReducer(
       return {
         ...state,
         loggingIn: false,
-        loginError: action.loginError
+        loginError: action.loginError,
       };
     case AuthActionTypes.LOGOUT_SUCCESS:
       return {
         ...state,
         token: null,
-        user: null
+        user: null,
       };
 
     default:

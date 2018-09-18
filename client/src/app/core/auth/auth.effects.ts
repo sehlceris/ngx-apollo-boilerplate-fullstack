@@ -1,26 +1,27 @@
-import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { BoundLogger, LogService } from "@app/core/services";
-import { UserHttpApiService } from "@app/core/services/api/user-http-api.service";
-import { LoginWithUsernameGQL } from "@app/generated/anms-graphql-client";
-import { Action } from "@ngrx/store";
-import { Actions, Effect, ofType } from "@ngrx/effects";
-import { of } from "rxjs";
-import { catchError, map, switchMap, tap } from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { BoundLogger, LogService } from '@app/core/services';
+import { UserHttpApiService } from '@app/core/services/api/user-http-api.service';
+import { LoginWithUsernameGQL } from '@app/generated/anms-graphql-client';
+import { Action } from '@ngrx/store';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
-import { LocalStorageService } from "../local-storage/local-storage.service";
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 import {
   ActionAuthLoginFailure,
   ActionAuthLoginRequest,
-  ActionAuthLoginSuccess, ActionAuthLogoutRequest, ActionAuthLogoutSuccess,
+  ActionAuthLoginSuccess,
+  ActionAuthLogoutRequest,
+  ActionAuthLogoutSuccess,
   AUTH_KEY,
-  AuthActionTypes
-} from "./auth.reducer";
+  AuthActionTypes,
+} from './auth.reducer';
 
 @Injectable()
 export class AuthEffects {
-
   private log: BoundLogger = this.logService.bindToNamespace(AuthEffects.name);
 
   constructor(
@@ -30,8 +31,7 @@ export class AuthEffects {
     private userHttpApiService: UserHttpApiService,
     private loginWithUsernameGQL: LoginWithUsernameGQL,
     private logService: LogService
-  ) {
-  }
+  ) {}
 
   @Effect({ dispatch: true })
   loginRequest() {
@@ -39,8 +39,14 @@ export class AuthEffects {
       ofType<ActionAuthLoginRequest>(AuthActionTypes.LOGIN_REQUEST),
       switchMap((action) => this.loginWithUsernameGQL.mutate(action)),
       map((result) => result.data.loginWithUsername),
-      map((loginWithUsername) => new ActionAuthLoginSuccess(loginWithUsername.token, loginWithUsername.user)),
-      catchError((err) => of(new ActionAuthLoginFailure(err))),
+      map(
+        (loginWithUsername) =>
+          new ActionAuthLoginSuccess(
+            loginWithUsername.token,
+            loginWithUsername.user
+          )
+      ),
+      catchError((err) => of(new ActionAuthLoginFailure(err)))
     );
   }
 
@@ -51,7 +57,7 @@ export class AuthEffects {
       tap((action) =>
         this.localStorageService.setItem(AUTH_KEY, {
           token: action.token,
-          user: action.user
+          user: action.user,
         })
       )
     );
@@ -64,7 +70,7 @@ export class AuthEffects {
       tap((action) =>
         this.localStorageService.setItem(AUTH_KEY, {
           token: null,
-          user: null
+          user: null,
         })
       )
     );
@@ -77,7 +83,7 @@ export class AuthEffects {
       tap((action) =>
         this.localStorageService.setItem(AUTH_KEY, {
           token: null,
-          user: null
+          user: null,
         })
       ),
       map(() => new ActionAuthLogoutSuccess())
@@ -88,9 +94,7 @@ export class AuthEffects {
   logoutSuccess() {
     return this.actions$.pipe(
       ofType<ActionAuthLogoutSuccess>(AuthActionTypes.LOGOUT_SUCCESS),
-      tap((action) =>
-        this.router.navigate(['/'])
-      )
+      tap((action) => this.router.navigate(['/']))
     );
   }
 }
