@@ -15,9 +15,7 @@ export class AboutComponent implements OnInit {
 
   private log: BoundLogger = this.logService.bindToNamespace('AboutComponent');
 
-  constructor(
-    private logService: LogService
-  ) {}
+  constructor(private logService: LogService) {}
 
   ngOnInit() {}
 }
