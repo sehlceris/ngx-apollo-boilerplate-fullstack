@@ -26,59 +26,59 @@ import { animate, style, transition, trigger } from '@angular/animations';
  *   this.deletedSiblingIndex = index;
  * }
  */
+export const AnimatedListItems = {
 
-export const createAnimatedListItemTriggers = function(
-  listItemMargin: string = '0px'
-) {
-  return [
-    trigger('animatedListItemIn', [
-      transition('void => *', [
-        style({
-          opacity: 0,
-          transform: 'translateX(-5%) scale(0.92)',
-        }),
-        animate(
-          300,
-          style({
-            opacity: 1,
-            transform: 'translateX(0) scale(1.0)',
-          })
-        ),
-      ]),
-    ]),
-    trigger('animatedListItemOut', [
-      transition('* => void', [
-        style({
-          zIndex: -1,
-          transform: 'translateX(0) scale(1.0)',
-          boxShadow: 'none',
-        }),
-        animate(
-          300,
+  buildTriggers(listItemMargin = '0px') {
+    return [
+      trigger('animatedListItemIn', [
+        transition('void => *', [
           style({
             opacity: 0,
-            transform: 'translateX(50%) scale(0.5)',
-          })
-        ),
+            transform: 'translateX(-5%) scale(0.92)',
+          }),
+          animate(
+            300,
+            style({
+              opacity: 1,
+              transform: 'translateX(0) scale(1.0)',
+            })
+          ),
+        ]),
       ]),
-    ]),
-    trigger('animatedListItemBelowRemovedSibling', [
-      transition('false => true', [
-        style({
-          transform: 'translateY(0px)',
-        }),
-        animate(
-          300,
+      trigger('animatedListItemOut', [
+        transition('* => void', [
           style({
-            transform: `translateY(calc(-100% - ${listItemMargin})`,
-          })
-        ),
+            zIndex: -1,
+            transform: 'translateX(0) scale(1.0)',
+            boxShadow: 'none',
+          }),
+          animate(
+            300,
+            style({
+              opacity: 0,
+              transform: 'translateX(50%) scale(0.5)',
+            })
+          ),
+        ]),
       ]),
-      transition('true => false', [
-        style({
-          transform: 'translateY(0px)',
-        }),
+      trigger('animatedListItemBelowRemovedSibling', [
+        transition('false => true', [
+          style({
+            transform: 'translateY(0px)',
+          }),
+          animate(
+            300,
+            style({
+              transform: `translateY(calc(-100% - ${listItemMargin})`,
+            })
+          ),
+        ]),
+        transition('true => false', [
+          style({
+            transform: 'translateY(0px)',
+          }),
+        ]),
       ]),
-    ]),
-  ];
+    ]
+  }
 };
