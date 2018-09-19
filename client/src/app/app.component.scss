@@ -9,6 +9,22 @@ mat-sidenav-container {
     width: 100%;
     display: flex;
 
+    .toolbar-right {
+      text-align: right;
+    }
+
+    .toolbar-left,
+    .toolbar-right {
+      flex: 0 0 75px;
+    }
+
+    .toolbar-center {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     .nav-button {
       margin: 0 10px 0 0;
     }
