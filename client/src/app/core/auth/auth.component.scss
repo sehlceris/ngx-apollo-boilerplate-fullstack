@@ -1,2 +1,8 @@
+@import '~styles/mixins/layout';
+
 :host {
+
+  @include flex-column-center;
+
+  overflow: auto;
 }
