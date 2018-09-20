@@ -9,29 +9,29 @@ export const APP_ROUTES: Routes = [
     redirectTo: 'about',
     pathMatch: 'full',
     data: {
-      title: 'About'
-    }
+      title: 'About',
+    },
   },
   {
     path: 'settings',
     component: SettingsComponent,
     data: {
-      title: 'anms.menu.settings'
+      title: 'anms.menu.settings',
     },
   },
   {
     path: 'tasks',
     loadChildren: 'app/feature-modules/tasks/tasks.module#TasksModule',
     data: {
-      title: 'Tasks'
-    }
+      title: 'Tasks',
+    },
   },
   {
     path: 'examples',
     loadChildren: 'app/feature-modules/examples/examples.module#ExamplesModule',
     data: {
-      title: 'Examples'
-    }
+      title: 'Examples',
+    },
   },
   {
     path: '**',
