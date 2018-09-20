@@ -1,4 +1,4 @@
-@import 'styles-variables';
+@import 'styles/styles-variables';
 
 @import '../node_modules/bootstrap/scss/bootstrap-reboot';
 @import '../node_modules/bootstrap/scss/bootstrap-grid';
@@ -6,7 +6,7 @@
 @import '../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-solid';
 @import '../node_modules/@fortawesome/fontawesome-free-webfonts/scss/fa-brands';
 
-@import 'styles-reset';
+@import 'styles/styles-reset';
 
 @import '../node_modules/@angular/material/theming';
 
@@ -16,7 +16,7 @@
 @import 'themes/light-theme.scss';
 @import 'themes/black-theme.scss';
 
-@import 'styles-reset.scss-theme';
+@import 'styles/styles-reset.scss-theme';
 
 @import 'app/app.component.scss-theme';
 
@@ -30,7 +30,7 @@
 @import 'app/feature-modules/examples/theming/child/child.component.scss-theme';
 @import 'app/feature-modules/examples/examples/examples.component.scss-theme';
 
-@import 'global-styles/global';
+@import 'styles/global';
 
 @mixin custom-components-theme($theme) {
   @include anms-styles-reset-theme($theme);

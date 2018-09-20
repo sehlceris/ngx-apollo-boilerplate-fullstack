@@ -33,9 +33,12 @@
           [src]="logo"/> {{ 'anms.title' | translate }}</span>
       </div>
       <div class="toolbar-right">
-        <button mat-button class="sign-in-button "
-                *ngIf="!isAuthenticated"
-                (click)="onLoginClick()">
+        <button
+          mat-button
+          class="sign-in-button"
+          *ngIf="!isAuthenticated"
+          routerLink="auth"
+        >
           {{ 'anms.menu.login' | translate }}
         </button>
 
