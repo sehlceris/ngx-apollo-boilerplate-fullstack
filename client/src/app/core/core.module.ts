@@ -69,12 +69,10 @@ const COMPONENTS = [LoadingOverlayComponent];
         auth: authReducer,
       },
       {
-        metaReducers
+        metaReducers,
       }
     ),
-    EffectsModule.forRoot([
-      AuthEffects
-    ]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreRouterConnectingModule,
 
     environment.envName === 'DEV'
@@ -88,7 +86,9 @@ const COMPONENTS = [LoadingOverlayComponent];
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
+        deps: [
+          HttpClient
+        ],
       },
     }),
   ],
