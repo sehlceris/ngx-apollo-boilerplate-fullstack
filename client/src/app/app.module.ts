@@ -31,9 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
 
     // app
     AppRoutingModule,
-
     GraphQLModule,
-
     HttpClientModule,
   ],
   declarations: [AppComponent],
