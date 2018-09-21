@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from '@app/core/auth/auth.component';
 import { LoginComponent } from '@app/core/auth/login/login.component';
 import { ForgotPasswordComponent } from '@app/core/auth/forgot-password/forgot-password.component';
+import { RegisterComponent } from '@app/core/auth/register/register.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
       },
       {
         path: 'register',
-        component: LoginComponent,
+        component: RegisterComponent,
         data: { title: 'anms.auth.register' },
       },
       {
