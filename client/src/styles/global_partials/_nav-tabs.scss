@@ -1,0 +1,35 @@
+/*
+  NOTE: This class is obsolete.
+  Instead, you can use the mat-tab-nav-bar and mat-tab-link directives
+  (see the auth component for an example)
+ */
+body {
+  // the body selector gives specificity priority over the theme class
+  .nav-tabs {
+    display: flex;
+    flex-direction: row;
+    flex: 1 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    & > a {
+      margin: 7px;
+      padding: 4px;
+      border-bottom: 2px solid transparent;
+      transition: all 400ms;
+      color: var(--theme-color-contrast-background-base);
+
+      &:hover {
+        color: var(--theme-color-contrast-background-base);
+        border-bottom: 2px solid var(--theme-color-accent-light);
+      }
+
+      &.active {
+        border-bottom: 2px solid var(--theme-color-accent-base);
+      }
+    }
+  }
+}

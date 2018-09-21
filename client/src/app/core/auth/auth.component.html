@@ -1,15 +1,24 @@
-<h1>Authentication</h1>
-<nav>
-  <ul>
-    <li>
-      Login
-    </li>
-    <li>
-      Register
-    </li>
-    <li>
-      Forgot Password
-    </li>
-  </ul>
-</nav>
-<router-outlet></router-outlet>
+<mat-card
+  class="auth-card"
+>
+  <div
+    mat-tab-nav-bar
+    class="auth-nav"
+  >
+    <a
+      mat-tab-link
+      routerLink="login"
+      routerLinkActive #loginRla="routerLinkActive"
+      [active]="loginRla.isActive"
+    >Login</a>
+    <a
+      mat-tab-link
+      routerLink="register"
+      routerLinkActive #registerRla="routerLinkActive"
+      [active]="registerRla.isActive"
+    >Register</a>
+  </div>
+  <div class="auth-outlet">
+    <router-outlet></router-outlet>
+  </div>
+</mat-card>

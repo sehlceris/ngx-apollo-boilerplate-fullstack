@@ -58,25 +58,17 @@
   </div>
 
   <div class="wrapper">
-
     <div class="content"
          [@routeAnimations]="o.isActivated && o.activatedRoute.routeConfig.path">
       <router-outlet #o="outlet"></router-outlet>
     </div>
-
     <div class="footer">
-      <div class="row">
-        <div class="col-sm-12 links">
-
-        </div>
-      </div>
       <div class="row">
         <div class="col-12 signature">
           &#169; <span class="year">{{year}}</span> - Tomas Trajan
         </div>
       </div>
     </div>
-
   </div>
 
 </mat-sidenav-container>

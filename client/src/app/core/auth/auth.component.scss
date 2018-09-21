@@ -3,5 +3,31 @@
 :host {
   @include flex-column-center;
 
+  flex: 1 1 auto;
+  padding: 2rem;
   overflow: auto;
+
+  .auth-nav {
+    margin-bottom: 1rem;
+
+    ::ng-deep .mat-tab-links {
+      justify-content: space-around;
+    }
+  }
+
+  .auth-card {
+    flex: 0 400px;
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 601px) {
+      width: 100%;
+    }
+  }
+
+  .auth-outlet {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
 }

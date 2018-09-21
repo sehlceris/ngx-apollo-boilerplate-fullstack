@@ -33,10 +33,6 @@ export const APP_ROUTES: Routes = [
       title: 'Examples',
     },
   },
-  {
-    path: '**',
-    redirectTo: 'about',
-  },
 ];
 
 @NgModule({

@@ -1,2 +1,12 @@
 :host {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .forgot-password-link {
+    color: var(--theme-color-contrast-background-base-secondary);
+    font-size: 0.8em;
+    text-align: center;
+  }
 }
