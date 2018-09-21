@@ -66,7 +66,7 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   loginFailure() {
     return this.actions$.pipe(
-      ofType<ActionAuthLoginSuccess>(AuthActionTypes.LOGIN_FAILURE),
+      ofType<ActionAuthLoginFailure>(AuthActionTypes.LOGIN_FAILURE),
       tap((action) =>
         this.localStorageService.setItem(AUTH_KEY, {
           token: null,
