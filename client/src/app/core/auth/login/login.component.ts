@@ -69,15 +69,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         new ActionLoginWithUsernameRequest(loginVm.username, loginVm.password)
       );
       this.loginForm.controls['password'].reset();
-    } else {
-      console.log('login form not valid');
     }
   }
 
   private initLoginForm() {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
     });
   }
 }

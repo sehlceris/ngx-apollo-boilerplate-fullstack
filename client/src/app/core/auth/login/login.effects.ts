@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalStorageService } from '@app/core/local-storage/local-storage.service';
 import {
   ActionLoginWithUsernameRequest,
   ActionLoginSuccess,
   ActionLoginFailure,
   ActionLogoutRequest,
   ActionLogoutSuccess,
-  LOGIN_KEY,
   LoginActionTypes,
 } from '@app/core/auth/login/login.reducer';
 import {
@@ -15,7 +13,6 @@ import {
   ActionUserUnauthenticate,
 } from '@app/core/auth/user/user.reducer';
 import { BoundLogger, LogService } from '@app/core/services';
-import { UserHttpApiService } from '@app/core/services/api/user-http-api.service';
 import { LoginWithUsernameGQL } from '@app/generated/anms-graphql-client';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -28,9 +25,7 @@ export class LoginEffects {
 
   constructor(
     private actions$: Actions<Action>,
-    private localStorageService: LocalStorageService,
     private router: Router,
-    private userHttpApiService: UserHttpApiService,
     private loginWithUsernameGQL: LoginWithUsernameGQL,
     private logService: LogService
   ) {}

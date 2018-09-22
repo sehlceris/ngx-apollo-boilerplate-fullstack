@@ -13,8 +13,8 @@ type Mutation {
   loginWithId(id: String!, password: String!): LoginResponse
 
   register(
-    username: String!,
     email: String!,
+    username: String!,
     password: String!,
     firstName: String,
     lastName: String

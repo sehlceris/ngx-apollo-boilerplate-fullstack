@@ -1,3 +1,44 @@
-<p>
-  register works!
-</p>
+<form
+  class="login-form flex-form"
+  [formGroup]="registerForm"
+  (ngSubmit)="onRegisterFormSubmit()"
+>
+  <mat-form-field>
+    <input
+      matInput
+      type="email"
+      formControlName="email"
+      placeholder="Email"
+    >
+    <mat-error>Please enter a valid email</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      formControlName="username"
+      placeholder="Username"
+    >
+    <ng-template #usernameHint>Minimum length 4, no spaces or special characters.</ng-template>
+    <mat-error><ng-container *ngTemplateOutlet="usernameHint"></ng-container></mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      type="password"
+      formControlName="password"
+      placeholder="Password"
+    >
+    <ng-template #passwordHint>Minimum length 6</ng-template>
+    <mat-error><ng-container *ngTemplateOutlet="passwordHint"></ng-container></mat-error>
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="accent"
+    type="submit"
+    class="submit-button"
+  >Register</button>
+  <div class="form-error">
+    {{registerError}}
+  </div>
+</form>

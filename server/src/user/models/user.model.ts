@@ -10,12 +10,13 @@ export class User extends Typegoose {
   @prop({
     required: [true, 'Username is required'],
     unique: true,
-    minlength: [6, 'Must be at least 6 characters'],
+    minlength: [4, 'Must be at least 4 characters'],
   })
   username: string;
 
   @prop({
-    required: [true, 'Email is required']
+    required: [true, 'Email is required'],
+    unique: true,
   })
   email: string;
 
