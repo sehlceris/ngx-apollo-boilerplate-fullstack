@@ -1,3 +1,9 @@
+import {
+  ActionLoginWithUsernameRequest,
+  ActionLogoutRequest,
+} from '@app/core/auth/login/login.reducer';
+import { selectorUser } from '@app/core/auth/user/user.reducer';
+import { BoundLogger, LogService } from '@app/core/services';
 import browser from 'browser-detect';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
@@ -5,16 +11,9 @@ import { ActivationEnd, Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 
-import {
-  AnimationsService,
-  TitleService,
-  selectorAuth,
-  routeAnimations,
-  ActionAuthLoginRequest,
-  ActionAuthLogoutRequest,
-} from '@app/core';
+import { AnimationsService, TitleService, routeAnimations } from '@app/core';
 import { environment as env } from '@env/environment';
 
 import {
@@ -57,13 +56,16 @@ export class AppComponent implements OnInit, OnDestroy {
   settings: SettingsState;
   isAuthenticated: boolean;
 
+  private log: BoundLogger = this.logService.bindToNamespace(AppComponent.name);
+
   constructor(
     public overlayContainer: OverlayContainer,
     private store: Store<any>,
     private router: Router,
     private titleService: TitleService,
     private animationService: AnimationsService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private logService: LogService
   ) {}
 
   private static trackPageView(event: NavigationEnd) {
@@ -87,12 +89,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  onLoginClick() {
-    this.store.dispatch(new ActionAuthLoginRequest('000000', '000000'));
-  }
-
   onLogoutClick() {
-    this.store.dispatch(new ActionAuthLogoutRequest());
+    this.store.dispatch(new ActionLogoutRequest());
   }
 
   onLanguageSelect({ value: language }) {
@@ -103,10 +101,10 @@ export class AppComponent implements OnInit, OnDestroy {
   private subscribeToIsAuthenticated() {
     this.store
       .pipe(
-        select(selectorAuth),
+        select(selectorUser),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe((auth) => (this.isAuthenticated = !!auth.token));
+      .subscribe((user) => (this.isAuthenticated = !!user.token));
   }
 
   private subscribeToSettings() {

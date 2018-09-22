@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 const APP_PREFIX = 'ANMS-';
+const LOCAL_STORAGE_STORE_VERSION_KEY = `${APP_PREFIX}storeVersion`;
 
 @Injectable()
 export class LocalStorageService {
@@ -8,7 +9,7 @@ export class LocalStorageService {
 
   static loadInitialState() {
     return Object.keys(localStorage).reduce((state: any, storageKey) => {
-      if (storageKey.includes(APP_PREFIX)) {
+      if (storageKey.startsWith(APP_PREFIX)) {
         state = state || {};
         const stateKey = storageKey
           .replace(APP_PREFIX, '')
@@ -26,6 +27,26 @@ export class LocalStorageService {
       }
       return state;
     }, undefined);
+  }
+
+  static clearStoredState() {
+    Object.keys(localStorage).map((storageKey) => {
+      if (storageKey.startsWith(APP_PREFIX)) {
+        localStorage.removeItem(storageKey);
+      }
+    });
+    localStorage.removeItem(LOCAL_STORAGE_STORE_VERSION_KEY);
+  }
+
+  static getLocalStorageStoreVersion(): number {
+    return JSON.parse(localStorage.getItem(LOCAL_STORAGE_STORE_VERSION_KEY));
+  }
+
+  static setLocalStorageStoreVersion(number): void {
+    return localStorage.setItem(
+      LOCAL_STORAGE_STORE_VERSION_KEY,
+      JSON.stringify(number)
+    );
   }
 
   setItem(key: string, value: any) {

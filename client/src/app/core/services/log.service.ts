@@ -150,12 +150,12 @@ export class BoundLogger {
     this.logger.log(this.namespace, message, level);
   }
 
-  public tapObservableForLogging(
+  public tapObservableForLogging<T>(
     name: string = 'observable',
     nextLevel: LogLevel = LogLevel.DEBUG,
     errLevel: LogLevel = LogLevel.ERROR,
     completeLevel: LogLevel = LogLevel.DEBUG
-  ) {
+  ): OperatorFunction<T, T> {
     return this.logger.tapObservableForLogging(
       this.namespace,
       name,
