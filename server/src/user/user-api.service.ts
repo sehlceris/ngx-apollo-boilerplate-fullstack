@@ -37,21 +37,39 @@ export class UserApiService {
     return this.getExistingUserByFilter({username: username}, throwIfNotFound);
   }
 
+  async getUserByEmail(email: string, throwIfNotFound: boolean = true): Promise<UserVm> {
+    if (!email) {
+      throw new HttpException('No email provided', HttpStatus.BAD_REQUEST);
+    }
+    return this.getExistingUserByFilter({email: email}, throwIfNotFound);
+  }
+
 
   async register(vm: RegisterVm): Promise<UserVm> {
-    const {username, password} = vm;
+    const {username, email, password} = vm;
 
     if (!username) {
       throw new HttpException('Username is required', HttpStatus.BAD_REQUEST);
+    }
+
+    if (!email) {
+      throw new HttpException('Email is required', HttpStatus.BAD_REQUEST);
     }
 
     if (!password) {
       throw new HttpException('Password is required', HttpStatus.BAD_REQUEST);
     }
 
-    const unmappedExistingUser = await this.getUserByUsername(username, false);
+    let unmappedExistingUser;
+
+    unmappedExistingUser = await this.getUserByUsername(username, false);
     if (unmappedExistingUser) {
-      throw new HttpException(`${username} exists`, HttpStatus.BAD_REQUEST);
+      throw new HttpException(`Username ${username} already registered`, HttpStatus.BAD_REQUEST);
+    }
+
+    unmappedExistingUser = await this.getUserByEmail(email, false);
+    if (unmappedExistingUser) {
+      throw new HttpException(`Email ${email} already registered`, HttpStatus.BAD_REQUEST);
     }
 
     const newUser = await this.userService.register(vm);

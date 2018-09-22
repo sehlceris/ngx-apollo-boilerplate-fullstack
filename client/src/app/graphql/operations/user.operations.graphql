@@ -35,3 +35,14 @@ mutation LoginWithUsername($username: String! $password: String!) {
     }
   }
 }
+
+mutation Register($email: String! $username: String! $password: String!) {
+  register(email: $email, username: $username, password: $password) {
+    id,
+    username,
+    email,
+    firstName,
+    lastName,
+    role,
+  }
+}

@@ -10,6 +10,7 @@
       formControlName="username"
       placeholder="Username"
     >
+    <mat-error>This field is required.</mat-error>
   </mat-form-field>
   <mat-form-field>
     <input
@@ -18,13 +19,15 @@
       formControlName="password"
       placeholder="Password"
     >
+    <mat-error>This field is required.</mat-error>
   </mat-form-field>
   <button
     mat-raised-button
     color="accent"
     type="submit"
+    class="submit-button"
   >Login</button>
-  <div class="login-error">
+  <div class="form-error">
     {{loginError}}
   </div>
 </form>

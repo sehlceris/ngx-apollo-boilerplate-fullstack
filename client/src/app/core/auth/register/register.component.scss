@@ -1,2 +1,16 @@
 :host {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .form-error {
+    margin-top: 1em;
+    font-size: 0.8rem;
+    color: var(--theme-color-error-base);
+  }
+
+  .submit-button {
+    margin-top: 2em;
+  }
 }
