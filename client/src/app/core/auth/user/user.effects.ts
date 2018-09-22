@@ -34,7 +34,7 @@ export class UserEffects {
     );
   }
 
-  @Effect({ dispatch: true })
+  @Effect({ dispatch: false })
   unauthenticate() {
     return this.actions$.pipe(
       ofType<ActionUserUnauthenticate>(UserActionTypes.UNAUTHENTICATE),
