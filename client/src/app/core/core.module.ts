@@ -1,6 +1,8 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { LoginEffects } from '@app/core/auth/login/login.effects';
+import { UserEffects } from '@app/core/auth/user/user.effects';
 import { MetaReducer, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { storeFreeze } from 'ngrx-store-freeze';
@@ -72,7 +74,7 @@ const COMPONENTS = [LoadingOverlayComponent];
         metaReducers,
       }
     ),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([LoginEffects, UserEffects]),
     StoreRouterConnectingModule,
 
     environment.envName === 'DEV'

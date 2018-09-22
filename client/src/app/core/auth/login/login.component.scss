@@ -9,4 +9,10 @@
     font-size: 0.8em;
     text-align: center;
   }
+
+  .login-error {
+    margin-top: 1em;
+    font-size: 0.8rem;
+    color: var(--theme-color-error-base);
+  }
 }
