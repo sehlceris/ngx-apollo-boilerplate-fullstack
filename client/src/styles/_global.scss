@@ -13,12 +13,8 @@ body {
   font-size: 0.8em;
 }
 
-.snack-error {
-  color: #ff5c18;
-
-  & > simple-snack-bar {
-    font-size: 1em;
-  }
+.snack-error simple-snack-bar {
+  color: var(--theme-color-error-base);
 }
 
 // firefox fix
