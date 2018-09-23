@@ -5,8 +5,6 @@ query GetUsers {
     id,
     username,
     email,
-    firstName,
-    lastName,
     role,
   }
 }
@@ -16,8 +14,6 @@ query GetUserById($id: String!) {
     id,
     username,
     email,
-    firstName,
-    lastName,
     role,
   }
 }
@@ -29,8 +25,6 @@ mutation LoginWithUsername($username: String! $password: String!) {
       id,
       username,
       email,
-      firstName,
-      lastName,
       role,
     }
   }
@@ -41,8 +35,6 @@ mutation Register($email: String! $username: String! $password: String!) {
     id,
     username,
     email,
-    firstName,
-    lastName,
     role,
   }
 }
