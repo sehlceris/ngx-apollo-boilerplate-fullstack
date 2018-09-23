@@ -1,4 +1,8 @@
-import {BadRequestException, Injectable, InternalServerErrorException} from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ModelType } from 'typegoose';
 import { BaseService } from '../shared/base.service';

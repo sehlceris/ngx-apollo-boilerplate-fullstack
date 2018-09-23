@@ -1,52 +1,64 @@
-import {UserService} from './user.service';
-import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
-import {RegisterVm} from './models/view-models/register-vm.model';
-import {UserVm} from './models/view-models/user-vm.model';
-import {LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm} from './models/view-models/login-vm.model';
-import {LoginResponseVm} from './models/view-models/login-response-vm.model';
+import { UserService } from './user.service';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { RegisterVm } from './models/view-models/register-vm.model';
+import { UserVm } from './models/view-models/user-vm.model';
+import {
+  LoginWithEmailVm,
+  LoginWithIdVm,
+  LoginWithUsernameVm,
+} from './models/view-models/login-vm.model';
+import { LoginResponseVm } from './models/view-models/login-response-vm.model';
 
 @Injectable()
 export class UserApiService {
-
-  constructor(
-    protected readonly userService: UserService,
-  ) {
-  }
+  constructor(protected readonly userService: UserService) {}
 
   async getUsers(filter: Partial<UserVm> = {}): Promise<UserVm[]> {
     try {
       const unmappedUsers = await this.userService.findAll({});
-      return this.userService.map<UserVm[]>(unmappedUsers.map(u => u.toJSON()));
-    }
-    catch (e) {
+      return this.userService.map<UserVm[]>(
+        unmappedUsers.map((u) => u.toJSON())
+      );
+    } catch (e) {
       throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async getUserById(id: string, throwIfNotFound: boolean = true): Promise<UserVm> {
+  async getUserById(
+    id: string,
+    throwIfNotFound: boolean = true
+  ): Promise<UserVm> {
     if (!id) {
       throw new HttpException('No ID provided', HttpStatus.BAD_REQUEST);
     }
     return this.getExistingUserById(id, throwIfNotFound);
   }
 
-  async getUserByUsername(username: string, throwIfNotFound: boolean = true): Promise<UserVm> {
+  async getUserByUsername(
+    username: string,
+    throwIfNotFound: boolean = true
+  ): Promise<UserVm> {
     if (!username) {
       throw new HttpException('No username provided', HttpStatus.BAD_REQUEST);
     }
-    return this.getExistingUserByFilter({username: username}, throwIfNotFound);
+    return this.getExistingUserByFilter(
+      { username: username },
+      throwIfNotFound
+    );
   }
 
-  async getUserByEmail(email: string, throwIfNotFound: boolean = true): Promise<UserVm> {
+  async getUserByEmail(
+    email: string,
+    throwIfNotFound: boolean = true
+  ): Promise<UserVm> {
     if (!email) {
       throw new HttpException('No email provided', HttpStatus.BAD_REQUEST);
     }
-    return this.getExistingUserByFilter({email: email}, throwIfNotFound);
+    return this.getExistingUserByFilter({ email: email }, throwIfNotFound);
   }
 
-
   async register(vm: RegisterVm): Promise<UserVm> {
-    const {username, email, password} = vm;
+    const { username, email, password } = vm;
 
     if (!username) {
       throw new HttpException('Username is required', HttpStatus.BAD_REQUEST);
@@ -64,12 +76,18 @@ export class UserApiService {
 
     unmappedExistingUser = await this.getUserByUsername(username, false);
     if (unmappedExistingUser) {
-      throw new HttpException(`Username ${username} already registered`, HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        `Username ${username} already registered`,
+        HttpStatus.BAD_REQUEST
+      );
     }
 
     unmappedExistingUser = await this.getUserByEmail(email, false);
     if (unmappedExistingUser) {
-      throw new HttpException(`Email ${email} already registered`, HttpStatus.BAD_REQUEST);
+      throw new HttpException(
+        `Email ${email} already registered`,
+        HttpStatus.BAD_REQUEST
+      );
     }
 
     const newUser = await this.userService.register(vm);
@@ -110,11 +128,7 @@ export class UserApiService {
   }
 
   async updateUser(vm: UserVm): Promise<UserVm> {
-
-    const {
-      id,
-      email,
-    } = vm;
+    const { id, email } = vm;
 
     const unmappedExistingUser = await this.userService.findById(id);
     if (!unmappedExistingUser) {
@@ -125,14 +139,21 @@ export class UserApiService {
       unmappedExistingUser.email = email;
     }
 
-    const unmappedUpdatedUser = await this.userService.update(id, unmappedExistingUser);
+    const unmappedUpdatedUser = await this.userService.update(
+      id,
+      unmappedExistingUser
+    );
     return this.userService.map<UserVm>(unmappedUpdatedUser.toJSON());
   }
 
-  async updatePasswordById(id: string, currentPassword: string, newPassword: string): Promise<UserVm> {
+  async updatePasswordById(
+    id: string,
+    currentPassword: string,
+    newPassword: string
+  ): Promise<UserVm> {
     await this.userService.loginWithId({
       id,
-      password: currentPassword
+      password: currentPassword,
     });
     return this.userService.updatePasswordById(id, newPassword);
   }
@@ -145,19 +166,26 @@ export class UserApiService {
     return this.userService.map<UserVm>(unmappedDeletedUser.toJSON());
   }
 
-  private async getExistingUserByFilter(filter: Partial<UserVm>, throwIfNotFound: boolean = true): Promise<UserVm> {
+  private async getExistingUserByFilter(
+    filter: Partial<UserVm>,
+    throwIfNotFound: boolean = true
+  ): Promise<UserVm> {
     try {
       const unmappedExistingUser = await this.userService.findOne(filter);
       if (!unmappedExistingUser) {
         if (throwIfNotFound === false) {
           return null;
         }
-        throw new HttpException(`user ${JSON.stringify(filter)} does not exist`, HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          `user ${JSON.stringify(filter)} does not exist`,
+          HttpStatus.BAD_REQUEST
+        );
       }
-      const userVmPromise = this.userService.map<UserVm>(unmappedExistingUser.toJSON());
+      const userVmPromise = this.userService.map<UserVm>(
+        unmappedExistingUser.toJSON()
+      );
       return userVmPromise;
-    }
-    catch (e) {
+    } catch (e) {
       if (e instanceof HttpException) {
         throw e;
       }
@@ -165,19 +193,26 @@ export class UserApiService {
     }
   }
 
-  private async getExistingUserById(id: string, throwIfNotFound: boolean = true): Promise<UserVm> {
+  private async getExistingUserById(
+    id: string,
+    throwIfNotFound: boolean = true
+  ): Promise<UserVm> {
     try {
       const unmappedExistingUser = await this.userService.findById(id);
       if (!unmappedExistingUser) {
         if (throwIfNotFound === false) {
           return null;
         }
-        throw new HttpException(`user ${id} does not exist`, HttpStatus.BAD_REQUEST);
+        throw new HttpException(
+          `user ${id} does not exist`,
+          HttpStatus.BAD_REQUEST
+        );
       }
-      const userVmPromise = this.userService.map<UserVm>(unmappedExistingUser.toJSON());
+      const userVmPromise = this.userService.map<UserVm>(
+        unmappedExistingUser.toJSON()
+      );
       return userVmPromise;
-    }
-    catch (e) {
+    } catch (e) {
       if (e instanceof HttpException) {
         throw e;
       }

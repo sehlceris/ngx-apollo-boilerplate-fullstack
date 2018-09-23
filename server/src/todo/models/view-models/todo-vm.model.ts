@@ -3,8 +3,12 @@ import { BaseModelVm } from '../../../shared/base.model';
 import { TodoLevel } from '../todo-level.enum';
 
 export class TodoVm extends BaseModelVm {
-  @ApiModelProperty() content: string;
-  @ApiModelProperty({ enum: TodoLevel }) level: TodoLevel;
-  @ApiModelProperty() isCompleted: boolean;
-  @ApiModelProperty() ownerId: string;
+  @ApiModelProperty()
+  content: string;
+  @ApiModelProperty({ enum: TodoLevel })
+  level: TodoLevel;
+  @ApiModelProperty()
+  isCompleted: boolean;
+  @ApiModelProperty()
+  ownerId: string;
 }

@@ -8,26 +8,24 @@ import {
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { verify } from 'jsonwebtoken';
-import {Configuration} from '../../configuration/configuration.enum';
-import {ConfigurationService} from '../../configuration/configuration.service';
-import {JwtPayload} from '../../auth/jwt-payload.model';
-import {AuthService} from '../../auth/auth.service';
+import { Configuration } from '../../configuration/configuration.enum';
+import { ConfigurationService } from '../../configuration/configuration.service';
+import { JwtPayload } from '../../auth/jwt-payload.model';
+import { AuthService } from '../../auth/auth.service';
 
 @Injectable()
 export class GraphQLJwtAuthGuard implements CanActivate {
-
   protected jwtKey: string;
 
   constructor(
     private readonly _reflector: Reflector,
     private readonly _configurationService: ConfigurationService,
-    private readonly authService: AuthService,
+    private readonly authService: AuthService
   ) {
     this.jwtKey = _configurationService.get(Configuration.JWT_SECRET_KEY);
   }
 
   async canActivate(executionContext: ExecutionContext): Promise<boolean> {
-
     const ctx = GqlExecutionContext.create(executionContext);
     const graphqlContext = ctx.getContext();
     const headers = graphqlContext.headers;
@@ -38,8 +36,7 @@ export class GraphQLJwtAuthGuard implements CanActivate {
       const user = await this.authService.validateUser(decodedJwt);
       graphqlContext.user = user;
       return true;
-    }
-    catch (e) {
+    } catch (e) {
       throw new HttpException(
         `Failed to authenticate: ${e} (GraphqlJwtAuthGuard)`,
         HttpStatus.INTERNAL_SERVER_ERROR
@@ -52,7 +49,6 @@ export class GraphQLJwtAuthGuard implements CanActivate {
   }
 
   private async getJwtStringFromHeaders(headers): Promise<string> {
-
     if (!headers || !(headers['authorization'] || headers['Authorization'])) {
       throw new Error('No authorization header provided');
     }
@@ -60,11 +56,17 @@ export class GraphQLJwtAuthGuard implements CanActivate {
     const authHeader = headers['authorization'] || headers['Authorization'];
 
     const split = authHeader.split(' ');
-    if (split && split.length === 2 && (split[0] === 'Bearer' || split[0] === 'bearer')) {
+    if (
+      split &&
+      split.length === 2 &&
+      (split[0] === 'Bearer' || split[0] === 'bearer')
+    ) {
       const jwtStr = split[1];
       return jwtStr;
     }
-    throw new Error('Authorization header is not in expected format: Bearer {{jwt}} ');
+    throw new Error(
+      'Authorization header is not in expected format: Bearer {{jwt}} '
+    );
   }
 
   private async decodeJwtPayload(jwtStr: string): Promise<JwtPayload> {

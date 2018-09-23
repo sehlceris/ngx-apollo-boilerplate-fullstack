@@ -1,18 +1,16 @@
-import {
-  ExecutionContext,
-  Injectable,
-} from '@nestjs/common';
-import {InstanceType} from 'typegoose';
-import {User} from '../../../user/models/user.model';
-import {AbstractRolesOrSelfGuard} from '../shared/abstract-roles-or-self.guard';
-import {GraphQLGuardHelpers} from './helpers';
-import {Reflector} from '@nestjs/core';
+import { ExecutionContext, Injectable } from '@nestjs/common';
+import { InstanceType } from 'typegoose';
+import { User } from '../../../user/models/user.model';
+import { AbstractRolesOrSelfGuard } from '../shared/abstract-roles-or-self.guard';
+import { GraphQLGuardHelpers } from './helpers';
+import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export abstract class GraphqlUserRoleOrSelfGuard extends AbstractRolesOrSelfGuard {
-
-  private static forIdFromArgumentKeyCache: Map<string, any> =
-    new Map<string, any>();
+  private static forIdFromArgumentKeyCache: Map<string, any> = new Map<
+    string,
+    any
+  >();
 
   constructor(protected readonly _reflector: Reflector) {
     super(_reflector);
@@ -32,9 +30,13 @@ export abstract class GraphqlUserRoleOrSelfGuard extends AbstractRolesOrSelfGuar
     return c;
   }
 
-  abstract getTargetUserIdFromContext(executionContext: ExecutionContext): string;
+  abstract getTargetUserIdFromContext(
+    executionContext: ExecutionContext
+  ): string;
 
-  protected getUserFromContext(executionContext: ExecutionContext): InstanceType<User> {
+  protected getUserFromContext(
+    executionContext: ExecutionContext
+  ): InstanceType<User> {
     return GraphQLGuardHelpers.getUserFromContext(executionContext);
   }
 }

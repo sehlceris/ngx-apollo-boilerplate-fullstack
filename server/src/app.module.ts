@@ -19,13 +19,13 @@ import { UserModule } from './user/user.module';
     GraphQLModule.forRoot({
       typePaths: ['./src/**/*.types.graphql'],
       installSubscriptionHandlers: true,
-      context: ({req}) => {
+      context: ({ req }) => {
         return {
           headers: {
-            ...req.headers
-          }
+            ...req.headers,
+          },
         };
-      }
+      },
     }),
     UserModule,
     TodoModule,

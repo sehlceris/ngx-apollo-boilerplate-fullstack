@@ -6,7 +6,9 @@ import {
   Param,
   Post,
   Put,
-  Query, Req, UseGuards,
+  Query,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -25,19 +27,17 @@ import { TodoLevel } from './models/todo-level.enum';
 import { Todo } from './models/todo.model';
 import { TodoParams } from './models/view-models/todo-params.model';
 import { TodoVm } from './models/view-models/todo-vm.model';
-import {UserRole} from '../user/models/user-role.enum';
-import {HttpRolesGuard} from '../shared/guards/http/http-roles.guard';
-import {AuthGuard} from '@nestjs/passport';
-import {Roles} from '../shared/decorators/roles.decorator';
-import {TodoApiService} from './todo-api.service';
+import { UserRole } from '../user/models/user-role.enum';
+import { HttpRolesGuard } from '../shared/guards/http/http-roles.guard';
+import { AuthGuard } from '@nestjs/passport';
+import { Roles } from '../shared/decorators/roles.decorator';
+import { TodoApiService } from './todo-api.service';
 
 @Controller('todos')
 @ApiUseTags(Todo.modelName)
 @ApiBearerAuth()
 export class TodoController {
-  constructor(
-    protected readonly todoApiService: TodoApiService,
-  ) {}
+  constructor(protected readonly todoApiService: TodoApiService) {}
 
   @Get()
   @Roles(UserRole.Admin, UserRole.User)
@@ -54,8 +54,7 @@ export class TodoController {
   @ApiImplicitQuery({ name: 'isCompleted', required: false })
   async get(
     @Query('level') level?: TodoLevel,
-    @Query('isCompleted', new ToBooleanPipe())
-      isCompleted?: boolean
+    @Query('isCompleted', new ToBooleanPipe()) isCompleted?: boolean
   ): Promise<TodoVm[]> {
     return this.todoApiService.getTodos(level, isCompleted);
   }
@@ -66,11 +65,8 @@ export class TodoController {
   @ApiCreatedResponse({ type: TodoVm })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(Todo.modelName, 'Create'))
-  async create(
-    @Req() request,
-    @Body() params: TodoParams
-  ): Promise<TodoVm> {
-    const {user} = request;
+  async create(@Req() request, @Body() params: TodoParams): Promise<TodoVm> {
+    const { user } = request;
     const userId = user.id;
     return this.todoApiService.createTodo(userId, params);
   }
@@ -83,7 +79,6 @@ export class TodoController {
   @ApiOperation(GetOperationId(Todo.modelName, 'Update'))
   async update(@Body() vm: TodoVm): Promise<TodoVm> {
     return this.todoApiService.updateTodo(vm);
-
   }
 
   @Delete(':id')
