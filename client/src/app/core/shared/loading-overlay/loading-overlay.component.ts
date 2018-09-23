@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { LoadingOverlayService } from './loading-overlay.service';
 
 @Component({
-  selector: 'loading-overlay',
+  selector: 'anms-loading-overlay',
   templateUrl: './loading-overlay.template.html',
   styleUrls: ['./loading-overlay.style.scss'],
 })
@@ -25,7 +25,6 @@ export class LoadingOverlayComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.overlayService.onHide$.subscribe(() => {
-        // this.message = '';
         this.show = false;
       })
     );

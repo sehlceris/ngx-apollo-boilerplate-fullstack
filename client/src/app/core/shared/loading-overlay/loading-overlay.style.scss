@@ -10,29 +10,36 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  z-index: -1;
-  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
-  transition: opacity 500ms;
+  transition: opacity 400ms;
+  pointer-events: none;
 
   .message {
+    user-select: none;
+    border-radius: 3px;
+    pointer-events: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 1rem;
     min-width: 7rem;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: var(--theme-color-background-base);
   }
 
   p {
+    pointer-events: none;
+    margin-top: 0.5rem;
     margin-bottom: 0;
     padding-bottom: 0;
+    color: var(--theme-color-contrast-background-base-primary);
   }
 }
 
 .loading-overlay.loading-overlay-shown {
+  pointer-events: initial;
   opacity: 1;
-  z-index: 100;
 }
