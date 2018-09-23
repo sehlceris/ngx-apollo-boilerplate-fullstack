@@ -8,13 +8,11 @@ import { JwtPayload } from './jwt-payload.model';
 
 @Injectable()
 export class AuthService {
-
   private readonly jwtOptions: SignOptions;
   private readonly jwtKey: string;
 
   constructor(
-    @Inject(forwardRef(() => UserService))
-    readonly _userService: UserService,
+    @Inject(forwardRef(() => UserService)) readonly _userService: UserService,
     private readonly _configurationService: ConfigurationService
   ) {
     this.jwtOptions = { expiresIn: '12h' };

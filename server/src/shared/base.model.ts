@@ -8,7 +8,8 @@ export class BaseModelVm {
   @ApiModelPropertyOptional({ type: String, format: 'date-time' })
   updatedAt?: Date;
 
-  @ApiModelPropertyOptional() id?: string;
+  @ApiModelPropertyOptional()
+  id?: string;
 }
 
 export const schemaOptions: SchemaOptions = {

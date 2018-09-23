@@ -1,7 +1,7 @@
-import {Injectable} from '@nestjs/common';
-import {Observable} from 'rxjs';
-import {OperatorFunction} from 'rxjs/internal/types';
-import {tap} from 'rxjs/operators';
+import { Injectable } from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { OperatorFunction } from 'rxjs/internal/types';
+import { tap } from 'rxjs/operators';
 
 export enum LogLevel {
   DEBUG = 4,
@@ -10,8 +10,10 @@ export enum LogLevel {
   ERROR = 1,
 }
 
-export const logLevelToString: Map<LogLevel, string> = new Map<LogLevel,
-  string>();
+export const logLevelToString: Map<LogLevel, string> = new Map<
+  LogLevel,
+  string
+>();
 logLevelToString.set(LogLevel.DEBUG, 'DEBUG');
 logLevelToString.set(LogLevel.INFO, 'INFO');
 logLevelToString.set(LogLevel.WARN, 'WARN');
@@ -21,7 +23,7 @@ export type LogFunction = (message) => void;
 export type LogFormatter = (
   namespace: string,
   message: string,
-  level: LogLevel,
+  level: LogLevel
 ) => string;
 
 @Injectable()
@@ -63,7 +65,7 @@ export class LogService {
   public static defaultLogFormatter(
     namespace: string,
     message: string,
-    level: LogLevel,
+    level: LogLevel
   ): string {
     return `[${LogService.logLevelToString(level)}] [${namespace}] ${message}`;
   }
@@ -93,7 +95,7 @@ export class LogService {
     name: string,
     nextLevel: LogLevel = LogLevel.DEBUG,
     errLevel: LogLevel = LogLevel.ERROR,
-    completeLevel: LogLevel = LogLevel.DEBUG,
+    completeLevel: LogLevel = LogLevel.DEBUG
   ): OperatorFunction<T, T> {
     return (source$: Observable<T>): Observable<T> => {
       return source$.pipe(
@@ -102,20 +104,20 @@ export class LogService {
             this.log(
               namespace,
               `${name} next: ${this.objToMessage(next)}`,
-              nextLevel,
+              nextLevel
             );
           },
           (err: any) => {
             this.log(
               namespace,
               `${name} err: ${this.objToMessage(err)}`,
-              errLevel,
+              errLevel
             );
           },
           () => {
             this.log(namespace, `${name} complete`, completeLevel);
-          },
-        ),
+          }
+        )
       );
     };
   }
@@ -126,8 +128,7 @@ export class LogService {
 }
 
 export class BoundLogger {
-  constructor(private namespace: string, private logger: LogService) {
-  }
+  constructor(private namespace: string, private logger: LogService) {}
 
   public debug(message: any) {
     this.log(message, LogLevel.DEBUG);
@@ -153,14 +154,14 @@ export class BoundLogger {
     name: string = 'observable',
     nextLevel: LogLevel = LogLevel.INFO,
     errLevel: LogLevel = LogLevel.ERROR,
-    completeLevel: LogLevel = LogLevel.INFO,
+    completeLevel: LogLevel = LogLevel.INFO
   ) {
     return this.logger.tapObservableForLogging(
       this.namespace,
       name,
       nextLevel,
       errLevel,
-      completeLevel,
+      completeLevel
     );
   }
 }

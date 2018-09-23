@@ -14,7 +14,11 @@ import { BaseService } from '../shared/base.service';
 import { MapperService } from '../shared/mapper/mapper.service';
 import { User, UserModel } from './models/user.model';
 import { LoginResponseVm } from './models/view-models/login-response-vm.model';
-import {LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm} from './models/view-models/login-vm.model';
+import {
+  LoginWithEmailVm,
+  LoginWithIdVm,
+  LoginWithUsernameVm,
+} from './models/view-models/login-vm.model';
 import { RegisterVm } from './models/view-models/register-vm.model';
 import { UserVm } from './models/view-models/user-vm.model';
 
@@ -23,8 +27,7 @@ export class UserService extends BaseService<User> {
   constructor(
     @InjectModel(User.modelName) private readonly _userModel: ModelType<User>,
     private readonly _mapperService: MapperService,
-    @Inject(forwardRef(() => AuthService))
-    readonly _authService: AuthService
+    @Inject(forwardRef(() => AuthService)) readonly _authService: AuthService
   ) {
     super();
     this._model = _userModel;
@@ -69,7 +72,10 @@ export class UserService extends BaseService<User> {
     return this.performCommonLoginSequence(user, password);
   }
 
-  private async performCommonLoginSequence(user, passwordToTest: string): Promise<LoginResponseVm> {
+  private async performCommonLoginSequence(
+    user,
+    passwordToTest: string
+  ): Promise<LoginResponseVm> {
     if (!user) {
       throw new HttpException('Invalid crendentials', HttpStatus.NOT_FOUND);
     }
@@ -95,7 +101,6 @@ export class UserService extends BaseService<User> {
   }
 
   async updatePasswordById(id: string, newPassword: string): Promise<UserVm> {
-
     const user = await this.findById(id);
     if (!user) {
       throw new HttpException(`No user with id ${id}`, HttpStatus.NOT_FOUND);
