@@ -32,13 +32,13 @@
     <ng-template #passwordHint>Minimum length 6</ng-template>
     <mat-error><ng-container *ngTemplateOutlet="passwordHint"></ng-container></mat-error>
   </mat-form-field>
+  <div class="form-error">
+    {{registerError ? registerError : '&nbsp;'}}
+  </div>
   <button
     mat-raised-button
     color="accent"
     type="submit"
     class="submit-button"
   >Register</button>
-  <div class="form-error">
-    {{registerError}}
-  </div>
 </form>

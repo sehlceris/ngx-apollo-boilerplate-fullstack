@@ -3,7 +3,7 @@ export const AppConfig = {
 
   SnackDismissText: 'Ok',
   SnackDuration: 6000,
-  SnackErrorDuration: 10000,
+  SnackErrorDuration: 6000,
   SnackErrorClass: 'snack-error',
 };
 Object.freeze(AppConfig);

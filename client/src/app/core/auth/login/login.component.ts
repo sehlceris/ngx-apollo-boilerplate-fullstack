@@ -8,7 +8,7 @@ import {
 import { LoadingOverlayService } from '@app/core/shared/loading-overlay/loading-overlay.service';
 import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { skip, takeUntil } from 'rxjs/operators';
 import { LoginWithUsernameVm } from '../../../../../../server/src/user/models/view-models/login-vm.model';
 
 const LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF =
@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.store
       .pipe(
         select(selectorLogin),
-        takeUntil(this.unsubscribe$)
+        takeUntil(this.unsubscribe$),
+        skip(1)
       )
       .subscribe((login: LoginState) => {
         if (login.loggingIn) {
@@ -68,7 +69,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.store.dispatch(
         new ActionLoginWithUsernameRequest(loginVm.username, loginVm.password)
       );
-      this.loginForm.controls['password'].reset();
     }
   }
 

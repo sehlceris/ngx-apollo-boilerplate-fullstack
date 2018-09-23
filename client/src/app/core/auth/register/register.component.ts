@@ -8,8 +8,9 @@ import {
 import { LoadingOverlayService } from '@app/core/shared/loading-overlay/loading-overlay.service';
 import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { skip, takeUntil } from 'rxjs/operators';
 import { RegisterVm } from '../../../../../../server/src/user/models/view-models/register-vm.model';
+import { MatSnackBar } from '@angular/material';
 
 const REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF =
   'REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF';
@@ -37,7 +38,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.store
       .pipe(
         select(selectorRegister),
-        takeUntil(this.unsubscribe$)
+        takeUntil(this.unsubscribe$),
+        skip(1)
       )
       .subscribe((register: RegisterState) => {
         if (register.registering) {

@@ -30,6 +30,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { UserHttpApiService } from '@app/core/services/api/user-http-api.service';
 import { AuthModule } from '@app/core/auth/auth.module';
+import { ForgotPasswordEffects } from '@app/core/auth/forgot-password/forgot-password.effects';
 
 export const metaReducers: MetaReducer<any>[] = [initStateFromLocalStorage];
 
@@ -75,7 +76,12 @@ const COMPONENTS = [LoadingOverlayComponent];
         metaReducers,
       }
     ),
-    EffectsModule.forRoot([LoginEffects, UserEffects, RegisterEffects]),
+    EffectsModule.forRoot([
+      LoginEffects,
+      UserEffects,
+      RegisterEffects,
+      ForgotPasswordEffects,
+    ]),
     StoreRouterConnectingModule,
 
     environment.envName === 'DEV'

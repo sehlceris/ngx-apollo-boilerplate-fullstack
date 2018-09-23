@@ -21,15 +21,15 @@
     >
     <mat-error>This field is required.</mat-error>
   </mat-form-field>
+  <div class="form-error">
+    {{loginError ? loginError : '&nbsp;'}}
+  </div>
   <button
     mat-raised-button
     color="accent"
     type="submit"
     class="submit-button"
   >Login</button>
-  <div class="form-error">
-    {{loginError}}
-  </div>
 </form>
 <a
   class="forgot-password-link"
