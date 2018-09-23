@@ -113,8 +113,7 @@ export class UserApiService {
 
     const {
       id,
-      firstName,
-      lastName,
+      email,
     } = vm;
 
     const unmappedExistingUser = await this.userService.findById(id);
@@ -122,11 +121,8 @@ export class UserApiService {
       throw new HttpException(`${id} Not found`, HttpStatus.NOT_FOUND);
     }
 
-    if (firstName) {
-      unmappedExistingUser.firstName = firstName;
-    }
-    if (lastName) {
-      unmappedExistingUser.lastName = lastName;
+    if (email) {
+      unmappedExistingUser.email = email;
     }
 
     const unmappedUpdatedUser = await this.userService.update(id, unmappedExistingUser);

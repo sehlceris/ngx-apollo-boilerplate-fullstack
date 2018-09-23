@@ -15,15 +15,12 @@ type Mutation {
   register(
     email: String!,
     username: String!,
-    password: String!,
-    firstName: String,
-    lastName: String
+    password: String!
   ): User
 
   updateUser(
     id: String!,
-    firstName: String,
-    lastName: String
+    email: String
   ): User
 
   deleteUserById(id: String!): User
@@ -33,8 +30,6 @@ type User {
   id: String!
   username: String!
   email: String!
-  firstName: String
-  lastName: String
   role: UserRole!
   todos: [Todo]
 }

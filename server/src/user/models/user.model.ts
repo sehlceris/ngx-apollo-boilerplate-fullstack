@@ -26,10 +26,6 @@ export class User extends Typegoose {
   })
   password: string;
 
-  @prop() firstName?: string;
-
-  @prop() lastName?: string;
-
   @prop({ enum: UserRole, default: UserRole.User })
   role?: UserRole;
 
