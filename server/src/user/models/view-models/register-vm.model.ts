@@ -1,19 +1,17 @@
-import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
-import { LoginWithUsernameVm } from './login-vm.model';
+import { ApiModelProperty } from '@nestjs/swagger';
 
-export class RegisterVm extends LoginWithUsernameVm {
-  @ApiModelProperty({ required: true, minLength: 6 })
+export class RegisterVm {
+  @ApiModelProperty({ required: true, minLength: 4 })
   username: string;
 
   @ApiModelProperty({ required: true })
   email: string;
 
-  @ApiModelProperty({ required: true, minLength: 6 })
+  @ApiModelProperty({
+    required: true,
+    minLength: 6,
+    type: String,
+    format: 'password',
+  })
   password: string;
-
-  @ApiModelPropertyOptional({ example: 'John' })
-  firstName?: string;
-
-  @ApiModelPropertyOptional({ example: 'Doe' })
-  lastName?: string;
 }
