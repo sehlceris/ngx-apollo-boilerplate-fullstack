@@ -11,7 +11,7 @@ export class PasswordPropertyVm {
 }
 
 export class LoginWithUsernameVm extends PasswordPropertyVm {
-  @ApiModelProperty({ required: true, minLength: 6 })
+  @ApiModelProperty({ required: true, minLength: 4 })
   username: string;
 }
 
