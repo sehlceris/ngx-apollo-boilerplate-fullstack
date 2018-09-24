@@ -6,9 +6,9 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import {
-  ActionResetPasswordByEmail,
-  ActionResetPasswordByTextMessage,
-  ActionResetPasswordRequestFailure,
+  ActionGenerateResetTokenByEmail,
+  ActionGenerateResetTokenByTextMessage,
+  ActionGenerateResetTokenByEmailFailure,
   ForgotPasswordActionTypes,
 } from '@app/core/auth/forgot-password/forgot-password.reducer';
 
@@ -27,11 +27,11 @@ export class ForgotPasswordEffects {
   @Effect({ dispatch: true })
   resetPasswordByEmail() {
     return this.actions$.pipe(
-      ofType<ActionResetPasswordByEmail>(
-        ForgotPasswordActionTypes.RESET_PASSWORD_BY_EMAIL
+      ofType<ActionGenerateResetTokenByEmail>(
+        ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_EMAIL
       ),
       map((action) => {
-        return new ActionResetPasswordRequestFailure(
+        return new ActionGenerateResetTokenByEmailFailure(
           'Resetting your password is not yet supported'
         );
       })
@@ -41,11 +41,11 @@ export class ForgotPasswordEffects {
   @Effect({ dispatch: true })
   resetPasswordByTextMessage() {
     return this.actions$.pipe(
-      ofType<ActionResetPasswordByTextMessage>(
-        ForgotPasswordActionTypes.RESET_PASSWORD_BY_TEXT_MESSAGE
+      ofType<ActionGenerateResetTokenByTextMessage>(
+        ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_TEXT_MESSAGE
       ),
       map((action) => {
-        return new ActionResetPasswordRequestFailure(
+        return new ActionGenerateResetTokenByEmailFailure(
           'Resetting your password is not yet supported'
         );
       })
