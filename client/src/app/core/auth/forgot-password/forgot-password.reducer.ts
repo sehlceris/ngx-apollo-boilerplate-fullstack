@@ -1,7 +1,5 @@
 import { Action } from '@ngrx/store';
 
-export const FORGOT_PASSWORD_KEY = 'FORGOT_PASSWORD';
-
 export enum ForgotPasswordActionTypes {
   GENERATE_RESET_TOKEN_BY_EMAIL = '[ForgotPassword] GENERATE_RESET_TOKEN_BY_EMAIL',
   GENERATE_RESET_TOKEN_BY_EMAIL_SUCCESS = '[ForgotPassword] GENERATE_RESET_TOKEN_BY_EMAIL_SUCCESS',

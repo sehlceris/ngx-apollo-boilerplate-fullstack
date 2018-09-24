@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { UserVm } from '../../../../../../server/src/user/models/view-models/user-vm.model';
 
-export const USER_KEY = 'USER';
+export const USER_LOCAL_STORAGE_KEY = 'auth.user'; // this must match the path to the state in the store
 
 export enum UserActionTypes {
   AUTHENTICATE = '[User] AUTHENTICATE',

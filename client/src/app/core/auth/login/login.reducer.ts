@@ -1,7 +1,5 @@
 import { Action } from '@ngrx/store';
 
-export const LOGIN_KEY = 'LOGIN';
-
 export enum LoginActionTypes {
   LOGIN_WITH_USERNAME_REQUEST = '[Login] LOGIN_WITH_USERNAME_REQUEST',
   LOGIN_SUCCESS = '[Login] LOGIN_SUCCESS',
