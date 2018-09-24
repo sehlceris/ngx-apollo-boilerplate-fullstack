@@ -1,8 +1,6 @@
 import { Action } from '@ngrx/store';
 import { RegisterVm } from '../../../../../../server/src/user/models/view-models/register-vm.model';
 
-export const REGISTER_KEY = 'REGISTER';
-
 export enum RegisterActionTypes {
   REGISTER_REQUEST = '[Register] REGISTER_REQUEST',
   REGISTER_SUCCESS = '[Register] REGISTER_SUCCESS',

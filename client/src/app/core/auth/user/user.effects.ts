@@ -3,7 +3,7 @@ import { LocalStorageService } from '@app/core/local-storage/local-storage.servi
 import {
   ActionUserAuthenticate,
   ActionUserUnauthenticate,
-  USER_KEY,
+  USER_LOCAL_STORAGE_KEY,
   UserActionTypes,
 } from '@app/core/auth/user/user.reducer';
 import { BoundLogger, LogService } from '@app/core/services';
@@ -26,7 +26,7 @@ export class UserEffects {
     return this.actions$.pipe(
       ofType<ActionUserAuthenticate>(UserActionTypes.AUTHENTICATE),
       tap((action) =>
-        this.localStorageService.setItem(USER_KEY, {
+        this.localStorageService.setItem(USER_LOCAL_STORAGE_KEY, {
           token: action.token,
           user: action.user,
         })
@@ -39,7 +39,7 @@ export class UserEffects {
     return this.actions$.pipe(
       ofType<ActionUserUnauthenticate>(UserActionTypes.UNAUTHENTICATE),
       tap(() =>
-        this.localStorageService.setItem(USER_KEY, {
+        this.localStorageService.setItem(USER_LOCAL_STORAGE_KEY, {
           token: null,
           user: null,
         })
