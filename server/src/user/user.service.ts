@@ -21,12 +21,15 @@ import {
 } from './models/view-models/login-vm.model';
 import { RegisterVm } from './models/view-models/register-vm.model';
 import { UserVm } from './models/view-models/user-vm.model';
+import {RegistrationService} from '../registration/registration.service';
+import {UserRole} from './models/user-role.enum';
 
 @Injectable()
 export class UserService extends BaseService<User> {
   constructor(
     @InjectModel(User.modelName) private readonly _userModel: ModelType<User>,
     private readonly _mapperService: MapperService,
+    private readonly _registrationService: RegistrationService,
     @Inject(forwardRef(() => AuthService)) readonly _authService: AuthService
   ) {
     super();
@@ -40,13 +43,16 @@ export class UserService extends BaseService<User> {
     const newUser = new UserModel();
     newUser.username = username.trim().toLowerCase();
     newUser.email = email.trim().toLowerCase();
+    newUser.role = UserRole.UnconfirmedUser;
 
     const salt = await genSalt(10);
     newUser.password = await hash(password, salt);
 
     try {
       const result = await this.create(newUser);
-      return result.toJSON() as User;
+      const resultUser = result.toJSON() as User;
+      await this._registrationService.createRegistrationConfirmationForUser(resultUser);
+      return resultUser;
     } catch (e) {
       throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }

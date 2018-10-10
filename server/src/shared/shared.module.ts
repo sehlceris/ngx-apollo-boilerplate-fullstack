@@ -4,11 +4,12 @@ import { AuthService } from './auth/auth.service';
 import { JwtStrategy } from './auth/strategies/jwt-strategy.service';
 import { ConfigurationService } from './configuration/configuration.service';
 import { MapperService } from './mapper/mapper.service';
+import {RegistrationModule} from '../registration/registration.module';
 
 @Global()
 @Module({
   providers: [ConfigurationService, MapperService, AuthService, JwtStrategy],
   exports: [ConfigurationService, MapperService, AuthService],
-  imports: [UserModule],
+  imports: [UserModule, RegistrationModule],
 })
 export class SharedModule {}

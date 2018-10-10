@@ -8,6 +8,7 @@ import { ConfigurationService } from './shared/configuration/configuration.servi
 import { SharedModule } from './shared/shared.module';
 import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
+import {RegistrationModule} from './registration/registration.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UserModule } from './user/user.module';
       },
     }),
     UserModule,
+    RegistrationModule,
     TodoModule,
   ],
   controllers: [AppController],
