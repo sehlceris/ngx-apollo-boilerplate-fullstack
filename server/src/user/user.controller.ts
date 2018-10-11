@@ -40,8 +40,7 @@ import { HttpRolesOrSelfGuard } from '../shared/guards/http/http-user-role-or-se
 @ApiUseTags(User.modelName)
 export class UserController {
   constructor(
-    private readonly userApiService: UserApiService,
-    private readonly todoApiService: TodoApiService
+    private readonly userApiService: UserApiService
   ) {}
 
   @Post('register')
@@ -104,15 +103,6 @@ export class UserController {
   @ApiOperation(GetOperationId(User.modelName, 'deleteUserById'))
   async deleteUserById(@Param('id') id: string): Promise<UserVm> {
     return this.userApiService.deleteUserById(id);
-  }
-
-  @Get(':id/todos')
-  @Roles(UserRole.Admin)
-  @UseGuards(<any>AuthGuard('jwt'), HttpRolesOrSelfGuard.forParamIdKey('id'))
-  @ApiBearerAuth()
-  @ApiOperation(GetOperationId(User.modelName, 'getUserTodos'))
-  async getUserTodos(@Param('id') id: string): Promise<TodoVm[]> {
-    return this.todoApiService.getTodosForUser(id);
   }
 
   @Get()

@@ -35,6 +35,17 @@ export class TodoResolvers {
     return this.todoApiService.getTodos(level, isCompleted);
   }
 
+  // @Query('getTodosForUser')
+  // @Roles(UserRole.Admin, UserRole.User)
+  // @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
+  // async getTodosForUser(
+  //   @Args('userId') userId: string,
+  //   @Args('level') level?: TodoLevel,
+  //   @Args('isCompleted', new ToBooleanPipe()) isCompleted?: boolean
+  // ): Promise<TodoVm[]> {
+  //   return this.todoApiService.getTodosForUser(ownerId);
+  // }
+
   @Mutation('createTodo')
   @Roles(UserRole.Admin, UserRole.User)
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
