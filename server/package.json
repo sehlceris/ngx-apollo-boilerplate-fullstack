@@ -49,6 +49,7 @@
     "subscriptions-transport-ws": "^0.9.14",
     "typegoose": "5.2.1",
     "typescript": "3.0.3",
+    "uuid": "^3.3.2",
     "ws": "^6.0.0"
   },
   "resolutions": {

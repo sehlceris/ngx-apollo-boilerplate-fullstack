@@ -27,7 +27,6 @@ import { GraphqlUserRoleOrSelfGuard } from '../shared/guards/graphql/graphql-use
 export class UserResolvers {
   constructor(
     protected readonly userApiService: UserApiService,
-    protected readonly todoApiService: TodoApiService
   ) {}
 
   @Mutation('register')
@@ -88,15 +87,5 @@ export class UserResolvers {
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async deleteUserById(@Args('id') id: string): Promise<UserVm> {
     return this.userApiService.deleteUserById(id);
-  }
-
-  @ResolveProperty()
-  @Roles(UserRole.Admin)
-  @UseGuards(
-    GraphQLJwtAuthGuard,
-    GraphqlUserRoleOrSelfGuard.forIdFromArgumentKey('id')
-  )
-  todos(@Parent() user: UserVm) {
-    return this.todoApiService.getTodosForUser(user.id);
   }
 }
