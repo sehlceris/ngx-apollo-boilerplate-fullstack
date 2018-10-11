@@ -7,14 +7,19 @@ export enum JwtPayloadType {
 }
 
 export interface JwtPayload {
-  userId: string;
-  username: string;
-  role: UserRole;
   type: JwtPayloadType;
   iat?: Date;
   exp?: Date;
 }
 
-export interface JwtSingleUsePayload extends JwtPayload {
+export interface JwtUserPayload extends JwtPayload {
+  userId: string;
+}
+
+export interface JwtAuthPayload extends JwtUserPayload {
+  role: UserRole;
+}
+
+export interface JwtSingleUseUserPayload extends JwtUserPayload {
   jti: string;
 }

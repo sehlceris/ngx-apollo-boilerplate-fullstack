@@ -3,7 +3,13 @@ import {InjectModel} from '@nestjs/mongoose';
 import {compare, genSalt, hash} from 'bcryptjs';
 import {ModelType} from 'typegoose';
 import {AuthService} from '../shared/auth/auth.service';
-import {JwtPayload, JwtPayloadType, JwtSingleUsePayload} from '../shared/auth/jwt-payload.model';
+import {
+  JwtAuthPayload,
+  JwtPayload,
+  JwtPayloadType,
+  JwtSingleUseUserPayload,
+  JwtUserPayload,
+} from '../shared/auth/jwt-payload.model';
 import {BaseService} from '../shared/base.service';
 import {MapperService} from '../shared/mapper/mapper.service';
 import {User, UserModel} from './models/user.model';
@@ -66,41 +72,41 @@ export class UserService extends BaseService<User> {
   }
 
   async createJwtAuthPayload(user): Promise<string> {
-    const payload = this.createJwtPayload(user, JwtPayloadType.Auth);
+    const payload: JwtAuthPayload = {
+      type: JwtPayloadType.Auth,
+      userId: user.id,
+      role: user.role,
+    };
     const token = await this._authService.signPayload(payload);
     return token;
   }
 
   async createJwtVerifyEmailPayload(user): Promise<string> {
-    const payload = this.createSingleUseJwtPayload(user, JwtPayloadType.VerifyEmail);
+    const type = JwtPayloadType.ResetPassword;
+    const payload: JwtSingleUseUserPayload = this.createJwtSingleUseUserPayload(user, type);
     const token = await this._authService.signPayload(payload);
     return token;
   }
 
   async createJwtResetPasswordPayload(user): Promise<string> {
-    const payload = this.createSingleUseJwtPayload(user, JwtPayloadType.ResetPassword);
+    const type = JwtPayloadType.ResetPassword;
+    const payload: JwtSingleUseUserPayload = this.createJwtSingleUseUserPayload(user, type);
     const token = await this._authService.signPayload(payload);
     return token;
   }
 
-  private createJwtPayload(user, type: JwtPayloadType): JwtPayload {
-    const payload: JwtPayload = {
-      userId: user.id,
-      username: user.username,
-      role: user.role,
+  private createJwtSingleUseUserPayload(user, type: JwtPayloadType): JwtSingleUseUserPayload {
+    return {
       type: type,
+      userId: user.id,
+      jti: this.createAndStoreJti(type)
     };
-    return payload;
   }
 
-  private createSingleUseJwtPayload(user, type: JwtPayloadType): JwtSingleUsePayload {
-    const payload = this.createJwtPayload(user, type);
+  private createAndStoreJti(type: JwtPayloadType): string {
     const uuid = randomUuid();
     this.memoryCacheService.addJti(type, uuid);
-    return {
-      ...payload,
-      jti: uuid
-    };
+    return uuid;
   }
 
   private async performCommonLoginSequence(

@@ -4,7 +4,7 @@ import { ExtractJwt, Strategy, VerifiedCallback } from 'passport-jwt';
 import { Configuration } from '../../configuration/configuration.enum';
 import { ConfigurationService } from '../../configuration/configuration.service';
 import { AuthService } from '../auth.service';
-import { JwtPayload } from '../jwt-payload.model';
+import { JwtAuthPayload } from '../jwt-payload.model';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -18,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload, done: VerifiedCallback) {
+  async validate(payload: JwtAuthPayload, done: VerifiedCallback) {
     const user = await this._authService.validateUser(payload);
     if (!user) {
       return done(new HttpException({}, HttpStatus.UNAUTHORIZED), false);
