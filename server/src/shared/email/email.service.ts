@@ -1,11 +1,14 @@
-import {Injectable} from '@nestjs/common';
-import {User} from '../../user/models/user.model';
-import * as Email from 'email-templates';
-import * as path from 'path';
-import {BoundLogger, LogService} from '../utilities/log.service';
-import {ConfigurationService} from '../configuration/configuration.service';
-import {Configuration} from '../configuration/configuration.enum';
-import {ClientPaths} from '../constants/client-paths';
+import { Injectable } from "@nestjs/common";
+import * as Email from "email-templates";
+import * as SMTPTransport from "nodemailer/lib/smtp-transport";
+import * as path from "path";
+import * as nodemailer from "nodemailer";
+import { User } from "../../user/models/user.model";
+import { UserVm } from "../../user/models/view-models/user-vm.model";
+import { Configuration } from "../configuration/configuration.enum";
+import { ConfigurationService } from "../configuration/configuration.service";
+import { ClientPaths } from "../constants/client-paths";
+import { BoundLogger, LogService } from "../utilities/log.service";
 
 enum EmailTemplatePath {
   VerifyEmail = 'verify-email',
@@ -19,6 +22,8 @@ const TOKEN_NAME = 'token';
 @Injectable()
 export class EmailService {
 
+  private cachedTransport = this.getTransport();
+
   private log: BoundLogger = this.logService.bindToNamespace(EmailService.name);
 
   constructor(
@@ -28,7 +33,7 @@ export class EmailService {
 
   }
 
-  async sendVerifyEmailAddressEmail(user: User, token: string): Promise<void> {
+  async sendVerifyEmailAddressEmail(user: UserVm, token: string): Promise<void> {
     const email = this.getBaseEmail();
     const destinationAddress = user.email;
     const templatePath = path.join(TEMPLATE_ROOT, EmailTemplatePath.VerifyEmail);
@@ -57,7 +62,7 @@ export class EmailService {
     return sendPromise;
   }
 
-  async sendPasswordResetEmail(user: User, token: string): Promise<void> {
+  async sendPasswordResetEmail(user: UserVm, token: string): Promise<void> {
     const email = this.getBaseEmail();
     const destinationAddress = user.email;
     const templatePath = path.join(TEMPLATE_ROOT, EmailTemplatePath.PasswordReset);
@@ -106,9 +111,7 @@ export class EmailService {
       message: {
         from: this.configurationService.get(Configuration.EMAIL_FROM_ADDRESS)
       },
-      transport: {
-        jsonTransport: true
-      },
+      transport: this.getTransport(),
       juiceResources: {
         webResources: {
           relativeTo: EMAIL_ROOT
@@ -118,9 +121,32 @@ export class EmailService {
         options: {
           extension: 'handlebars'
         }
-      }
+      },
       // send: true, // uncomment to send emails in dev
     });
     return email;
+  }
+
+  private getTransport() {
+    if (this.cachedTransport) {
+      return this.cachedTransport;
+    }
+    const transport = new SMTPTransport(this.getSmtpConfig());
+    const transporter = nodemailer.createTransport(transport);
+    return transporter;
+  }
+
+  private getSmtpConfig() {
+    const poolConfig = {
+      pool: true,
+      secure: false, // use TLS
+      host: this.configurationService.get(Configuration.EMAIL_SMTP_HOST),
+      port: parseInt(this.configurationService.get(Configuration.EMAIL_SMTP_PORT), 10),
+      auth: {
+        user: this.configurationService.get(Configuration.EMAIL_SMTP_USERNAME),
+        pass: this.configurationService.get(Configuration.EMAIL_SMTP_PASSWORD),
+      }
+    };
+    return poolConfig;
   }
 }

@@ -108,7 +108,7 @@ export class UserApiService {
     return this.userService.map<UserVm>(newUser);
   }
 
-  async sendVerifyEmailAddressEmail(user: User): Promise<void> {
+  async sendVerifyEmailAddressEmail(user: UserVm): Promise<void> {
     if (user.role !== UserRole.UnconfirmedUser) {
       throw new HttpException(`User must have a role of ${UserRole.UnconfirmedUser} to send a confirmation email`, HttpStatus.BAD_REQUEST);
     }
@@ -117,7 +117,7 @@ export class UserApiService {
     return this.emailService.sendVerifyEmailAddressEmail(user, token);
   }
 
-  async sendPasswordResetEmail(user: User): Promise<void> {
+  async sendPasswordResetEmail(user: UserVm): Promise<void> {
     if (user.role !== UserRole.UnconfirmedUser) {
       throw new HttpException(`User must have a role of ${UserRole.UnconfirmedUser} to send a confirmation email`, HttpStatus.BAD_REQUEST);
     }
