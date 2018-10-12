@@ -1,6 +1,8 @@
 {
   "SERVER_HOST": "http://127.0.0.1",
   "SERVER_PORT": "3000",
+  "CLIENT_ROOT": "http://127.0.0.1",
+  "CLIENT_PORT": "4200",
   "MONGODB_HOST": "127.0.0.1",
   "MONGODB_PORT": "27017",
   "MONGODB_USERNAME": "root",

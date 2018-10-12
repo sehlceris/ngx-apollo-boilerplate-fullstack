@@ -6,6 +6,7 @@ import {ConfigurationService} from './configuration/configuration.service';
 import {MapperService} from './mapper/mapper.service';
 import {LogService} from './utilities/log.service';
 import {MemoryCacheService} from './utilities/memory-cache.service';
+import {EmailService} from './email/email.service';
 
 const SERVICES = [
   ConfigurationService,
@@ -13,6 +14,7 @@ const SERVICES = [
   AuthService,
   LogService,
   MemoryCacheService,
+  EmailService,
   JwtStrategy
 ];
 
