@@ -19,5 +19,4 @@ src/app/generated/
 
 # config
 config/
-config/development.json
 
