@@ -82,7 +82,7 @@ export class UserService extends BaseService<User> {
   }
 
   async createJwtVerifyEmailPayload(user): Promise<string> {
-    const type = JwtPayloadType.ResetPassword;
+    const type = JwtPayloadType.VerifyEmail;
     const payload: JwtSingleUseUserPayload = this.createJwtSingleUseUserPayload(user, type);
     const token = await this._authService.signPayload(payload);
     return token;

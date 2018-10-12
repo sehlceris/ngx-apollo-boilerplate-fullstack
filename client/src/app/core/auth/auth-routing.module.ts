@@ -32,6 +32,16 @@ const routes: Routes = [
         component: ForgotPasswordComponent,
         data: { title: 'anms.auth.forgot' },
       },
+      {
+        path: 'reset-password',
+        component: ResetPasswordComponent,
+        data: { title: 'anms.auth.reset' },
+      },
+      {
+        path: 'verify-email',
+        component: VerifyEmailComponent,
+        data: { title: 'anms.auth.verify' },
+      },
     ],
   },
 ];
