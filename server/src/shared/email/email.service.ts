@@ -113,6 +113,11 @@ export class EmailService {
         webResources: {
           relativeTo: EMAIL_ROOT
         }
+      },
+      views: {
+        options: {
+          extension: 'handlebars'
+        }
       }
       // send: true, // uncomment to send emails in dev
     });
