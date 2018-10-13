@@ -24,7 +24,17 @@ export class UserApiService {
     protected readonly authService: AuthService,
     protected readonly emailService: EmailService,
     protected readonly logService: LogService,
-  ) {}
+  ) {
+    setTimeout(() => {
+      this.sendEmailTest();
+    }, 2000);
+  }
+
+  async sendEmailTest() {
+    const user = await this.getExistingUserById('5bc0540d4566dc1e1e3faf88');
+    await this.sendPasswordResetEmail(user);
+    await this.sendVerifyEmailAddressEmail(user);
+  }
 
   async getUsers(filter: Partial<UserVm> = {}): Promise<UserVm[]> {
     try {

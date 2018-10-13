@@ -34,11 +34,26 @@ body {
   font-size: 1.7em;
 }
 
-.token-link {
-  display: block;
-  padding: 0.2em;
-  max-width: 300px;
+.token-link-container,
+.token-link-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.token-link-container {
   margin: 1.25em auto;
+}
+
+.token-link-wrapper {
+  padding: 0.5em;
+  border: 3px dashed gray;
+  border-radius: 10px;
+}
+
+.token-link {
+  flex: 0 1 auto;
+  padding: 0.2em 1em;
   border-radius: 4px;
   color: #f5f5f5;
   background-color: #52984d;
