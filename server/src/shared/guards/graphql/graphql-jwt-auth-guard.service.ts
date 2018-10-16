@@ -10,7 +10,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { verify } from 'jsonwebtoken';
 import { Configuration } from '../../configuration/configuration.enum';
 import { ConfigurationService } from '../../configuration/configuration.service';
-import { JwtPayload } from '../../auth/jwt-payload.model';
+import { JwtAuthPayload } from '../../auth/jwt-payload.model';
 import { AuthService } from '../../auth/auth.service';
 
 @Injectable()
@@ -32,7 +32,7 @@ export class GraphQLJwtAuthGuard implements CanActivate {
 
     try {
       const jwtStr = await this.getJwtStringFromHeaders(headers);
-      const decodedJwt: JwtPayload = await this.decodeJwtPayload(jwtStr);
+      const decodedJwt: JwtAuthPayload = await this.decodeJwtPayload(jwtStr);
       const user = await this.authService.validateUser(decodedJwt);
       graphqlContext.user = user;
       return true;
@@ -69,7 +69,7 @@ export class GraphQLJwtAuthGuard implements CanActivate {
     );
   }
 
-  private async decodeJwtPayload(jwtStr: string): Promise<JwtPayload> {
+  private async decodeJwtPayload(jwtStr: string): Promise<JwtAuthPayload> {
     return new Promise<any>((resolve, reject) => {
       verify(jwtStr, this.jwtKey, function(err, decoded) {
         if (err) {

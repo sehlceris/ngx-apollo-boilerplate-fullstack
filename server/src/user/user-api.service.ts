@@ -8,14 +8,28 @@ import {
   LoginWithUsernameVm,
 } from './models/view-models/login-vm.model';
 import { LoginResponseVm } from './models/view-models/login-response-vm.model';
+import {User} from './models/user.model';
+import {UserRole} from './models/user-role.enum';
+import {AuthService} from '../shared/auth/auth.service';
+import {BoundLogger, LogService} from '../shared/utilities/log.service';
+import {EmailService} from '../shared/email/email.service';
 
 @Injectable()
 export class UserApiService {
-  constructor(protected readonly userService: UserService) {}
+
+  private log: BoundLogger = this.logService.bindToNamespace(UserApiService.name);
+
+  constructor(
+    protected readonly userService: UserService,
+    protected readonly authService: AuthService,
+    protected readonly emailService: EmailService,
+    protected readonly logService: LogService,
+  ) {
+  }
 
   async getUsers(filter: Partial<UserVm> = {}): Promise<UserVm[]> {
     try {
-      const unmappedUsers = await this.userService.findAll({});
+      const unmappedUsers = await this.userService.findAll(filter);
       return this.userService.map<UserVm[]>(
         unmappedUsers.map((u) => u.toJSON())
       );
@@ -91,7 +105,26 @@ export class UserApiService {
     }
 
     const newUser = await this.userService.register(vm);
+    await this.sendVerifyEmailAddressEmail(newUser);
     return this.userService.map<UserVm>(newUser);
+  }
+
+  async sendVerifyEmailAddressEmail(user: UserVm): Promise<void> {
+    if (user.role !== UserRole.UnconfirmedUser) {
+      throw new HttpException(`User must have a role of ${UserRole.UnconfirmedUser} to send a confirmation email`, HttpStatus.BAD_REQUEST);
+    }
+    const token = await this.userService.createJwtVerifyEmailPayload(user);
+    this.log.info(`sending confirmation email to ${user.email} with token: ${token}`);
+    return this.emailService.sendVerifyEmailAddressEmail(user, token);
+  }
+
+  async sendPasswordResetEmail(user: UserVm): Promise<void> {
+    if (user.role !== UserRole.UnconfirmedUser) {
+      throw new HttpException(`User must have a role of ${UserRole.UnconfirmedUser} to send a confirmation email`, HttpStatus.BAD_REQUEST);
+    }
+    const token = await this.userService.createJwtResetPasswordPayload(user);
+    this.log.info(`sending password reset email to ${user.email} with token: ${token}`);
+    return this.emailService.sendPasswordResetEmail(user, token);
   }
 
   async loginWithUsername(vm: LoginWithUsernameVm): Promise<LoginResponseVm> {

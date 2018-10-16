@@ -1,16 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { get } from 'config';
-import { Configuration } from './configuration.enum';
+import {Injectable} from '@nestjs/common';
+import {get} from 'config';
+import {Configuration} from './configuration.enum';
 
 export enum Environment {
-  DEVELOPMENT = 'development',
-  TESTING = 'testing',
-  PRODUCTION = 'production',
+  Development = 'development',
+  Testing = 'testing',
+  Production = 'production',
 }
 
 @Injectable()
 export class ConfigurationService {
-  static environment: string = process.env.NODE_ENV || Environment.DEVELOPMENT;
+  static environment: string = process.env.NODE_ENV || Environment.Development;
 
   static get(name: string): string {
     const val = process.env[name] || get(name);
@@ -21,7 +21,7 @@ export class ConfigurationService {
   }
 
   static get isDevelopment(): boolean {
-    return ConfigurationService.environment === Environment.DEVELOPMENT;
+    return ConfigurationService.environment === Environment.Development;
   }
 
   static getMongoDbConnectionString() {
@@ -39,11 +39,17 @@ export class ConfigurationService {
 
   // ***** instance methods are for components that use dependency injection *****
 
-  get(name: string): string {
+  get(name: Configuration): string {
     return ConfigurationService.get(name);
   }
 
   get isDevelopment(): boolean {
     return ConfigurationService.isDevelopment;
+  }
+
+  get clientBaseUrl(): string {
+    const url = new URL(this.get(Configuration.CLIENT_ROOT));
+    url.port = this.get(Configuration.CLIENT_PORT);
+    return url.toString();
   }
 }

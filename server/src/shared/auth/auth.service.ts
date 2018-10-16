@@ -4,7 +4,7 @@ import { User } from '../../user/models/user.model';
 import { UserService } from '../../user/user.service';
 import { Configuration } from '../configuration/configuration.enum';
 import { ConfigurationService } from '../configuration/configuration.service';
-import { JwtPayload } from './jwt-payload.model';
+import {JwtAuthPayload, JwtPayload} from './jwt-payload.model';
 
 @Injectable()
 export class AuthService {
@@ -23,9 +23,7 @@ export class AuthService {
     return sign(payload, this.jwtKey, this.jwtOptions);
   }
 
-  async validateUser(validatePayload: JwtPayload): Promise<User> {
-    return this._userService.findOne({
-      username: validatePayload.username.toLowerCase(),
-    });
+  async validateUser(validatePayload: JwtAuthPayload): Promise<User> {
+    return this._userService.findById(validatePayload.userId);
   }
 }
