@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { JwtPayloadType } from "../auth/jwt-payload.model";
+import { BoundLogger, LogService } from "./log.service";
 
 @Injectable()
 export class MemoryCacheService {
 
   private generalMemoryCache: Map<string, any>;
   private jtiCache: Map<JwtPayloadType, Set<string>>;
+  private log: BoundLogger = this.logService.bindToNamespace(MemoryCacheService.name);
 
-  constructor() {
+  constructor(
+    private logService: LogService
+  ) {
     this.initializeCache();
   }
 
@@ -20,34 +24,27 @@ export class MemoryCacheService {
   }
 
   public addJti(key: JwtPayloadType, jti: string) {
-    let jtiSet = this.jtiCache.get(key);
-    if (!jtiSet) {
-      jtiSet = new Set();
-      this.jtiCache.set(key, jtiSet);
-    }
+    const jtiSet = this.jtiCache.get(key);
     jtiSet.add(jti);
   }
 
   public hasJti(key: JwtPayloadType, jti: string) {
-    let jtiSet = this.jtiCache.get(key);
-    if (!jtiSet) {
-      jtiSet = new Set();
-      this.jtiCache.set(key, jtiSet);
-    }
+    const jtiSet = this.jtiCache.get(key);
     return jtiSet.has(jti);
   }
 
   public removeJti(key: JwtPayloadType, jti: string) {
-    let jtiSet = this.jtiCache.get(key);
-    if (!jtiSet) {
-      jtiSet = new Set();
-      this.jtiCache.set(key, jtiSet);
-    }
+    const jtiSet = this.jtiCache.get(key);
     jtiSet.delete(jti);
   }
 
   public initializeCache() {
     this.generalMemoryCache = new Map();
     this.jtiCache = new Map();
+    Object.keys(JwtPayloadType).forEach((key: string) => {
+      const payloadType: JwtPayloadType = JwtPayloadType[key];
+      const jtiSet = new Set();
+      this.jtiCache.set(payloadType, jtiSet);
+    });
   }
 }
