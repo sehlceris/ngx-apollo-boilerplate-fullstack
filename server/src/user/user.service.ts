@@ -20,14 +20,41 @@ import {UserVm} from './models/view-models/user-vm.model';
 import {UserRole} from './models/user-role.enum';
 import {randomUuid} from '../shared/utilities/random-utils';
 import {MemoryCacheService} from '../shared/utilities/memory-cache.service';
+import {Configuration} from '../shared/configuration/configuration.enum';
+import {ConfigurationService} from '../shared/configuration/configuration.service';
+import {Observable, Subject} from 'rxjs';
+import {BoundLogger, LogService} from '../shared/utilities/log.service';
 
 @Injectable()
 export class UserService extends BaseService<User> {
+
+  private newUserRegisteredSubject: Subject<UserVm> = new Subject<UserVm>();
+  public newUserRegistered$: Observable<UserVm> = this.newUserRegisteredSubject.asObservable();
+
+  private userVerifiedEmailSubject: Subject<UserVm> = new Subject<UserVm>();
+  public userVerifiedEmail$: Observable<UserVm> = this.userVerifiedEmailSubject.asObservable();
+
+  private userForgotPasswordSubject: Subject<UserVm> = new Subject<UserVm>();
+  public userForgotPassword$: Observable<UserVm> = this.userForgotPasswordSubject.asObservable();
+
+  private userRequestedPasswordResetSubject: Subject<UserVm> = new Subject<UserVm>();
+  public userRequestedPasswordReset$: Observable<UserVm> = this.userRequestedPasswordResetSubject.asObservable();
+
+  private userExecutePasswordResetSubject: Subject<UserVm> = new Subject<UserVm>();
+  public userExecutePasswordReset$: Observable<UserVm> = this.userExecutePasswordResetSubject.asObservable();
+
+  private userChangedPasswordSubject: Subject<UserVm> = new Subject<UserVm>();
+  public userChangedPassword$: Observable<UserVm> = this.userChangedPasswordSubject.asObservable();
+
+  private log: BoundLogger = this.logService.bindToNamespace(UserService.name);
+
   constructor(
+    private configurationService: ConfigurationService,
     @InjectModel(User.modelName) private readonly _userModel: ModelType<User>,
     private readonly _mapperService: MapperService,
     @Inject(forwardRef(() => AuthService)) readonly _authService: AuthService,
     private readonly memoryCacheService: MemoryCacheService,
+    private logService: LogService,
   ) {
     super();
     this._model = _userModel;
@@ -47,7 +74,10 @@ export class UserService extends BaseService<User> {
 
     try {
       const result = await this.create(newUser);
-      return result.toJSON() as User;
+      const resultJSON = result.toJSON() as User;
+      const resultMapped = await this.map<UserVm>(resultJSON);
+      this.newUserRegisteredSubject.next(resultMapped);
+      return resultJSON;
     } catch (e) {
       throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -71,31 +101,53 @@ export class UserService extends BaseService<User> {
     return this.performCommonLoginSequence(user, password);
   }
 
-  async createJwtAuthPayload(user): Promise<string> {
+  async requestPasswordReset(email: string) {
+    const user = await this.findOne({ email });
+    if (user) {
+      const userVm: UserVm = await this.map<UserVm>(user.toJSON());
+      this.userRequestedPasswordResetSubject.next(userVm);
+    }
+  }
+
+  private async createJwtAuthPayload(user: UserVm): Promise<string> {
     const payload: JwtAuthPayload = {
       type: JwtPayloadType.Auth,
       userId: user.id,
       role: user.role,
     };
-    const token = await this._authService.signPayload(payload);
-    return token;
+    const token = await this._authService.signPayload(
+      payload,
+      {
+        expiresIn: this.configurationService.get(Configuration.JWT_AUTH_TOKEN_EXPIRATION)
+      },
+    );    return token;
   }
 
-  async createJwtVerifyEmailPayload(user): Promise<string> {
+  async createJwtVerifyEmailPayload(user: UserVm): Promise<string> {
     const type = JwtPayloadType.VerifyEmail;
     const payload: JwtSingleUseUserPayload = this.createJwtSingleUseUserPayload(user, type);
-    const token = await this._authService.signPayload(payload);
+    const token = await this._authService.signPayload(
+      payload,
+      {
+        expiresIn: this.configurationService.get(Configuration.JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION)
+      },
+    );
     return token;
   }
 
-  async createJwtResetPasswordPayload(user): Promise<string> {
+  async createJwtResetPasswordPayload(user: UserVm): Promise<string> {
     const type = JwtPayloadType.ResetPassword;
     const payload: JwtSingleUseUserPayload = this.createJwtSingleUseUserPayload(user, type);
-    const token = await this._authService.signPayload(payload);
+    const token = await this._authService.signPayload(
+      payload,
+      {
+        expiresIn: this.configurationService.get(Configuration.JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION)
+      },
+    );
     return token;
   }
 
-  private createJwtSingleUseUserPayload(user, type: JwtPayloadType): JwtSingleUseUserPayload {
+  private createJwtSingleUseUserPayload(user: UserVm, type: JwtPayloadType): JwtSingleUseUserPayload {
     return {
       type: type,
       userId: user.id,

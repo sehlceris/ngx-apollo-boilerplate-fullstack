@@ -9,10 +9,12 @@ import { SharedModule } from './shared/shared.module';
 import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
 import {RegistrationModule} from './registration/registration.module';
+import {CoreModule} from './shared/core/core.module';
 
 @Module({
   imports: [
     SharedModule,
+    CoreModule,
     MongooseModule.forRoot(ConfigurationService.getMongoDbConnectionString(), {
       retryDelay: 500,
       retryAttempts: 3,

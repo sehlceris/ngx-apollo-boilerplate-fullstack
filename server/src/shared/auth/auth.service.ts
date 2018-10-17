@@ -15,12 +15,15 @@ export class AuthService {
     @Inject(forwardRef(() => UserService)) readonly _userService: UserService,
     private readonly _configurationService: ConfigurationService
   ) {
-    this.jwtOptions = { expiresIn: '12h' };
+    this.jwtOptions = { expiresIn: _configurationService.get(Configuration.JWT_AUTH_TOKEN_EXPIRATION) };
     this.jwtKey = _configurationService.get(Configuration.JWT_SECRET_KEY);
   }
 
-  async signPayload(payload: JwtPayload): Promise<string> {
-    return sign(payload, this.jwtKey, this.jwtOptions);
+  async signPayload(payload: JwtPayload, options: SignOptions = {}): Promise<string> {
+    return sign(payload, this.jwtKey, {
+      ...this.jwtOptions,
+      ...options,
+    });
   }
 
   async validateUser(validatePayload: JwtAuthPayload): Promise<User> {

@@ -1,14 +1,16 @@
-import { Injectable } from "@nestjs/common";
-import * as Email from "email-templates";
-import * as SMTPTransport from "nodemailer/lib/smtp-transport";
-import * as path from "path";
-import * as nodemailer from "nodemailer";
-import { User } from "../../user/models/user.model";
-import { UserVm } from "../../user/models/view-models/user-vm.model";
-import { Configuration } from "../configuration/configuration.enum";
-import { ConfigurationService } from "../configuration/configuration.service";
-import { ClientPaths } from "../constants/client-paths";
-import { BoundLogger, LogService } from "../utilities/log.service";
+import { Injectable } from '@nestjs/common';
+import * as Email from 'email-templates';
+import * as SMTPTransport from 'nodemailer/lib/smtp-transport';
+import * as path from 'path';
+import * as nodemailer from 'nodemailer';
+import { UserVm } from '../../user/models/view-models/user-vm.model';
+import { Configuration } from '../configuration/configuration.enum';
+import { ConfigurationService } from '../configuration/configuration.service';
+import { ClientPaths } from '../constants/client-paths';
+import { BoundLogger, LogService } from '../utilities/log.service';
+import {UserService} from '../../user/user.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 enum EmailTemplatePath {
   VerifyEmail = 'verify-email',
@@ -23,14 +25,26 @@ const TOKEN_NAME = 'token';
 export class EmailService {
 
   private cachedTransport = this.getTransport();
-
   private log: BoundLogger = this.logService.bindToNamespace(EmailService.name);
+  private unsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(
+    private readonly userService: UserService,
     private readonly configurationService: ConfigurationService,
     private readonly logService: LogService,
   ) {
+  }
 
+  public startReactingToEvents() {
+    this.unsubscribe$.next(); // prevent double email effects if this method is accidentally called twice
+
+    this.userService.newUserRegistered$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(this.handleNewUserRegistered.bind(this));
+
+    this.userService.userRequestedPasswordReset$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(this.handleUserRequestedPasswordReset.bind(this));
   }
 
   async sendVerifyEmailAddressEmail(user: UserVm, token: string): Promise<void> {
@@ -89,6 +103,16 @@ export class EmailService {
       });
 
     return sendPromise;
+  }
+
+  private async handleNewUserRegistered(user: UserVm) {
+    const token = await this.userService.createJwtVerifyEmailPayload(user);
+    await this.sendVerifyEmailAddressEmail(user, token);
+  }
+
+  private async handleUserRequestedPasswordReset(user: UserVm) {
+    const token = await this.userService.createJwtResetPasswordPayload(user);
+    await this.sendPasswordResetEmail(user, token);
   }
 
   private async sendEmail(

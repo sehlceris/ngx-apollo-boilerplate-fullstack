@@ -6,14 +6,26 @@ import { UserService } from './user.service';
 import { UserApiService } from './user-api.service';
 import { UserResolvers } from './user.resolvers';
 
+const SERVICES = [
+  UserService,
+  UserApiService,
+  UserResolvers,
+];
+
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: User.modelName, schema: User.model.schema },
     ]),
   ],
-  providers: [UserService, UserApiService, UserResolvers],
-  controllers: [UserController],
-  exports: [UserService, UserApiService, UserResolvers],
+  providers: [
+    ...SERVICES
+  ],
+  controllers: [
+    UserController,
+  ],
+  exports: [
+    ...SERVICES
+  ],
 })
 export class UserModule {}
