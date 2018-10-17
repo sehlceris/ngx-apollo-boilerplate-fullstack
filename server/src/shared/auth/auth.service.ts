@@ -4,7 +4,7 @@ import { User } from '../../user/models/user.model';
 import { UserService } from '../../user/user.service';
 import { Configuration } from '../configuration/configuration.enum';
 import { ConfigurationService } from '../configuration/configuration.service';
-import {JwtAuthPayload, JwtPayload} from './jwt-payload.model';
+import { JwtAuthPayload, JwtPayload, JwtPayloadType } from "./jwt-payload.model";
 
 @Injectable()
 export class AuthService {
@@ -27,6 +27,9 @@ export class AuthService {
   }
 
   async validateUser(validatePayload: JwtAuthPayload): Promise<User> {
+    if (validatePayload.type !== JwtPayloadType.Auth) {
+      throw new Error(`Auth JWT payload must be of type ${JwtPayloadType.Auth}`);
+    }
     return this._userService.findById(validatePayload.userId);
   }
 }
