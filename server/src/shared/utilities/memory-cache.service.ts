@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { JwtPayloadType } from "../auth/jwt-payload.model";
 
 @Injectable()
 export class MemoryCacheService {
 
   private generalMemoryCache: Map<string, any>;
-  private jtiCache: Map<string, Set<string>>;
+  private jtiCache: Map<JwtPayloadType, Set<string>>;
 
   constructor() {
     this.initializeCache();
@@ -18,7 +19,7 @@ export class MemoryCacheService {
     return this.generalMemoryCache.get(key);
   }
 
-  public addJti(key: string, jti: string) {
+  public addJti(key: JwtPayloadType, jti: string) {
     let jtiSet = this.jtiCache.get(key);
     if (!jtiSet) {
       jtiSet = new Set();
@@ -27,7 +28,7 @@ export class MemoryCacheService {
     jtiSet.add(jti);
   }
 
-  public hasJti(key: string, jti: string) {
+  public hasJti(key: JwtPayloadType, jti: string) {
     let jtiSet = this.jtiCache.get(key);
     if (!jtiSet) {
       jtiSet = new Set();
@@ -36,7 +37,7 @@ export class MemoryCacheService {
     return jtiSet.has(jti);
   }
 
-  public removeJti(key: string, jti: string) {
+  public removeJti(key: JwtPayloadType, jti: string) {
     let jtiSet = this.jtiCache.get(key);
     if (!jtiSet) {
       jtiSet = new Set();
