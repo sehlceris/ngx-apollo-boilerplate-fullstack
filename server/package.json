@@ -21,8 +21,15 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run prettier"
+      "pre-commit": "lint-staged",
+      "post-commit": "git update-index -g"
     }
+  },
+  "lint-staged": {
+    "{src,}/**/*.{ts,json,md,scss}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "@nestjs/common": "5.3.6",
@@ -75,6 +82,7 @@
     "@types/supertest": "2.0.6",
     "husky": "^0.14.3",
     "jest": "23.6.0",
+    "lint-staged": "^7.3.0",
     "nodemon": "1.18.4",
     "prettier": "1.14.2",
     "supertest": "3.3.0",
