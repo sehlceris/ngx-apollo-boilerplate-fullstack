@@ -8,20 +8,20 @@ import {
   LoginWithUsernameVm,
 } from './models/view-models/login-vm.model';
 import { LoginResponseVm } from './models/view-models/login-response-vm.model';
-import {AuthService} from '../shared/auth/auth.service';
-import {BoundLogger, LogService} from '../shared/utilities/log.service';
+import { AuthService } from '../shared/auth/auth.service';
+import { BoundLogger, LogService } from '../shared/utilities/log.service';
 
 @Injectable()
 export class UserApiService {
-
-  private log: BoundLogger = this.logService.bindToNamespace(UserApiService.name);
+  private log: BoundLogger = this.logService.bindToNamespace(
+    UserApiService.name
+  );
 
   constructor(
     protected readonly userService: UserService,
     protected readonly authService: AuthService,
-    protected readonly logService: LogService,
-  ) {
-  }
+    protected readonly logService: LogService
+  ) {}
 
   async getUsers(filter: Partial<UserVm> = {}): Promise<UserVm[]> {
     try {

@@ -25,9 +25,7 @@ import { GraphqlUserRoleOrSelfGuard } from '../shared/guards/graphql/graphql-use
 
 @Resolver('User')
 export class UserResolvers {
-  constructor(
-    protected readonly userApiService: UserApiService,
-  ) {}
+  constructor(protected readonly userApiService: UserApiService) {}
 
   @Mutation('register')
   async register(@Args() vm: RegisterVm): Promise<UserVm> {

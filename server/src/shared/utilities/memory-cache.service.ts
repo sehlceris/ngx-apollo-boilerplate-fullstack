@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { JwtPayloadType } from "../auth/jwt-payload.model";
+import { JwtPayloadType } from '../auth/jwt-payload.model';
 
 @Injectable()
 export class MemoryCacheService {
-
   private generalMemoryCache: Map<string, any>;
   private jtiCache: Map<JwtPayloadType, Set<string>>;
 

@@ -1,8 +1,14 @@
-import {forwardRef, HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
-import {InjectModel} from '@nestjs/mongoose';
-import {compare, genSalt, hash} from 'bcryptjs';
-import {ModelType} from 'typegoose';
-import {AuthService} from '../shared/auth/auth.service';
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { compare, genSalt, hash } from 'bcryptjs';
+import { ModelType } from 'typegoose';
+import { AuthService } from '../shared/auth/auth.service';
 import {
   JwtAuthPayload,
   JwtPayload,
@@ -10,41 +16,60 @@ import {
   JwtSingleUseUserPayload,
   JwtUserPayload,
 } from '../shared/auth/jwt-payload.model';
-import {BaseService} from '../shared/base.service';
-import {MapperService} from '../shared/mapper/mapper.service';
-import {User, UserModel} from './models/user.model';
-import {LoginResponseVm} from './models/view-models/login-response-vm.model';
-import {LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm} from './models/view-models/login-vm.model';
-import {RegisterVm} from './models/view-models/register-vm.model';
-import {UserVm} from './models/view-models/user-vm.model';
-import {UserRole} from './models/user-role.enum';
-import {randomUuid} from '../shared/utilities/random-utils';
-import {MemoryCacheService} from '../shared/utilities/memory-cache.service';
-import {Configuration} from '../shared/configuration/configuration.enum';
-import {ConfigurationService} from '../shared/configuration/configuration.service';
-import {Observable, Subject} from 'rxjs';
-import {BoundLogger, LogService} from '../shared/utilities/log.service';
+import { BaseService } from '../shared/base.service';
+import { MapperService } from '../shared/mapper/mapper.service';
+import { User, UserModel } from './models/user.model';
+import { LoginResponseVm } from './models/view-models/login-response-vm.model';
+import {
+  LoginWithEmailVm,
+  LoginWithIdVm,
+  LoginWithUsernameVm,
+} from './models/view-models/login-vm.model';
+import { RegisterVm } from './models/view-models/register-vm.model';
+import { UserVm } from './models/view-models/user-vm.model';
+import { UserRole } from './models/user-role.enum';
+import { randomUuid } from '../shared/utilities/random-utils';
+import { MemoryCacheService } from '../shared/utilities/memory-cache.service';
+import { Configuration } from '../shared/configuration/configuration.enum';
+import { ConfigurationService } from '../shared/configuration/configuration.service';
+import { Observable, Subject } from 'rxjs';
+import { BoundLogger, LogService } from '../shared/utilities/log.service';
 
 @Injectable()
 export class UserService extends BaseService<User> {
-
   private newUserRegisteredSubject: Subject<UserVm> = new Subject<UserVm>();
-  public newUserRegistered$: Observable<UserVm> = this.newUserRegisteredSubject.asObservable();
+  public newUserRegistered$: Observable<
+    UserVm
+  > = this.newUserRegisteredSubject.asObservable();
 
   private userVerifiedEmailSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userVerifiedEmail$: Observable<UserVm> = this.userVerifiedEmailSubject.asObservable();
+  public userVerifiedEmail$: Observable<
+    UserVm
+  > = this.userVerifiedEmailSubject.asObservable();
 
   private userForgotPasswordSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userForgotPassword$: Observable<UserVm> = this.userForgotPasswordSubject.asObservable();
+  public userForgotPassword$: Observable<
+    UserVm
+  > = this.userForgotPasswordSubject.asObservable();
 
-  private userRequestedPasswordResetSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userRequestedPasswordReset$: Observable<UserVm> = this.userRequestedPasswordResetSubject.asObservable();
+  private userRequestedPasswordResetSubject: Subject<UserVm> = new Subject<
+    UserVm
+  >();
+  public userRequestedPasswordReset$: Observable<
+    UserVm
+  > = this.userRequestedPasswordResetSubject.asObservable();
 
-  private userExecutePasswordResetSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userExecutePasswordReset$: Observable<UserVm> = this.userExecutePasswordResetSubject.asObservable();
+  private userExecutePasswordResetSubject: Subject<UserVm> = new Subject<
+    UserVm
+  >();
+  public userExecutePasswordReset$: Observable<
+    UserVm
+  > = this.userExecutePasswordResetSubject.asObservable();
 
   private userChangedPasswordSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userChangedPassword$: Observable<UserVm> = this.userChangedPasswordSubject.asObservable();
+  public userChangedPassword$: Observable<
+    UserVm
+  > = this.userChangedPasswordSubject.asObservable();
 
   private log: BoundLogger = this.logService.bindToNamespace(UserService.name);
 
@@ -54,7 +79,7 @@ export class UserService extends BaseService<User> {
     private readonly _mapperService: MapperService,
     @Inject(forwardRef(() => AuthService)) readonly _authService: AuthService,
     private readonly memoryCacheService: MemoryCacheService,
-    private logService: LogService,
+    private logService: LogService
   ) {
     super();
     this._model = _userModel;
@@ -115,43 +140,50 @@ export class UserService extends BaseService<User> {
       userId: user.id,
       role: user.role,
     };
-    const token = await this._authService.signPayload(
-      payload,
-      {
-        expiresIn: this.configurationService.get(Configuration.JWT_AUTH_TOKEN_EXPIRATION)
-      },
-    );    return token;
+    const token = await this._authService.signPayload(payload, {
+      expiresIn: this.configurationService.get(
+        Configuration.JWT_AUTH_TOKEN_EXPIRATION
+      ),
+    });
+    return token;
   }
 
   async createJwtVerifyEmailPayload(user: UserVm): Promise<string> {
     const type = JwtPayloadType.VerifyEmail;
-    const payload: JwtSingleUseUserPayload = this.createJwtSingleUseUserPayload(user, type);
-    const token = await this._authService.signPayload(
-      payload,
-      {
-        expiresIn: this.configurationService.get(Configuration.JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION)
-      },
+    const payload: JwtSingleUseUserPayload = this.createJwtSingleUseUserPayload(
+      user,
+      type
     );
+    const token = await this._authService.signPayload(payload, {
+      expiresIn: this.configurationService.get(
+        Configuration.JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION
+      ),
+    });
     return token;
   }
 
   async createJwtResetPasswordPayload(user: UserVm): Promise<string> {
     const type = JwtPayloadType.ResetPassword;
-    const payload: JwtSingleUseUserPayload = this.createJwtSingleUseUserPayload(user, type);
-    const token = await this._authService.signPayload(
-      payload,
-      {
-        expiresIn: this.configurationService.get(Configuration.JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION)
-      },
+    const payload: JwtSingleUseUserPayload = this.createJwtSingleUseUserPayload(
+      user,
+      type
     );
+    const token = await this._authService.signPayload(payload, {
+      expiresIn: this.configurationService.get(
+        Configuration.JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION
+      ),
+    });
     return token;
   }
 
-  private createJwtSingleUseUserPayload(user: UserVm, type: JwtPayloadType): JwtSingleUseUserPayload {
+  private createJwtSingleUseUserPayload(
+    user: UserVm,
+    type: JwtPayloadType
+  ): JwtSingleUseUserPayload {
     return {
       type: type,
       userId: user.id,
-      jti: this.createAndStoreJti(type)
+      jti: this.createAndStoreJti(type),
     };
   }
 

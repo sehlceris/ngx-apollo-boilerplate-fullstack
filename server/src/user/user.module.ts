@@ -6,11 +6,7 @@ import { UserService } from './user.service';
 import { UserApiService } from './user-api.service';
 import { UserResolvers } from './user.resolvers';
 
-const SERVICES = [
-  UserService,
-  UserApiService,
-  UserResolvers,
-];
+const SERVICES = [UserService, UserApiService, UserResolvers];
 
 @Module({
   imports: [
@@ -18,14 +14,8 @@ const SERVICES = [
       { name: User.modelName, schema: User.model.schema },
     ]),
   ],
-  providers: [
-    ...SERVICES
-  ],
-  controllers: [
-    UserController,
-  ],
-  exports: [
-    ...SERVICES
-  ],
+  providers: [...SERVICES],
+  controllers: [UserController],
+  exports: [...SERVICES],
 })
 export class UserModule {}

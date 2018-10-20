@@ -1,15 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import {RegistrationService} from './registration.service';
-import {UserVm} from '../user/models/view-models/user-vm.model';
-import {User} from '../user/models/user.model';
-import {Registration, RegistrationModel} from './models/registration.model';
-import {ConfirmUserVm} from './models/view-models/confirm-user-vm.model';
+import { RegistrationService } from './registration.service';
+import { UserVm } from '../user/models/view-models/user-vm.model';
+import { User } from '../user/models/user.model';
+import { Registration, RegistrationModel } from './models/registration.model';
+import { ConfirmUserVm } from './models/view-models/confirm-user-vm.model';
 
 @Injectable()
 export class RegistrationApiService {
-  constructor(
-    protected readonly registrationService: RegistrationService
-  ) {}
+  constructor(protected readonly registrationService: RegistrationService) {}
 
   async createRegistrationConfirmationForUser(user: User) {
     const newRegistration = new RegistrationModel();

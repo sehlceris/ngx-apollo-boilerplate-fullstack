@@ -35,4 +35,7 @@ export class Registration extends Typegoose {
   }
 }
 
-export const RegistrationModel = new Registration().getModelForClass(Registration, { schemaOptions });
+export const RegistrationModel = new Registration().getModelForClass(
+  Registration,
+  { schemaOptions }
+);

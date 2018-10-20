@@ -14,7 +14,11 @@ import { TodoModule } from '../todo/todo.module';
     ]),
     TodoModule,
   ],
-  providers: [RegistrationService, RegistrationApiService, RegistrationResolvers],
+  providers: [
+    RegistrationService,
+    RegistrationApiService,
+    RegistrationResolvers,
+  ],
   controllers: [RegistrationController],
   exports: [RegistrationService, RegistrationApiService, RegistrationResolvers],
 })
