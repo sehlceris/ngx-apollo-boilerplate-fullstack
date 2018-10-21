@@ -14,6 +14,7 @@ export interface JwtPayload {
 
 export interface JwtUserPayload extends JwtPayload {
   userId: string;
+  securityIdentifier: string;
 }
 
 export interface JwtAuthPayload extends JwtUserPayload {

@@ -43,6 +43,12 @@ export class AuthService {
         `Auth JWT payload must be of type ${JwtPayloadType.Auth}`
       );
     }
-    return this._userService.findById(validatePayload.userId);
+    const user = await this._userService.findById(validatePayload.userId);
+    if (validatePayload.securityIdentifier !== user.securityIdentifier) {
+      throw new Error(
+        'Security identifier mismatch'
+      );
+    }
+    return user;
   }
 }

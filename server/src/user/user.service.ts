@@ -139,6 +139,7 @@ export class UserService extends BaseService<User> {
       type: JwtPayloadType.Auth,
       userId: user.id,
       role: user.role,
+      securityIdentifier: user.securityIdentifier,
     };
     const token = await this._authService.signPayload(payload, {
       expiresIn: this.configurationService.get(
@@ -184,6 +185,7 @@ export class UserService extends BaseService<User> {
       type: type,
       userId: user.id,
       jti: this.createAndStoreJti(type),
+      securityIdentifier: user.securityIdentifier,
     };
   }
 

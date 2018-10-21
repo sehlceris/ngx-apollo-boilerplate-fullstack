@@ -1,6 +1,8 @@
 import { ModelType, pre, prop, Typegoose } from 'typegoose';
 import { schemaOptions } from '../../shared/base.model';
 import { UserRole } from './user-role.enum';
+import { randomBase64, randomBase64Sync } from '../../shared/utilities/random-utils';
+import { SecurityConstants } from '../../shared/constants/security-constants';
 
 @pre<User>('findOneAndUpdate', function(next) {
   this._update.updatedAt = new Date(Date.now());
@@ -34,6 +36,9 @@ export class User extends Typegoose {
 
   @prop({ default: Date.now() })
   updatedAt?: Date;
+
+  @prop({ default: randomBase64Sync(SecurityConstants.SecurityIdentifierByteLength) })
+  securityIdentifier?: string;
 
   id?: string;
 
