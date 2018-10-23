@@ -33,7 +33,7 @@ export class GraphQLJwtAuthGuard implements CanActivate {
     try {
       const jwtStr = await this.getJwtStringFromHeaders(headers);
       const decodedJwt: JwtAuthPayload = await this.decodeJwtPayload(jwtStr);
-      const user = await this.authService.validateUser(decodedJwt);
+      const user = await this.authService.validateUserAuthentication(decodedJwt);
       graphqlContext.user = user;
       return true;
     } catch (e) {

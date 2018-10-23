@@ -7,7 +7,7 @@ import { ConfigurationService } from '../configuration/configuration.service';
 import {
   JwtAuthPayload,
   JwtPayload,
-  JwtPayloadType,
+  JwtPayloadType, JwtSingleUseUserPayload, JwtUserPayload,
 } from './jwt-payload.model';
 
 @Injectable()
@@ -37,12 +37,37 @@ export class AuthService {
     });
   }
 
-  async validateUser(validatePayload: JwtAuthPayload): Promise<User> {
-    if (validatePayload.type !== JwtPayloadType.Auth) {
+  async validateUserAuthentication(validatePayload: JwtAuthPayload): Promise<User> {
+    const payloadType = JwtPayloadType.Auth;
+    if (validatePayload.type !== payloadType) {
       throw new Error(
-        `Auth JWT payload must be of type ${JwtPayloadType.Auth}`
+        `Auth JWT payload must be of type ${payloadType}`
       );
     }
+    return this.getValidatedUser(validatePayload);
+  }
+
+  async validateUserEmailVerification(validatePayload: JwtSingleUseUserPayload): Promise<User> {
+    const payloadType = JwtPayloadType.VerifyEmail;
+    if (validatePayload.type !== payloadType) {
+      throw new Error(
+        `Auth JWT payload must be of type ${payloadType}`
+      );
+    }
+    return this.getValidatedUser(validatePayload);
+  }
+
+  async validateUserPasswordReset(validatePayload: JwtSingleUseUserPayload): Promise<User> {
+    const payloadType = JwtPayloadType.ResetPassword;
+    if (validatePayload.type !== payloadType) {
+      throw new Error(
+        `Auth JWT payload must be of type ${payloadType}`
+      );
+    }
+    return this.getValidatedUser(validatePayload);
+  }
+
+  private async getValidatedUser(validatePayload: JwtUserPayload) {
     const user = await this._userService.findById(validatePayload.userId);
     if (validatePayload.securityIdentifier !== user.securityIdentifier) {
       throw new Error(
