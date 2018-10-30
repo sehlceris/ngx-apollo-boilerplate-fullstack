@@ -74,6 +74,6 @@ export abstract class HttpRolesOrSelfGuard extends AbstractRolesOrSelfGuard {
   protected getUserFromContext(
     executionContext: ExecutionContext
   ): User {
-    return HttpGuardHelpers.getUserFromContext(executionContext);
+    return HttpGuardHelpers.getUserFromAuthenticatedContext(executionContext);
   }
 }

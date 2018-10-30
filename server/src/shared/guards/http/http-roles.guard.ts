@@ -11,6 +11,6 @@ export class HttpRolesGuard extends AbstractUserRoleGuard {
   }
 
   getUserFromContext(context: ExecutionContext): User {
-    return HttpGuardHelpers.getUserFromContext(context);
+    return HttpGuardHelpers.getUserFromAuthenticatedContext(context);
   }
 }

@@ -14,25 +14,25 @@ export class MemoryCacheService {
     this.initializeCache();
   }
 
-  public set(key: string, value: any) {
+  public async set(key: string, value: any) {
     this.generalMemoryCache.set(key, value);
   }
 
-  public get(key: string) {
+  public async get(key: string) {
     return this.generalMemoryCache.get(key);
   }
 
-  public addJti(key: JwtPayloadType, jti: string) {
+  public async addJti(key: JwtPayloadType, jti: string) {
     const jtiSet = this.jtiCache.get(key);
     jtiSet.add(jti);
   }
 
-  public hasJti(key: JwtPayloadType, jti: string) {
+  public async hasJti(key: JwtPayloadType, jti: string) {
     const jtiSet = this.jtiCache.get(key);
     return jtiSet.has(jti);
   }
 
-  public removeJti(key: JwtPayloadType, jti: string) {
+  public async removeJti(key: JwtPayloadType, jti: string) {
     const jtiSet = this.jtiCache.get(key);
     jtiSet.delete(jti);
   }
