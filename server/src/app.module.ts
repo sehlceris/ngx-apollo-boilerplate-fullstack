@@ -8,8 +8,8 @@ import { ConfigurationService } from './shared/configuration/configuration.servi
 import { SharedModule } from './shared/shared.module';
 import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
-import {RegistrationModule} from './registration/registration.module';
-import {CoreModule} from './shared/core/core.module';
+import { CoreModule } from './shared/core/core.module';
+import { TokenModule } from './token/token.module';
 
 @Module({
   imports: [
@@ -31,7 +31,7 @@ import {CoreModule} from './shared/core/core.module';
       },
     }),
     UserModule,
-    RegistrationModule,
+    TokenModule,
     TodoModule,
   ],
   controllers: [AppController],

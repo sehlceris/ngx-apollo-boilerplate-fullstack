@@ -1,7 +1,7 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import {UserVm} from './user-vm.model';
+import { UserVm } from './user-vm.model';
 
-export class ConfirmUserVm {
+export class VerifyEmailVm {
   @ApiModelProperty({ required: true })
   confirmationToken: string;
 }

@@ -39,9 +39,7 @@ import { HttpRolesOrSelfGuard } from '../shared/guards/http/http-user-role-or-se
 @Controller('users')
 @ApiUseTags(User.modelName)
 export class UserController {
-  constructor(
-    private readonly userApiService: UserApiService
-  ) {}
+  constructor(private readonly userApiService: UserApiService) {}
 
   @Post('register')
   @ApiCreatedResponse({ type: UserVm })

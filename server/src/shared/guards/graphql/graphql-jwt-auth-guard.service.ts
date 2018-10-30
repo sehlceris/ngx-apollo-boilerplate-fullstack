@@ -7,11 +7,11 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { verify } from 'jsonwebtoken';
 import { Configuration } from '../../configuration/configuration.enum';
 import { ConfigurationService } from '../../configuration/configuration.service';
-import { JwtAuthPayload } from '../../auth/jwt-payload.model';
+import { AnyJwtPayload, AnyJwtUserPayload, JwtAuthPayload } from '../../auth/jwt-payload.model';
 import { AuthService } from '../../auth/auth.service';
+import { GraphQLGuardHelpers } from './helpers';
 
 @Injectable()
 export class GraphQLJwtAuthGuard implements CanActivate {
@@ -31,10 +31,11 @@ export class GraphQLJwtAuthGuard implements CanActivate {
     const headers = graphqlContext.headers;
 
     try {
-      const jwtStr = await this.getJwtStringFromHeaders(headers);
-      const decodedJwt: JwtAuthPayload = await this.decodeJwtPayload(jwtStr);
-      const user = await this.authService.validateUser(decodedJwt);
+      const jwtStr = await GraphQLGuardHelpers.getJwtStringFromHeaders(headers);
+      const decodedJwt: AnyJwtUserPayload = await GraphQLGuardHelpers.decodeJwtPayload(jwtStr);
+      const user = await this.authService.validateUserAuthentication(decodedJwt);
       graphqlContext.user = user;
+      graphqlContext.jwt = decodedJwt;
       return true;
     } catch (e) {
       throw new HttpException(
@@ -46,37 +47,5 @@ export class GraphQLJwtAuthGuard implements CanActivate {
       'You do not have permission (GraphQLJwtAuthGuard)',
       HttpStatus.UNAUTHORIZED
     );
-  }
-
-  private async getJwtStringFromHeaders(headers): Promise<string> {
-    if (!headers || !(headers['authorization'] || headers['Authorization'])) {
-      throw new Error('No authorization header provided');
-    }
-
-    const authHeader = headers['authorization'] || headers['Authorization'];
-
-    const split = authHeader.split(' ');
-    if (
-      split &&
-      split.length === 2 &&
-      (split[0] === 'Bearer' || split[0] === 'bearer')
-    ) {
-      const jwtStr = split[1];
-      return jwtStr;
-    }
-    throw new Error(
-      'Authorization header is not in expected format: Bearer {{jwt}} '
-    );
-  }
-
-  private async decodeJwtPayload(jwtStr: string): Promise<JwtAuthPayload> {
-    return new Promise<any>((resolve, reject) => {
-      verify(jwtStr, this.jwtKey, function(err, decoded) {
-        if (err) {
-          reject(err);
-        }
-        resolve(decoded);
-      });
-    });
   }
 }

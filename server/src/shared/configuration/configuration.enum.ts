@@ -1,5 +1,4 @@
 export enum Configuration {
-
   // ips and ports of stuff
   SERVER_HOST = 'SERVER_HOST',
   SERVER_PORT = 'SERVER_PORT',
@@ -24,7 +23,6 @@ export enum Configuration {
   // JWT
   JWT_AUTH_TOKEN_EXPIRATION = 'JWT_AUTH_TOKEN_EXPIRATION',
   JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION = 'JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION',
-
 
   // secrets
   JWT_SECRET_KEY = 'JWT_SECRET_KEY',

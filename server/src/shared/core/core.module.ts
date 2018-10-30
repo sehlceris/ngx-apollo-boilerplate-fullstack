@@ -1,30 +1,18 @@
-import {Module} from '@nestjs/common';
-import {SharedModule} from '../shared.module';
-import {BackgroundService} from './services/background.service';
-import {EmailService} from '../email/email.service';
+import { Module } from '@nestjs/common';
+import { SharedModule } from '../shared.module';
+import { BackgroundService } from './services/background.service';
+import { EmailService } from '../email/email.service';
 
-const SERVICES = [
-  BackgroundService,
-  EmailService,
-];
+const SERVICES = [BackgroundService, EmailService];
 
 @Module({
-  imports: [
-    SharedModule,
-  ],
+  imports: [SharedModule],
   controllers: [],
-  exports: [
-    ...SERVICES,
-  ],
-  providers: [
-    ...SERVICES,
-  ],
+  exports: [...SERVICES],
+  providers: [...SERVICES],
 })
 export class CoreModule {
-
-  constructor(
-    private readonly backgroundService: BackgroundService,
-  ) {
+  constructor(private readonly backgroundService: BackgroundService) {
     this.backgroundService.startAllBackgroundServices();
   }
 }

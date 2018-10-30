@@ -4,7 +4,6 @@ import { BoundLogger, LogService } from "./log.service";
 
 @Injectable()
 export class MemoryCacheService {
-
   private generalMemoryCache: Map<string, any>;
   private jtiCache: Map<JwtPayloadType, Set<string>>;
   private log: BoundLogger = this.logService.bindToNamespace(MemoryCacheService.name);

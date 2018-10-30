@@ -1,12 +1,11 @@
-import {Global, Module} from '@nestjs/common';
-import {UserModule} from '../user/user.module';
-import {AuthService} from './auth/auth.service';
-import {JwtStrategy} from './auth/strategies/jwt-strategy.service';
-import {ConfigurationService} from './configuration/configuration.service';
-import {MapperService} from './mapper/mapper.service';
-import {LogService} from './utilities/log.service';
-import {MemoryCacheService} from './utilities/memory-cache.service';
-import {RegistrationModule} from '../registration/registration.module';
+import { Global, Module } from '@nestjs/common';
+import { UserModule } from '../user/user.module';
+import { AuthService } from './auth/auth.service';
+import { JwtStrategy } from './auth/strategies/jwt-strategy.service';
+import { ConfigurationService } from './configuration/configuration.service';
+import { MapperService } from './mapper/mapper.service';
+import { LogService } from './utilities/log.service';
+import { MemoryCacheService } from './utilities/memory-cache.service';
 
 const SERVICES = [
   ConfigurationService,
@@ -14,22 +13,13 @@ const SERVICES = [
   AuthService,
   LogService,
   MemoryCacheService,
-  JwtStrategy
+  JwtStrategy,
 ];
 
 @Global()
 @Module({
-  imports: [
-    UserModule,
-    RegistrationModule,
-  ],
-  exports: [
-    UserModule,
-    ...SERVICES,
-  ],
-  providers: [
-    ...SERVICES,
-  ],
+  imports: [UserModule],
+  exports: [UserModule, ...SERVICES],
+  providers: [...SERVICES],
 })
-export class SharedModule {
-}
+export class SharedModule {}
