@@ -1,21 +1,17 @@
 import {
+  CanActivate,
   ExecutionContext,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { User } from '../../../user/models/user.model';
-import { AbstractTemplateGuard } from './abstract-template.guard';
 
-export abstract class AbstractUserGuard extends AbstractTemplateGuard {
+export abstract class AbstractTemplateGuard implements CanActivate {
 
-  protected constructor(protected readonly _reflector: Reflector) {
-    super();
-  }
-
-  protected abstract getUserFromContext(
+  protected abstract async checkCanActivate(
     context: ExecutionContext
-  ): User;
+  ): Promise<boolean>;
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     let canActivate;
@@ -23,7 +19,7 @@ export abstract class AbstractUserGuard extends AbstractTemplateGuard {
       canActivate = await this.checkCanActivate(context);
     } catch (e) {
       throw new HttpException(
-        `Error inside guard: ${e} (AbstractUserGuard)`,
+        `Error inside guard: ${e} (AbstractTemplateGuard)`,
         HttpStatus.INTERNAL_SERVER_ERROR
       );
     }
@@ -31,7 +27,7 @@ export abstract class AbstractUserGuard extends AbstractTemplateGuard {
       return true;
     }
     throw new HttpException(
-      'You do not have permission (AbstractUserGuard)',
+      'You do not have permission (AbstractTemplateGuard)',
       HttpStatus.UNAUTHORIZED
     );
   }

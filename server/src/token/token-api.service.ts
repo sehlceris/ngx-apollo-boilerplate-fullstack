@@ -1,12 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { TokenService } from './token.service';
-import { UserVm } from '../user/models/view-models/user-vm.model';
-import { User } from '../user/models/user.model';
-import { Token, TokenModel } from './models/token.model';
-import { VerifyEmailVm } from './models/view-models/verify-email-vm.model';
-import { MemoryCacheService } from '../shared/utilities/memory-cache.service';
-import { JwtSingleUseUserPayload } from '../shared/auth/jwt-payload.model';
-import { UserService } from '../user/user.service';
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { JwtSingleUseUserPayload } from "../shared/auth/jwt-payload.model";
+import { MemoryCacheService } from "../shared/utilities/memory-cache.service";
+import { UserRole } from "../user/models/user-role.enum";
+import { User } from "../user/models/user.model";
+import { UserVm } from "../user/models/view-models/user-vm.model";
+import { UserService } from "../user/user.service";
+import { TokenService } from "./token.service";
 
 @Injectable()
 export class TokenApiService {
@@ -18,12 +17,28 @@ export class TokenApiService {
   }
 
   async tokenExists(vm: JwtSingleUseUserPayload): Promise<boolean> {
-    const hasJti = await this.memoryCacheService.hasJti(vm.type, vm.jti);
-    return hasJti;
+    return true; // the token is already verified to be existing via the token guard
   }
 
   async verifyEmail(vm: JwtSingleUseUserPayload): Promise<UserVm> {
-    const tokenExists = await this.tokenExists(vm);
-    return null;
+    await this.consumeJti(vm);
+    const user = await this.userService.findById(vm.userId);
+    user.role = UserRole.User;
+
+    try {
+      const updatedUser = await this.userService.update(vm.userId, user);
+      return updatedUser.toJSON() as User;
+    } catch (e) {
+      throw new HttpException(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async resetPassword(vm: JwtSingleUseUserPayload, password: string): Promise<UserVm> {
+    await this.consumeJti(vm);
+    return this.userService.updatePasswordById(vm.userId, password);
+  }
+
+  private async consumeJti(vm: JwtSingleUseUserPayload): Promise<void> {
+    return this.memoryCacheService.removeJti(vm.type, vm.jti);
   }
 }

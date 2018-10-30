@@ -15,26 +15,33 @@ export class MemoryCacheService {
   }
 
   public async set(key: string, value: any) {
+    this.log.debug(`setting cache for key: ${key}; value: ${value}`);
     this.generalMemoryCache.set(key, value);
   }
 
   public async get(key: string) {
-    return this.generalMemoryCache.get(key);
+    const cachedValue = this.generalMemoryCache.get(key);
+    this.log.debug(`getting cache for key: ${key}; value: ${cachedValue}`);
+    return cachedValue;
   }
 
   public async addJti(key: JwtPayloadType, jti: string) {
     const jtiSet = this.jtiCache.get(key);
+    this.log.debug(`adding JTI for key: ${key}`);
     jtiSet.add(jti);
   }
 
   public async hasJti(key: JwtPayloadType, jti: string) {
     const jtiSet = this.jtiCache.get(key);
-    return jtiSet.has(jti);
+    const hasJti = jtiSet.has(jti);
+    this.log.debug(`has JTI for key: ${key} - ${hasJti}`);
+    return hasJti;
   }
 
   public async removeJti(key: JwtPayloadType, jti: string) {
     const jtiSet = this.jtiCache.get(key);
     jtiSet.delete(jti);
+    this.log.debug(`removed JTI for key: ${key}`);
   }
 
   public initializeCache() {

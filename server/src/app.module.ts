@@ -6,10 +6,7 @@ import { AppService } from './app.service';
 import { Configuration } from './shared/configuration/configuration.enum';
 import { ConfigurationService } from './shared/configuration/configuration.service';
 import { SharedModule } from './shared/shared.module';
-import { TodoModule } from './todo/todo.module';
-import { UserModule } from './user/user.module';
 import { CoreModule } from './shared/core/core.module';
-import { TokenModule } from './token/token.module';
 
 @Module({
   imports: [
@@ -30,9 +27,6 @@ import { TokenModule } from './token/token.module';
         };
       },
     }),
-    UserModule,
-    TokenModule,
-    TodoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

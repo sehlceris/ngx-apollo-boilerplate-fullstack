@@ -9,8 +9,8 @@ import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Configuration } from '../../configuration/configuration.enum';
 import { ConfigurationService } from '../../configuration/configuration.service';
-import { AnyJwtPayload, AnyJwtUserPayload, JwtAuthPayload } from '../../auth/jwt-payload.model';
 import { AuthService } from '../../auth/auth.service';
+import { GraphqlContextModel } from "./graphql-context.model";
 import { GraphQLGuardHelpers } from './helpers';
 
 @Injectable()
@@ -26,16 +26,15 @@ export class GraphQLJwtAuthGuard implements CanActivate {
   }
 
   async canActivate(executionContext: ExecutionContext): Promise<boolean> {
-    const ctx = GqlExecutionContext.create(executionContext);
-    const graphqlContext = ctx.getContext();
-    const headers = graphqlContext.headers;
-
     try {
+      const ctx = GqlExecutionContext.create(executionContext);
+      const graphqlContext = ctx.getContext<GraphqlContextModel>();
+      const headers = graphqlContext.headers;
       const jwtStr = GraphQLGuardHelpers.getJwtStringFromHeaders(headers);
-      const decodedJwt: AnyJwtUserPayload = await GraphQLGuardHelpers.decodeJwtPayload(jwtStr);
-      const user = await this.authService.validateUserAuthentication(decodedJwt);
+      const jwtPayload = await GraphQLGuardHelpers.decodeJwtPayload(jwtStr);
+      const user = await this.authService.validateUserAuthentication(jwtPayload);
       graphqlContext.user = user;
-      graphqlContext.jwt = decodedJwt;
+      graphqlContext.jwt = jwtPayload;
       return true;
     } catch (e) {
       throw new HttpException(

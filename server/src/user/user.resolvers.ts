@@ -1,9 +1,7 @@
 import {
   Args,
   Mutation,
-  Parent,
   Query,
-  ResolveProperty,
   Resolver,
 } from '@nestjs/graphql';
 import { UserApiService } from './user-api.service';
@@ -20,7 +18,6 @@ import { UserRole } from './models/user-role.enum';
 import { UseGuards } from '@nestjs/common';
 import { GraphQLJwtAuthGuard } from '../shared/guards/graphql/graphql-jwt-auth-guard.service';
 import { GraphQLRolesGuard } from '../shared/guards/graphql/graphql-roles-guard.service';
-import { TodoApiService } from '../todo/todo-api.service';
 import { GraphqlUserRoleOrSelfGuard } from '../shared/guards/graphql/graphql-user-role-or-self-guard.service';
 
 @Resolver('User')

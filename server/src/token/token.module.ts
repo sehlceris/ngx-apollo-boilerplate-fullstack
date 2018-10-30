@@ -5,21 +5,17 @@ import { TokenController } from './token.controller';
 import { TokenService } from './token.service';
 import { TokenApiService } from './token-api.service';
 import { TokenResolvers } from './token.resolvers';
-import { TodoModule } from '../todo/todo.module';
+
+const SERVICES = [TokenService, TokenApiService, TokenResolvers];
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Token.modelName, schema: Token.model.schema },
     ]),
-    TodoModule,
   ],
-  providers: [
-    TokenService,
-    TokenApiService,
-    TokenResolvers,
-  ],
+  providers: [...SERVICES],
   controllers: [TokenController],
-  exports: [TokenService, TokenApiService, TokenResolvers],
+  exports: [...SERVICES],
 })
 export class TokenModule {}

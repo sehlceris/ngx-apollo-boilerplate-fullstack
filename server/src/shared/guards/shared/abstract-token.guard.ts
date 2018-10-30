@@ -1,20 +1,25 @@
 import { ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AbstractUserGuard } from './abstract-user.guard';
+import { BoundLogger, LogService } from "../../utilities/log.service";
+import { AbstractTemplateGuard } from "./abstract-template.guard";
 import { JwtPayloadType, JwtSingleUseUserPayload } from '../../auth/jwt-payload.model';
 import { MemoryCacheService } from '../../utilities/memory-cache.service';
 
-export abstract class AbstractTokenGuard extends AbstractUserGuard {
-  constructor(
+export abstract class AbstractTokenGuard extends AbstractTemplateGuard {
+
+  private log: BoundLogger = this.logService.bindToNamespace(AbstractTokenGuard.name);
+
+  protected constructor(
     protected readonly _reflector: Reflector,
     protected readonly memoryCacheService: MemoryCacheService,
+    protected logService: LogService,
   ) {
-    super(_reflector);
+    super();
   }
 
   protected abstract async getJwtPayloadFromContext(
     context: ExecutionContext
-  ): JwtSingleUseUserPayload;
+  ): Promise<JwtSingleUseUserPayload>;
 
   protected async checkCanActivate(
     context: ExecutionContext
@@ -24,10 +29,11 @@ export abstract class AbstractTokenGuard extends AbstractUserGuard {
       context.getHandler()
     );
     const jwtPayload: JwtSingleUseUserPayload = await this.getJwtPayloadFromContext(context);
-    const isSameType = jwtPayload && jwtPayload.type && jwtPayload.type === jwtPayloadType;
+    this.log.debug(`checkCanActivate with JWT payload type: ${jwtPayloadType} vs ${jwtPayload.type}`);
+    const isSameType = (!jwtPayloadType || jwtPayload && jwtPayload.type && jwtPayload.type === jwtPayloadType);
     if (!isSameType || !jwtPayload.jti) {
       return false;
     }
-    return this.memoryCacheService.hasJti(jwtPayloadType, jwtPayload.jti);
+    return this.memoryCacheService.hasJti(jwtPayload.type, jwtPayload.jti);
   }
 }

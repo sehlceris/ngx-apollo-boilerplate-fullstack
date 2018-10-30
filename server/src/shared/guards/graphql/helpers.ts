@@ -7,12 +7,12 @@ import { GuardHelpers } from '../shared/helpers';
 
 export class GraphQLGuardHelpers extends GuardHelpers {
 
-  static async getJwtPayloadFromAuthenticatedContext(
+  static getJwtPayloadFromAuthenticatedContext(
     executionContext: ExecutionContext
-  ): Promise<AnyJwtPayload> {
+  ): AnyJwtPayload {
     const ctx = GqlExecutionContext.create(executionContext);
-    const graphqlContext = ctx.getContext();
-    return graphqlContext.user;
+    const graphqlContext = ctx.getContext<GraphqlContextModel>();
+    return graphqlContext.jwt;
   }
 
   static getUserFromAuthenticatedContext(
