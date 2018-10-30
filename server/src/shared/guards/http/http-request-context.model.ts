@@ -1,8 +1,3 @@
-import { AnyJwtPayload } from '../../auth/jwt-payload.model';
-import { User } from '../../../user/models/user.model';
+import { AbstractContextModel } from '../shared/abstract-context.model';
 
-export interface HttpRequestContextModel {
-  jwt: AnyJwtPayload;
-  user: User;
-  headers: any;
-}
+export interface HttpRequestContextModel extends AbstractContextModel {}
