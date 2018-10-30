@@ -37,7 +37,7 @@ export class AuthService {
     });
   }
 
-  async validateUserAuthentication(validatePayload: JwtAuthPayload): Promise<User> {
+  async validateUserAuthentication(validatePayload: JwtUserPayload): Promise<User> {
     const payloadType = JwtPayloadType.Auth;
     if (validatePayload.type !== payloadType) {
       throw new Error(

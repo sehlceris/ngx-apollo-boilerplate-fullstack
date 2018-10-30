@@ -4,14 +4,13 @@ import { genSalt, hash } from 'bcryptjs';
 import { ModelType } from 'typegoose';
 import { BaseService } from '../shared/base.service';
 import { MapperService } from '../shared/mapper/mapper.service';
-import { RegisterVm } from './models/view-models/register-vm.model';
-import { Registration, RegistrationModel } from './models/registration.model';
+import { Token, TokenModel } from './models/token.model';
 
 @Injectable()
-export class RegistrationService extends BaseService<Registration> {
+export class TokenService extends BaseService<Token> {
   constructor(
-    @InjectModel(Registration.modelName)
-    private readonly _registrationModel: ModelType<Registration>,
+    @InjectModel(Token.modelName)
+    private readonly _registrationModel: ModelType<Token>,
     private readonly _mapperService: MapperService
   ) {
     super();

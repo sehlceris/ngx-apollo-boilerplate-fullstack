@@ -1,6 +1,5 @@
 import { ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { InstanceType } from 'typegoose';
 import { UserRole } from '../../../user/models/user-role.enum';
 import { User } from '../../../user/models/user.model';
 import { AbstractUserGuard } from './abstract-user.guard';
@@ -12,7 +11,7 @@ export abstract class AbstractUserRoleGuard extends AbstractUserGuard {
 
   protected abstract getUserFromContext(
     context: ExecutionContext
-  ): InstanceType<User>;
+  ): User;
 
   protected async checkCanActivate(
     context: ExecutionContext
@@ -21,7 +20,7 @@ export abstract class AbstractUserRoleGuard extends AbstractUserGuard {
       'roles',
       context.getHandler()
     );
-    const user: InstanceType<User> = this.getUserFromContext(context);
+    const user: User = this.getUserFromContext(context);
     const hasRole = () =>
       roles && roles.length && roles.indexOf(user.role) >= 0;
     return user && user.role && hasRole();

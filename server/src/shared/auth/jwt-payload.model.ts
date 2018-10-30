@@ -24,3 +24,14 @@ export interface JwtAuthPayload extends JwtUserPayload {
 export interface JwtSingleUseUserPayload extends JwtUserPayload {
   jti: string;
 }
+
+export type AnyJwtUserPayload =
+  JwtUserPayload
+  | JwtAuthPayload
+  | JwtSingleUseUserPayload;
+
+export type AnyJwtPayload =
+  JwtPayload
+  | JwtUserPayload
+  | JwtAuthPayload
+  | JwtSingleUseUserPayload;

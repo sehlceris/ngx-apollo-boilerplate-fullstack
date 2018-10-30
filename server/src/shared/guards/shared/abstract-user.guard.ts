@@ -5,7 +5,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { InstanceType } from 'typegoose';
 import { User } from '../../../user/models/user.model';
 
 export abstract class AbstractUserGuard implements CanActivate {
@@ -13,7 +12,8 @@ export abstract class AbstractUserGuard implements CanActivate {
 
   protected abstract getUserFromContext(
     context: ExecutionContext
-  ): InstanceType<User>;
+  ): User;
+
   protected abstract async checkCanActivate(
     context: ExecutionContext
   ): Promise<boolean>;

@@ -6,24 +6,23 @@ import {
 } from '@nestjs/swagger';
 import { ApiException } from '../shared/api-exception.model';
 import { GetOperationId } from '../shared/utilities/get-operation-id.helper';
-import { RegisterVm } from './models/view-models/register-vm.model';
 import { UserApiService } from '../user/user-api.service';
-import { RegistrationApiService } from './registration-api.service';
+import { TokenApiService } from './token-api.service';
 import { UserVm } from '../user/models/view-models/user-vm.model';
 import { User } from '../user/models/user.model';
 
-@Controller('registration')
-export class RegistrationController {
+@Controller('token')
+export class TokenController {
   constructor(
     private readonly userApiService: UserApiService,
-    private readonly registrationApiService: RegistrationApiService
+    private readonly tokenApiService: TokenApiService
   ) {}
 
-  @Post('register')
+  @Post('verifyEmail')
   @ApiCreatedResponse({ type: UserVm })
   @ApiBadRequestResponse({ type: ApiException })
-  @ApiOperation(GetOperationId(User.modelName, 'register'))
-  async register(@Body() vm: RegisterVm): Promise<UserVm> {
-    return this.userApiService.register(vm);
+  @ApiOperation(GetOperationId(User.modelName, 'verifyEmail'))
+  async verifyEmail(@Body() vm: any): Promise<any> {
+    return null;
   }
 }

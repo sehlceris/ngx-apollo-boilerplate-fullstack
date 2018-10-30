@@ -1,11 +1,11 @@
 import { ModelType, pre, prop, Typegoose } from 'typegoose';
 import { schemaOptions } from '../../shared/base.model';
 
-@pre<Registration>('findOneAndUpdate', function(next) {
+@pre<Token>('findOneAndUpdate', function(next) {
   this._update.updatedAt = new Date(Date.now());
   next();
 })
-export class Registration extends Typegoose {
+export class Token extends Typegoose {
   @prop({
     required: [true, 'User ID is required'],
     unique: true,
@@ -26,8 +26,8 @@ export class Registration extends Typegoose {
 
   id?: string;
 
-  static get model(): ModelType<Registration> {
-    return new Registration().getModelForClass(Registration, { schemaOptions });
+  static get model(): ModelType<Token> {
+    return new Token().getModelForClass(Token, { schemaOptions });
   }
 
   static get modelName(): string {
@@ -35,7 +35,7 @@ export class Registration extends Typegoose {
   }
 }
 
-export const RegistrationModel = new Registration().getModelForClass(
-  Registration,
+export const TokenModel = new Token().getModelForClass(
+  Token,
   { schemaOptions }
 );

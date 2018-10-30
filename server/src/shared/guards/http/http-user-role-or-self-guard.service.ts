@@ -1,5 +1,4 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
-import { InstanceType } from 'typegoose';
 import { User } from '../../../user/models/user.model';
 import { AbstractRolesOrSelfGuard } from '../shared/abstract-roles-or-self.guard';
 import { Reflector } from '@nestjs/core';
@@ -74,7 +73,7 @@ export abstract class HttpRolesOrSelfGuard extends AbstractRolesOrSelfGuard {
 
   protected getUserFromContext(
     executionContext: ExecutionContext
-  ): InstanceType<User> {
+  ): User {
     return HttpGuardHelpers.getUserFromContext(executionContext);
   }
 }
