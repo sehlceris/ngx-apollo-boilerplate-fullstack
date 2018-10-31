@@ -1,14 +1,11 @@
-import { Query, UseGuards } from "@nestjs/common";
-import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
-import {
-  AnyJwtPayload, AnyJwtUserPayload,
-  JwtSingleUseUserPayload
-} from "../shared/auth/jwt-payload.model";
-import { AllowedJwtPayloadType } from "../shared/decorators/allowed-jwt-payload-type";
-import { GraphqlTokenGuard } from "../shared/guards/graphql/graphql-token-guard";
-import { BoundLogger, LogService } from "../shared/utilities/log.service";
+import { UseGuards } from '@nestjs/common';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { JwtPayloadType, JwtSingleUseUserPayload } from '../shared/auth/jwt-payload.model';
+import { GraphqlTokenGuard } from '../shared/guards/graphql/graphql-token-guard';
+import { BoundLogger, LogService } from '../shared/utilities/log.service';
 import { UserVm } from '../user/models/view-models/user-vm.model';
-import { TokenApiService } from "./token-api.service";
+import { TokenApiService } from './token-api.service';
+import { AllowedJwtPayloadType } from '../shared/decorators/allowed-jwt-payload-type';
 
 @Resolver('Token')
 export class TokenResolvers {
@@ -18,7 +15,8 @@ export class TokenResolvers {
   constructor(
     protected readonly tokenApiService: TokenApiService,
     private logService: LogService,
-  ) {}
+  ) {
+  }
 
   @Query('tokenExists')
   @UseGuards(GraphqlTokenGuard)
@@ -28,7 +26,16 @@ export class TokenResolvers {
   }
 
   @Mutation('verifyEmail')
-  async verifyEmail(@Args() vm: any): Promise<UserVm> {
-    return null
+  @AllowedJwtPayloadType(JwtPayloadType.VerifyEmail)
+  @UseGuards(GraphqlTokenGuard)
+  async verifyEmail(): Promise<UserVm> {
+    return null;
+  }
+
+  @Mutation('resetPassword')
+  @AllowedJwtPayloadType(JwtPayloadType.resetPassword)
+  @UseGuards(GraphqlTokenGuard)
+  async resetPassword(@Args('password') password: string): Promise<UserVm> {
+    return null;
   }
 }
