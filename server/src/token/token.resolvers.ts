@@ -33,7 +33,7 @@ export class TokenResolvers {
   }
 
   @Mutation('resetPassword')
-  @AllowedJwtPayloadType(JwtPayloadType.resetPassword)
+  @AllowedJwtPayloadType(JwtPayloadType.ResetPassword)
   @UseGuards(GraphqlTokenGuard)
   async resetPassword(@Args('password') password: string): Promise<UserVm> {
     return null;
