@@ -1,5 +1,5 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { sign, SignOptions } from 'jsonwebtoken';
+import { decode, sign, SignOptions } from 'jsonwebtoken';
 import { User } from '../../user/models/user.model';
 import { UserService } from '../../user/user.service';
 import { Configuration } from '../configuration/configuration.enum';
@@ -9,6 +9,7 @@ import {
   JwtPayload,
   JwtPayloadType, JwtSingleUseUserPayload, JwtUserPayload,
 } from './jwt-payload.model';
+import { RedisService } from '../utilities/redis.service';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,8 @@ export class AuthService {
 
   constructor(
     @Inject(forwardRef(() => UserService)) readonly _userService: UserService,
-    private readonly _configurationService: ConfigurationService
+    private readonly _configurationService: ConfigurationService,
+    private readonly memoryCacheService: RedisService,
   ) {
     this.jwtOptions = {
       expiresIn: _configurationService.get(
@@ -35,6 +37,29 @@ export class AuthService {
       ...this.jwtOptions,
       ...options,
     });
+  }
+
+  async signPayloadAndStoreJti(
+    payload: JwtSingleUseUserPayload,
+    options: SignOptions = {}
+  ): Promise<string> {
+
+    if (!payload.type || !payload.jti) {
+      throw new Error(`payload is missing type or jti`);
+    }
+
+    const signed = sign(payload, this.jwtKey, {
+      ...this.jwtOptions,
+      ...options,
+    });
+
+    const decoded: JwtSingleUseUserPayload = <JwtSingleUseUserPayload> decode(signed);
+    const { jti, exp } = decoded;
+
+    // TODO: store JTI with expiration
+    await this.memoryCacheService.addJti(jti, exp);
+
+    return signed;
   }
 
   async validateUserAuthentication(validatePayload: JwtUserPayload): Promise<User> {

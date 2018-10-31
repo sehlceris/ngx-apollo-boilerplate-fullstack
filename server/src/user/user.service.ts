@@ -29,7 +29,6 @@ import { RegisterVm } from './models/view-models/register-vm.model';
 import { UserVm } from './models/view-models/user-vm.model';
 import { UserRole } from './models/user-role.enum';
 import { randomUuid } from '../shared/utilities/random-utils';
-import { MemoryCacheService } from '../shared/utilities/memory-cache.service';
 import { Configuration } from '../shared/configuration/configuration.enum';
 import { ConfigurationService } from '../shared/configuration/configuration.service';
 import { Observable, Subject } from 'rxjs';
@@ -78,7 +77,6 @@ export class UserService extends BaseService<User> {
     @InjectModel(User.modelName) private readonly _userModel: ModelType<User>,
     private readonly _mapperService: MapperService,
     @Inject(forwardRef(() => AuthService)) readonly _authService: AuthService,
-    private readonly memoryCacheService: MemoryCacheService,
     private logService: LogService
   ) {
     super();
@@ -155,7 +153,7 @@ export class UserService extends BaseService<User> {
       user,
       type
     );
-    const token = await this._authService.signPayload(payload, {
+    const token = await this._authService.signPayloadAndStoreJti(payload, {
       expiresIn: this.configurationService.get(
         Configuration.JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION
       ),
@@ -169,7 +167,7 @@ export class UserService extends BaseService<User> {
       user,
       type
     );
-    const token = await this._authService.signPayload(payload, {
+    const token = await this._authService.signPayloadAndStoreJti(payload, {
       expiresIn: this.configurationService.get(
         Configuration.JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION
       ),
@@ -184,14 +182,13 @@ export class UserService extends BaseService<User> {
     return {
       type: type,
       userId: user.id,
-      jti: this.createAndStoreJti(type),
+      jti: this.createJti(type),
       securityIdentifier: user.securityIdentifier,
     };
   }
 
-  private createAndStoreJti(type: JwtPayloadType): string {
+  private createJti(type: JwtPayloadType): string {
     const uuid = randomUuid();
-    this.memoryCacheService.addJti(type, uuid);
     return uuid;
   }
 

@@ -1,4 +1,4 @@
-import { verify } from "jsonwebtoken";
+import { decode, verify } from 'jsonwebtoken';
 import { AnyJwtUserPayload } from "../../auth/jwt-payload.model";
 import { Configuration } from "../../configuration/configuration.enum";
 import { ConfigurationService } from "../../configuration/configuration.service";
@@ -28,7 +28,7 @@ export abstract class GuardHelpers {
     );
   }
 
-  static async decodeJwtPayload(jwtStr: string): Promise<AnyJwtUserPayload> {
+  static async verifyJwtPayload(jwtStr: string): Promise<AnyJwtUserPayload> {
     return new Promise<any>((resolve, reject) => {
       verify(jwtStr, jwtKey, function(err, decoded) {
         if (err) {

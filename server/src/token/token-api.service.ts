@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { JwtSingleUseUserPayload } from "../shared/auth/jwt-payload.model";
-import { MemoryCacheService } from "../shared/utilities/memory-cache.service";
+import { RedisService } from "../shared/utilities/redis.service";
 import { UserRole } from "../user/models/user-role.enum";
 import { User } from "../user/models/user.model";
 import { UserVm } from "../user/models/view-models/user-vm.model";
@@ -11,7 +11,7 @@ import { TokenService } from "./token.service";
 export class TokenApiService {
   constructor(
     protected readonly tokenService: TokenService,
-    protected readonly memoryCacheService: MemoryCacheService,
+    protected readonly memoryCacheService: RedisService,
     protected readonly userService: UserService,
   ) {
   }
@@ -39,6 +39,6 @@ export class TokenApiService {
   }
 
   private async consumeJti(vm: JwtSingleUseUserPayload): Promise<void> {
-    return this.memoryCacheService.removeJti(vm.type, vm.jti);
+    return this.memoryCacheService.removeJti(vm.jti);
   }
 }

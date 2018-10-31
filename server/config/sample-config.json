@@ -12,6 +12,10 @@
   "MONGODB_DATABASE_NAME": "apolloboilerplate",
   "MONGODB_AUTH_SOURCE": "admin",
 
+  "REDIS_HOST": "127.0.0.1",
+  "REDIS_PORT": "6379",
+  "REDIS_PASSWORD": "example",
+
   "EMAIL_FROM_ADDRESS": "support@your.app",
   "EMAIL_SMTP_HOST": "smtp-relay.sendinblue.com",
   "EMAIL_SMTP_PORT": "587",

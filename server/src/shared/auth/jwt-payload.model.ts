@@ -1,15 +1,15 @@
 import { UserRole } from '../../user/models/user-role.enum';
 
 export enum JwtPayloadType {
-  Auth = 'Auth',
-  VerifyEmail = 'VerifyEmail',
-  ResetPassword = 'ResetPassword',
+  Auth = 'JwtPayloadType.Auth',
+  VerifyEmail = 'JwtPayloadType.VerifyEmail',
+  ResetPassword = 'JwtPayloadType.ResetPassword',
 }
 
 export interface JwtPayload {
   type: JwtPayloadType;
-  iat?: Date;
-  exp?: Date;
+  iat?: number;
+  exp?: number;
 }
 
 export interface JwtUserPayload extends JwtPayload {

@@ -18,7 +18,7 @@ export class HttpGuardHelpers extends GuardHelpers {
 
     const headers = request.headers;
     const jwtString = this.getJwtStringFromHeaders(headers);
-    const jwtPayload = await this.decodeJwtPayload(jwtString);
+    const jwtPayload = await this.verifyJwtPayload(jwtString);
     request.jwt = jwtPayload; //cache jwt
     return jwtPayload;
   }

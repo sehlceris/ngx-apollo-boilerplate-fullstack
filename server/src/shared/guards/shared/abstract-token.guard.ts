@@ -3,7 +3,7 @@ import { Reflector } from '@nestjs/core';
 import { BoundLogger, LogService } from "../../utilities/log.service";
 import { AbstractTemplateGuard } from "./abstract-template.guard";
 import { JwtPayloadType, JwtSingleUseUserPayload } from '../../auth/jwt-payload.model';
-import { MemoryCacheService } from '../../utilities/memory-cache.service';
+import { RedisService } from '../../utilities/redis.service';
 
 export abstract class AbstractTokenGuard extends AbstractTemplateGuard {
 
@@ -11,7 +11,7 @@ export abstract class AbstractTokenGuard extends AbstractTemplateGuard {
 
   protected constructor(
     protected readonly _reflector: Reflector,
-    protected readonly memoryCacheService: MemoryCacheService,
+    protected readonly memoryCacheService: RedisService,
     protected logService: LogService,
   ) {
     super();
@@ -34,6 +34,6 @@ export abstract class AbstractTokenGuard extends AbstractTemplateGuard {
     if (!isSameType || !jwtPayload.jti) {
       return false;
     }
-    return this.memoryCacheService.hasJti(jwtPayload.type, jwtPayload.jti);
+    return this.memoryCacheService.hasJti(jwtPayload.jti);
   }
 }
