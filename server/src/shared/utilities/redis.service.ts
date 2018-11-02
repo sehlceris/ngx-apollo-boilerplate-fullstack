@@ -32,20 +32,22 @@ export class RedisService {
     return this._client;
   }
 
-  public async addJti(jti: string, exp: number) {
-    const ttl = Math.ceil(moment.unix(exp).diff(moment()) / 1000);
-    this.log.debug(`add JTI ${jti} with EXP ${exp} and TTL : ${ttl}`);
-    return this._client.setAsync(jti, true, 'EX', ttl);
+  public async addJti(jti: string, exp?: number) {
+    if (exp) {
+      const ttl = Math.ceil(moment.unix(exp).diff(moment()) / 1000);
+      return this._client.setAsync(jti, true, 'EX', ttl);
+    }
+    else {
+      return this._client.setAsync(jti, true);
+    }
   }
 
   public async hasJti(jti: string) {
     const hasJti = await this._client.existsAsync(jti);
-    this.log.debug(`has JTI ${jti}: ${hasJti}`);
     return hasJti;
   }
 
   public async removeJti(jti: string) {
-    this.log.debug(`remove JTI: ${jti}`);
     return this._client.delAsync(jti);
   }
 

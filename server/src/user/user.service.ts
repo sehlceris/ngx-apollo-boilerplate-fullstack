@@ -155,7 +155,7 @@ export class UserService extends BaseService<User> {
     );
     const token = await this._authService.signPayloadAndStoreJti(payload, {
       expiresIn: this.configurationService.get(
-        Configuration.JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION
+        Configuration.JWT_VERIFY_EMAIL_TOKEN_EXPIRATION
       ),
     });
     return token;
@@ -169,7 +169,7 @@ export class UserService extends BaseService<User> {
     );
     const token = await this._authService.signPayloadAndStoreJti(payload, {
       expiresIn: this.configurationService.get(
-        Configuration.JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION
+        Configuration.JWT_EMAIL_TOKEN_EXPIRATION
       ),
     });
     return token;

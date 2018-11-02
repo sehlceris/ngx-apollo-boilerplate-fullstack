@@ -3,12 +3,12 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AuthService } from "../../auth/auth.service";
+import { AuthService } from '../../auth/auth.service';
 import { JwtSingleUseUserPayload } from '../../auth/jwt-payload.model';
-import { LogService } from "../../utilities/log.service";
+import { LogService } from '../../utilities/log.service';
 import { RedisService } from '../../utilities/redis.service';
 import { AbstractTokenGuard } from '../shared/abstract-token.guard';
-import { GraphqlContextModel } from "./graphql-context.model";
+import { GraphqlContextModel } from './graphql-context.model';
 import { GraphQLGuardHelpers } from './helpers';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
@@ -30,7 +30,7 @@ export class GraphqlTokenGuard extends AbstractTokenGuard {
   }
 
   protected async getJwtPayloadFromContext(
-    executionContext: ExecutionContext
+    executionContext: ExecutionContext,
   ): Promise<JwtSingleUseUserPayload> {
     const ctx = GqlExecutionContext.create(executionContext);
     const graphqlContext = ctx.getContext<GraphqlContextModel>();

@@ -28,14 +28,17 @@ export class TokenResolvers {
   @Mutation('verifyEmail')
   @AllowedJwtPayloadType(JwtPayloadType.VerifyEmail)
   @UseGuards(GraphqlTokenGuard)
-  async verifyEmail(): Promise<UserVm> {
-    return null;
+  async verifyEmail(@Context('jwt') jwt: JwtSingleUseUserPayload): Promise<UserVm> {
+    return this.tokenApiService.verifyEmail(jwt);
   }
 
   @Mutation('resetPassword')
   @AllowedJwtPayloadType(JwtPayloadType.ResetPassword)
   @UseGuards(GraphqlTokenGuard)
-  async resetPassword(@Args('password') password: string): Promise<UserVm> {
-    return null;
+  async resetPassword(
+    @Context('jwt') jwt: JwtSingleUseUserPayload,
+    @Args('password') password: string,
+  ): Promise<UserVm> {
+    return this.tokenApiService.resetPassword(jwt, password);
   }
 }
