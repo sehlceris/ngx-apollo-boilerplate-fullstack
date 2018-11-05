@@ -10,12 +10,7 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        RouterTestingModule,
-        SharedModule,
-        CoreModule,
-      ],
+      imports: [NoopAnimationsModule, RouterTestingModule, SharedModule, CoreModule],
       declarations: [AppComponent],
     }).compileComponents();
   }));

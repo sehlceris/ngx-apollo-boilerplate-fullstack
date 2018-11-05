@@ -1,9 +1,4 @@
-import {
-  async,
-  ComponentFixture,
-  inject,
-  TestBed,
-} from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,10 +11,7 @@ import { CoreModule } from '@app/core';
 import { ExamplesModule } from '../examples.module';
 
 import { StockMarketComponent } from './stock-market.component';
-import {
-  StockMarketState,
-  ActionStockMarketRetrieve,
-} from './stock-market.reducer';
+import { StockMarketState, ActionStockMarketRetrieve } from './stock-market.reducer';
 
 describe('StockMarketComponent', () => {
   let component: StockMarketComponent;
@@ -30,21 +22,15 @@ describe('StockMarketComponent', () => {
 
   const getError = () => fixture.debugElement.query(By.css('.error'));
 
-  const getStocks = () =>
-    fixture.debugElement.query(By.css('mat-card mat-card-title'));
+  const getStocks = () => fixture.debugElement.query(By.css('mat-card mat-card-title'));
 
   const getInput = () => fixture.debugElement.query(By.css('input'));
 
-  const getExchange = () =>
-    fixture.debugElement.query(By.css('mat-card mat-card-content'));
+  const getExchange = () => fixture.debugElement.query(By.css('mat-card mat-card-content'));
 
-  const getChange = () =>
-    fixture.debugElement.query(By.css('mat-card mat-card-subtitle'));
+  const getChange = () => fixture.debugElement.query(By.css('mat-card mat-card-subtitle'));
 
-  const getCaretUpDownItem = () =>
-    fixture.debugElement.query(
-      By.css('mat-card mat-icon[fontIcon="fa-caret-down"]')
-    );
+  const getCaretUpDownItem = () => fixture.debugElement.query(By.css('mat-card mat-icon[fontIcon="fa-caret-down"]'));
 
   describe('given component booted', () => {
     beforeEach(async(() => {
@@ -77,9 +63,7 @@ describe('StockMarketComponent', () => {
 
       it('should trigger dispatch with correct input', () => {
         expect(dispatchSpy).toHaveBeenCalledTimes(1);
-        expect(dispatchSpy).toHaveBeenCalledWith(
-          new ActionStockMarketRetrieve({ symbol: 'A' })
-        );
+        expect(dispatchSpy).toHaveBeenCalledWith(new ActionStockMarketRetrieve({ symbol: 'A' }));
         expect(true).toBeTruthy();
       });
     });
@@ -153,21 +137,15 @@ describe('StockMarketComponent', () => {
       });
 
       it('should display correct stock name, price, currency', () => {
-        expect(getStocks().nativeElement.textContent.trim()).toEqual(
-          `${symbol} ${last} ${ccy}`
-        );
+        expect(getStocks().nativeElement.textContent.trim()).toEqual(`${symbol} ${last} ${ccy}`);
       });
 
       it('should display correct exchange', () => {
-        expect(getExchange().nativeElement.textContent.trim()).toEqual(
-          exchange
-        );
+        expect(getExchange().nativeElement.textContent.trim()).toEqual(exchange);
       });
 
       it('should display correct change', () => {
-        expect(getChange().nativeElement.textContent.trim()).toEqual(
-          `${change} (${changePercent})`
-        );
+        expect(getChange().nativeElement.textContent.trim()).toEqual(`${change} (${changePercent})`);
       });
     });
   });

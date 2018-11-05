@@ -20,7 +20,7 @@ export class AddTaskCardComponent implements OnInit {
     public formValidationService: FormValidationService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private logService: LogService
+    private logService: LogService,
   ) {}
 
   ngOnInit() {

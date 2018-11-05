@@ -9,14 +9,9 @@ import { AllowedJwtPayloadType } from '../shared/decorators/allowed-jwt-payload-
 
 @Resolver('Token')
 export class TokenResolvers {
-
   private log: BoundLogger = this.logService.bindToNamespace(TokenResolvers.name);
 
-  constructor(
-    protected readonly tokenApiService: TokenApiService,
-    private logService: LogService,
-  ) {
-  }
+  constructor(protected readonly tokenApiService: TokenApiService, private logService: LogService) {}
 
   @Query('tokenExists')
   @UseGuards(GraphqlTokenGuard)

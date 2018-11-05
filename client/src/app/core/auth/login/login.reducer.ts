@@ -50,10 +50,7 @@ export const initialState: LoginState = {
 
 export const selectorLogin = (state): LoginState => state.auth.login;
 
-export function loginReducer(
-  state: LoginState = initialState,
-  action: LoginActions
-): LoginState {
+export function loginReducer(state: LoginState = initialState, action: LoginActions): LoginState {
   switch (action.type) {
     case LoginActionTypes.LOGIN_WITH_USERNAME_REQUEST:
       return {

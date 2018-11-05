@@ -1,30 +1,10 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiBearerAuth,
-  ApiCreatedResponse,
-  ApiOperation,
-  ApiUseTags,
-} from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { ApiException } from '../shared/api-exception.model';
 import { GetOperationId } from '../shared/utilities/get-operation-id.helper';
 import { User } from './models/user.model';
 import { LoginResponseVm } from './models/view-models/login-response-vm.model';
-import {
-  LoginWithEmailVm,
-  LoginWithIdVm,
-  LoginWithUsernameVm,
-} from './models/view-models/login-vm.model';
+import { LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm } from './models/view-models/login-vm.model';
 import { RegisterVm } from './models/view-models/register-vm.model';
 import { UserVm } from './models/view-models/user-vm.model';
 import { UserApiService } from './user-api.service';
@@ -53,9 +33,7 @@ export class UserController {
   @ApiCreatedResponse({ type: LoginResponseVm })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(User.modelName, 'loginWithUsername'))
-  async loginWithUsername(
-    @Body() vm: LoginWithUsernameVm
-  ): Promise<LoginResponseVm> {
+  async loginWithUsername(@Body() vm: LoginWithUsernameVm): Promise<LoginResponseVm> {
     return this.userApiService.loginWithUsername(vm);
   }
 
@@ -120,9 +98,7 @@ export class UserController {
   @ApiCreatedResponse({ type: UserVm })
   @ApiBadRequestResponse({ type: ApiException })
   @ApiOperation(GetOperationId(User.modelName, 'getUserByUsername'))
-  async getUserByUsername(
-    @Param('username') username: string
-  ): Promise<UserVm> {
+  async getUserByUsername(@Param('username') username: string): Promise<UserVm> {
     return this.userApiService.getUserByUsername(username);
   }
 

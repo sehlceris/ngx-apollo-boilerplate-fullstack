@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -54,7 +43,7 @@ export class TodoController {
   @ApiImplicitQuery({ name: 'isCompleted', required: false })
   async get(
     @Query('level') level?: TodoLevel,
-    @Query('isCompleted', new ToBooleanPipe()) isCompleted?: boolean
+    @Query('isCompleted', new ToBooleanPipe()) isCompleted?: boolean,
   ): Promise<TodoVm[]> {
     return this.todoApiService.getTodos(level, isCompleted);
   }

@@ -9,27 +9,16 @@ export abstract class AbstractRolesOrSelfGuard extends AbstractUserGuard {
     super(_reflector);
   }
 
-  protected abstract getUserFromContext(
-    context: ExecutionContext
-  ): User;
+  protected abstract getUserFromContext(context: ExecutionContext): User;
 
-  protected abstract getTargetUserIdFromContext(
-    context: ExecutionContext
-  ): string;
+  protected abstract getTargetUserIdFromContext(context: ExecutionContext): string;
 
-  protected async checkCanActivate(
-    context: ExecutionContext
-  ): Promise<boolean> {
-    const roles = this._reflector.get<UserRole[]>(
-      'roles',
-      context.getHandler()
-    );
+  protected async checkCanActivate(context: ExecutionContext): Promise<boolean> {
+    const roles = this._reflector.get<UserRole[]>('roles', context.getHandler());
     const user: User = this.getUserFromContext(context);
     const targetUserId = this.getTargetUserIdFromContext(context);
-    const hasRole = () =>
-      roles && roles.length && roles.indexOf(user.role) >= 0;
-    const targetsSelf = () =>
-      user.id && targetUserId && user.id === targetUserId;
+    const hasRole = () => roles && roles.length && roles.indexOf(user.role) >= 0;
+    const targetsSelf = () => user.id && targetUserId && user.id === targetUserId;
     return user && user.role && (hasRole() || targetsSelf());
   }
 }

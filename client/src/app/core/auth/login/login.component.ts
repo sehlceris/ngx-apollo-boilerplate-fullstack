@@ -1,18 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {
-  ActionLoginWithUsernameRequest,
-  LoginState,
-  selectorLogin,
-} from '@app/core/auth/login/login.reducer';
+import { ActionLoginWithUsernameRequest, LoginState, selectorLogin } from '@app/core/auth/login/login.reducer';
 import { LoadingOverlayService } from '@app/core/shared/loading-overlay/loading-overlay.service';
 import { select, Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { skip, takeUntil } from 'rxjs/operators';
 import { LoginWithUsernameVm } from '../../../../../../server/src/user/models/view-models/login-vm.model';
 
-const LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF =
-  'LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF';
+const LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF = 'LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF';
 
 @Component({
   selector: 'anms-login',
@@ -28,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private store: Store<any>,
-    private loadingOverlayService: LoadingOverlayService
+    private loadingOverlayService: LoadingOverlayService,
   ) {}
 
   ngOnInit() {
@@ -38,27 +33,20 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(
         select(selectorLogin),
         takeUntil(this.unsubscribe$),
-        skip(1)
+        skip(1),
       )
       .subscribe((login: LoginState) => {
         if (login.loggingIn) {
-          this.loadingOverlayService.pushOrEditLoadingScreen(
-            LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF,
-            'Loading...'
-          );
+          this.loadingOverlayService.pushOrEditLoadingScreen(LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF, 'Loading...');
         } else {
-          this.loadingOverlayService.removeLoadingScreen(
-            LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF
-          );
+          this.loadingOverlayService.removeLoadingScreen(LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF);
         }
         this.loginError = login.loginError;
       });
   }
 
   ngOnDestroy() {
-    this.loadingOverlayService.removeLoadingScreen(
-      LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF
-    );
+    this.loadingOverlayService.removeLoadingScreen(LOGIN_COMPONENT_LOADING_OVERLAY_LOADING_REF);
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
@@ -66,9 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   onLoginFormSubmit() {
     if (this.loginForm.valid) {
       const loginVm: LoginWithUsernameVm = this.loginForm.value;
-      this.store.dispatch(
-        new ActionLoginWithUsernameRequest(loginVm.username, loginVm.password)
-      );
+      this.store.dispatch(new ActionLoginWithUsernameRequest(loginVm.username, loginVm.password));
     }
   }
 

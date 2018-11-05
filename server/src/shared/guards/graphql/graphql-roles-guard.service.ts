@@ -10,9 +10,7 @@ export class GraphQLRolesGuard extends AbstractUserRoleGuard {
     super(_reflector);
   }
 
-  protected getUserFromContext(
-    executionContext: ExecutionContext
-  ): User {
+  protected getUserFromContext(executionContext: ExecutionContext): User {
     return GraphQLGuardHelpers.getUserFromAuthenticatedContext(executionContext);
   }
 }

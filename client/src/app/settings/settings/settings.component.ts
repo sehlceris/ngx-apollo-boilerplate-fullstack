@@ -56,23 +56,17 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   onAutoNightModeToggle({ checked: autoNightMode }) {
-    this.store.dispatch(
-      new ActionSettingsChangeAutoNightMode({ autoNightMode })
-    );
+    this.store.dispatch(new ActionSettingsChangeAutoNightMode({ autoNightMode }));
     this.store.dispatch(new ActionSettingsPersist({ settings: this.settings }));
   }
 
   onPageAnimationsToggle({ checked: pageAnimations }) {
-    this.store.dispatch(
-      new ActionSettingsChangeAnimationsPage({ pageAnimations })
-    );
+    this.store.dispatch(new ActionSettingsChangeAnimationsPage({ pageAnimations }));
     this.store.dispatch(new ActionSettingsPersist({ settings: this.settings }));
   }
 
   onElementsAnimationsToggle({ checked: elementsAnimations }) {
-    this.store.dispatch(
-      new ActionSettingsChangeAnimationsElements({ elementsAnimations })
-    );
+    this.store.dispatch(new ActionSettingsChangeAnimationsElements({ elementsAnimations }));
     this.store.dispatch(new ActionSettingsPersist({ settings: this.settings }));
   }
 }

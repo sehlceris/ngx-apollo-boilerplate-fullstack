@@ -8,10 +8,7 @@ import { parse } from 'url';
 
 @Injectable()
 export abstract class HttpRolesOrSelfGuard extends AbstractRolesOrSelfGuard {
-  private static forQueryStringIdKeyCache: Map<string, any> = new Map<
-    string,
-    any
-  >();
+  private static forQueryStringIdKeyCache: Map<string, any> = new Map<string, any>();
 
   private static forParamIdKeyCache: Map<string, any> = new Map<string, any>();
 
@@ -27,9 +24,7 @@ export abstract class HttpRolesOrSelfGuard extends AbstractRolesOrSelfGuard {
     }
     const c = class HttpRolesOrSelfFromQueryStringGuard extends HttpRolesOrSelfGuard {
       getTargetUserIdFromContext(executionContext: ExecutionContext): string {
-        const incomingMessage: IncomingMessage = executionContext.getArgByIndex(
-          0
-        );
+        const incomingMessage: IncomingMessage = executionContext.getArgByIndex(0);
         const parsedUrl = parse(incomingMessage.url, true);
         const id = <string>parsedUrl.query[key];
         return id;
@@ -67,13 +62,9 @@ export abstract class HttpRolesOrSelfGuard extends AbstractRolesOrSelfGuard {
     return c;
   }
 
-  abstract getTargetUserIdFromContext(
-    executionContext: ExecutionContext
-  ): string;
+  abstract getTargetUserIdFromContext(executionContext: ExecutionContext): string;
 
-  protected getUserFromContext(
-    executionContext: ExecutionContext
-  ): User {
+  protected getUserFromContext(executionContext: ExecutionContext): User {
     return HttpGuardHelpers.getUserFromAuthenticatedContext(executionContext);
   }
 }

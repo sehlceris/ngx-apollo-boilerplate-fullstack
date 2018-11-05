@@ -74,14 +74,9 @@ const COMPONENTS = [LoadingOverlayComponent];
       },
       {
         metaReducers,
-      }
+      },
     ),
-    EffectsModule.forRoot([
-      LoginEffects,
-      UserEffects,
-      RegisterEffects,
-      ForgotPasswordEffects,
-    ]),
+    EffectsModule.forRoot([LoginEffects, UserEffects, RegisterEffects, ForgotPasswordEffects]),
     StoreRouterConnectingModule,
 
     environment.envName === 'DEV'
@@ -107,7 +102,7 @@ export class CoreModule {
   constructor(
     @Optional()
     @SkipSelf()
-    parentModule: CoreModule
+    parentModule: CoreModule,
   ) {
     if (parentModule) {
       throw new Error('CoreModule is already loaded. Import only in AppModule');
@@ -116,9 +111,5 @@ export class CoreModule {
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(
-    http,
-    `${environment.i18nPrefix}/assets/i18n/`,
-    '.json'
-  );
+  return new TranslateHttpLoader(http, `${environment.i18nPrefix}/assets/i18n/`, '.json');
 }

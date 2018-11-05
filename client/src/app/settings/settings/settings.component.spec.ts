@@ -1,12 +1,7 @@
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { MatSlideToggle } from '@angular/material';
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-  inject,
-} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { TestingModule, TestStore } from '@testing/utils';
 
@@ -25,10 +20,8 @@ describe('SettingsComponent', () => {
   let store: TestStore<SettingsState>;
   let dispatchSpy;
 
-  const getThemeSelectArrow = () =>
-    fixture.debugElement.queryAll(By.css('.mat-select-trigger'))[1];
-  const getSelectOptions = () =>
-    fixture.debugElement.queryAll(By.css('mat-option'));
+  const getThemeSelectArrow = () => fixture.debugElement.queryAll(By.css('.mat-select-trigger'))[1];
+  const getSelectOptions = () => fixture.debugElement.queryAll(By.css('mat-option'));
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -70,9 +63,7 @@ describe('SettingsComponent', () => {
     fixture.detectChanges();
 
     expect(dispatchSpy).toHaveBeenCalledTimes(2);
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionSettingsChangeTheme({ theme: 'LIGHT-THEME' })
-    );
+    expect(dispatchSpy).toHaveBeenCalledWith(new ActionSettingsChangeTheme({ theme: 'LIGHT-THEME' }));
   });
 
   it('should dispatch change auto night mode on night mode toggle', () => {
@@ -84,9 +75,7 @@ describe('SettingsComponent', () => {
     fixture.detectChanges();
 
     expect(dispatchSpy).toHaveBeenCalledTimes(2);
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionSettingsChangeAutoNightMode({ autoNightMode: false })
-    );
+    expect(dispatchSpy).toHaveBeenCalledWith(new ActionSettingsChangeAutoNightMode({ autoNightMode: false }));
   });
 
   it('should dispatch change animations page', () => {
@@ -98,9 +87,7 @@ describe('SettingsComponent', () => {
     fixture.detectChanges();
 
     expect(dispatchSpy).toHaveBeenCalledTimes(2);
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionSettingsChangeAnimationsPage({ pageAnimations: false })
-    );
+    expect(dispatchSpy).toHaveBeenCalledWith(new ActionSettingsChangeAnimationsPage({ pageAnimations: false }));
   });
 
   it('should dispatch change animations elements', () => {
@@ -112,9 +99,7 @@ describe('SettingsComponent', () => {
     fixture.detectChanges();
 
     expect(dispatchSpy).toHaveBeenCalledTimes(2);
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionSettingsChangeAnimationsElements({ elementsAnimations: false })
-    );
+    expect(dispatchSpy).toHaveBeenCalledWith(new ActionSettingsChangeAnimationsElements({ elementsAnimations: false }));
   });
 
   it('should disable change animations page when disabled is set in state', () => {

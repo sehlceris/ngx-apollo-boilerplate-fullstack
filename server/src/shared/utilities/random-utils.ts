@@ -23,8 +23,6 @@ export const randomBase64Sync = function(byteLength: number = 16): string {
   return crypto.randomBytes(byteLength).toString('base64');
 };
 
-export const randomUuid = function(
-  namespace: string = 'http://example.com'
-): string {
+export const randomUuid = function(namespace: string = 'http://example.com'): string {
   return uuid(namespace, uuid.URL);
 };

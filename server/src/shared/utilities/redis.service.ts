@@ -16,15 +16,11 @@ interface JtiInfo {
 
 @Injectable()
 export class RedisService {
-
   private log: BoundLogger = this.logService.bindToNamespace(RedisService.name);
 
   private _client;
 
-  constructor(
-    private configurationService: ConfigurationService,
-    private logService: LogService,
-  ) {
+  constructor(private configurationService: ConfigurationService, private logService: LogService) {
     this.initializeCache();
   }
 
@@ -36,8 +32,7 @@ export class RedisService {
     if (exp) {
       const ttl = Math.ceil(moment.unix(exp).diff(moment()) / 1000);
       return this._client.setAsync(jti, true, 'EX', ttl);
-    }
-    else {
+    } else {
       return this._client.setAsync(jti, true);
     }
   }

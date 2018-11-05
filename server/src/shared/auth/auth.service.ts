@@ -7,7 +7,9 @@ import { ConfigurationService } from '../configuration/configuration.service';
 import {
   JwtAuthPayload,
   JwtPayload,
-  JwtPayloadType, JwtSingleUseUserPayload, JwtUserPayload,
+  JwtPayloadType,
+  JwtSingleUseUserPayload,
+  JwtUserPayload,
 } from './jwt-payload.model';
 import { RedisService } from '../utilities/redis.service';
 
@@ -22,28 +24,19 @@ export class AuthService {
     private readonly memoryCacheService: RedisService,
   ) {
     this.jwtOptions = {
-      expiresIn: _configurationService.get(
-        Configuration.JWT_AUTH_TOKEN_EXPIRATION
-      ),
+      expiresIn: _configurationService.get(Configuration.JWT_AUTH_TOKEN_EXPIRATION),
     };
     this.jwtKey = _configurationService.get(Configuration.JWT_SECRET_KEY);
   }
 
-  async signPayload(
-    payload: JwtPayload,
-    options: SignOptions = {}
-  ): Promise<string> {
+  async signPayload(payload: JwtPayload, options: SignOptions = {}): Promise<string> {
     return sign(payload, this.jwtKey, {
       ...this.jwtOptions,
       ...options,
     });
   }
 
-  async signPayloadAndStoreJti(
-    payload: JwtSingleUseUserPayload,
-    options: SignOptions = {}
-  ): Promise<string> {
-
+  async signPayloadAndStoreJti(payload: JwtSingleUseUserPayload, options: SignOptions = {}): Promise<string> {
     if (!payload.type || !payload.jti) {
       throw new Error(`payload is missing type or jti`);
     }
@@ -53,7 +46,7 @@ export class AuthService {
       ...options,
     });
 
-    const decoded: JwtSingleUseUserPayload = <JwtSingleUseUserPayload> decode(signed);
+    const decoded: JwtSingleUseUserPayload = <JwtSingleUseUserPayload>decode(signed);
     const { jti, exp } = decoded;
 
     // TODO: store JTI with expiration
@@ -65,9 +58,7 @@ export class AuthService {
   async validateUserAuthentication(validatePayload: JwtUserPayload): Promise<User> {
     const payloadType = JwtPayloadType.Auth;
     if (validatePayload.type !== payloadType) {
-      throw new Error(
-        `Auth JWT payload must be of type ${payloadType}`
-      );
+      throw new Error(`Auth JWT payload must be of type ${payloadType}`);
     }
     return this.getValidatedUser(validatePayload);
   }
@@ -75,9 +66,7 @@ export class AuthService {
   async validateUserEmailVerification(validatePayload: JwtSingleUseUserPayload): Promise<User> {
     const payloadType = JwtPayloadType.VerifyEmail;
     if (validatePayload.type !== payloadType) {
-      throw new Error(
-        `Auth JWT payload must be of type ${payloadType}`
-      );
+      throw new Error(`Auth JWT payload must be of type ${payloadType}`);
     }
     return this.getValidatedUser(validatePayload);
   }
@@ -85,9 +74,7 @@ export class AuthService {
   async validateUserPasswordReset(validatePayload: JwtSingleUseUserPayload): Promise<User> {
     const payloadType = JwtPayloadType.ResetPassword;
     if (validatePayload.type !== payloadType) {
-      throw new Error(
-        `Auth JWT payload must be of type ${payloadType}`
-      );
+      throw new Error(`Auth JWT payload must be of type ${payloadType}`);
     }
     return this.getValidatedUser(validatePayload);
   }
@@ -95,9 +82,7 @@ export class AuthService {
   private async getValidatedUser(validatePayload: JwtUserPayload) {
     const user = await this._userService.findById(validatePayload.userId);
     if (validatePayload.securityIdentifier !== user.securityIdentifier) {
-      throw new Error(
-        'Security identifier mismatch'
-      );
+      throw new Error('Security identifier mismatch');
     }
     return user;
   }

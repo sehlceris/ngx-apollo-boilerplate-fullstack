@@ -30,7 +30,7 @@ export class EmailService {
   constructor(
     private readonly userService: UserService,
     private readonly configurationService: ConfigurationService,
-    private readonly logService: LogService
+    private readonly logService: LogService,
   ) {}
 
   public startReactingToEvents() {
@@ -45,43 +45,25 @@ export class EmailService {
       .subscribe(this.handleUserRequestedPasswordReset.bind(this));
   }
 
-  async sendVerifyEmailAddressEmail(
-    user: UserVm,
-    token: string
-  ): Promise<void> {
+  async sendVerifyEmailAddressEmail(user: UserVm, token: string): Promise<void> {
     const email = this.getBaseEmail();
     const destinationAddress = user.email;
-    const templatePath = path.join(
-      TEMPLATE_ROOT,
-      EmailTemplatePath.VerifyEmail
-    );
-    const url = new URL(
-      ClientPaths.VerifyEmail,
-      this.configurationService.clientBaseUrl
-    );
+    const templatePath = path.join(TEMPLATE_ROOT, EmailTemplatePath.VerifyEmail);
+    const url = new URL(ClientPaths.VerifyEmail, this.configurationService.clientBaseUrl);
     url.searchParams.append(TOKEN_NAME, token);
     const locals = {
       username: user.username,
       email: user.email,
       url: url.toString(),
     };
-    const sendPromise = this.sendEmail(
-      email,
-      templatePath,
-      destinationAddress,
-      locals
-    );
+    const sendPromise = this.sendEmail(email, templatePath, destinationAddress, locals);
 
     sendPromise
       .then(() => {
-        this.log.info(
-          `Sent email address verification email to ${destinationAddress}`
-        );
+        this.log.info(`Sent email address verification email to ${destinationAddress}`);
       })
       .catch((err) => {
-        this.log.error(
-          `Failed to send email address verification email to ${destinationAddress}: ${err}`
-        );
+        this.log.error(`Failed to send email address verification email to ${destinationAddress}: ${err}`);
       });
 
     return sendPromise;
@@ -90,35 +72,22 @@ export class EmailService {
   async sendPasswordResetEmail(user: UserVm, token: string): Promise<void> {
     const email = this.getBaseEmail();
     const destinationAddress = user.email;
-    const templatePath = path.join(
-      TEMPLATE_ROOT,
-      EmailTemplatePath.PasswordReset
-    );
-    const url = new URL(
-      ClientPaths.ResetPassword,
-      this.configurationService.clientBaseUrl
-    );
+    const templatePath = path.join(TEMPLATE_ROOT, EmailTemplatePath.PasswordReset);
+    const url = new URL(ClientPaths.ResetPassword, this.configurationService.clientBaseUrl);
     url.searchParams.append(TOKEN_NAME, token);
     const locals = {
       username: user.username,
       email: user.email,
       url: url.toString(),
     };
-    const sendPromise = this.sendEmail(
-      email,
-      templatePath,
-      destinationAddress,
-      locals
-    );
+    const sendPromise = this.sendEmail(email, templatePath, destinationAddress, locals);
 
     sendPromise
       .then(() => {
         this.log.info(`Sent password recovery email to ${destinationAddress}`);
       })
       .catch((err) => {
-        this.log.error(
-          `Failed to send password recovery email to ${destinationAddress}: ${err}`
-        );
+        this.log.error(`Failed to send password recovery email to ${destinationAddress}: ${err}`);
       });
 
     return sendPromise;
@@ -134,12 +103,7 @@ export class EmailService {
     await this.sendPasswordResetEmail(user, token);
   }
 
-  private async sendEmail(
-    email: Email,
-    templatePath: string,
-    destinationAddress: string,
-    locals: any
-  ): Promise<void> {
+  private async sendEmail(email: Email, templatePath: string, destinationAddress: string, locals: any): Promise<void> {
     const sendPromise = email.send({
       template: templatePath,
       message: { to: destinationAddress },
@@ -183,10 +147,7 @@ export class EmailService {
       pool: true,
       secure: false, // use TLS
       host: this.configurationService.get(Configuration.EMAIL_SMTP_HOST),
-      port: parseInt(
-        this.configurationService.get(Configuration.EMAIL_SMTP_PORT),
-        10
-      ),
+      port: parseInt(this.configurationService.get(Configuration.EMAIL_SMTP_PORT), 10),
       auth: {
         user: this.configurationService.get(Configuration.EMAIL_SMTP_USERNAME),
         pass: this.configurationService.get(Configuration.EMAIL_SMTP_PASSWORD),

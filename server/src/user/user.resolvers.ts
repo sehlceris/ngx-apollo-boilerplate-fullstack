@@ -1,17 +1,8 @@
-import {
-  Args,
-  Mutation,
-  Query,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserApiService } from './user-api.service';
 import { UserVm } from './models/view-models/user-vm.model';
 import { RegisterVm } from './models/view-models/register-vm.model';
-import {
-  LoginWithEmailVm,
-  LoginWithIdVm,
-  LoginWithUsernameVm,
-} from './models/view-models/login-vm.model';
+import { LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm } from './models/view-models/login-vm.model';
 import { LoginResponseVm } from './models/view-models/login-response-vm.model';
 import { Roles } from '../shared/decorators/roles.decorator';
 import { UserRole } from './models/user-role.enum';
@@ -30,9 +21,7 @@ export class UserResolvers {
   }
 
   @Mutation('loginWithUsername')
-  async loginWithUsername(
-    @Args() vm: LoginWithUsernameVm
-  ): Promise<LoginResponseVm> {
+  async loginWithUsername(@Args() vm: LoginWithUsernameVm): Promise<LoginResponseVm> {
     return this.userApiService.loginWithUsername(vm);
   }
 
@@ -55,10 +44,7 @@ export class UserResolvers {
 
   @Query('getUserById')
   @Roles(UserRole.Admin)
-  @UseGuards(
-    GraphQLJwtAuthGuard,
-    GraphqlUserRoleOrSelfGuard.forIdFromArgumentKey('id')
-  )
+  @UseGuards(GraphQLJwtAuthGuard, GraphqlUserRoleOrSelfGuard.forIdFromArgumentKey('id'))
   async getUserById(@Args('id') id: string): Promise<UserVm> {
     return this.userApiService.getUserById(id);
   }

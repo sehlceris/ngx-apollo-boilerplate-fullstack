@@ -15,9 +15,7 @@ export class FormValidationService {
 
   public getControlError(control: FormControl) {
     if (control && !control.valid && control.errors) {
-      const errors = Object.keys(control.errors).filter(
-        (err) => !!control.errors[err]
-      );
+      const errors = Object.keys(control.errors).filter((err) => !!control.errors[err]);
       if (errors.length) {
         return FORM_VALIDATION_ERROR_MAP[errors[0]];
       }

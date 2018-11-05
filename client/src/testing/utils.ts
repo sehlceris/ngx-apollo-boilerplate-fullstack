@@ -21,18 +21,8 @@ export class TestStore<T> {
 }
 
 @NgModule({
-  imports: [
-    NoopAnimationsModule,
-    RouterTestingModule,
-    SharedModule,
-    TranslateModule.forRoot(),
-  ],
-  exports: [
-    NoopAnimationsModule,
-    RouterTestingModule,
-    SharedModule,
-    TranslateModule,
-  ],
+  imports: [NoopAnimationsModule, RouterTestingModule, SharedModule, TranslateModule.forRoot()],
+  exports: [NoopAnimationsModule, RouterTestingModule, SharedModule, TranslateModule],
   providers: [{ provide: Store, useClass: TestStore }],
 })
 export class TestingModule {

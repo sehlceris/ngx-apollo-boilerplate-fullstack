@@ -35,7 +35,6 @@ export class Token extends Typegoose {
   }
 }
 
-export const TokenModel = new Token().getModelForClass(
-  Token,
-  { schemaOptions }
-);
+export const TokenModel = new Token().getModelForClass(Token, {
+  schemaOptions,
+});

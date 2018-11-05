@@ -9,11 +9,7 @@ import { TokenResolvers } from './token.resolvers';
 const SERVICES = [TokenService, TokenApiService, TokenResolvers];
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      { name: Token.modelName, schema: Token.model.schema },
-    ]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Token.modelName, schema: Token.model.schema }])],
   providers: [...SERVICES],
   controllers: [TokenController],
   exports: [...SERVICES],

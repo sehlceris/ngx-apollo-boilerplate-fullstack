@@ -9,10 +9,7 @@ describe('LocalStorageService', () => {
     });
   });
 
-  it('should be created', inject(
-    [LocalStorageService],
-    (service: LocalStorageService) => {
-      expect(service).toBeTruthy();
-    }
-  ));
+  it('should be created', inject([LocalStorageService], (service: LocalStorageService) => {
+    expect(service).toBeTruthy();
+  }));
 });

@@ -15,15 +15,13 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 @Injectable()
 export class RegisterEffects {
-  private log: BoundLogger = this.logService.bindToNamespace(
-    RegisterEffects.name
-  );
+  private log: BoundLogger = this.logService.bindToNamespace(RegisterEffects.name);
 
   constructor(
     private actions$: Actions<Action>,
     private router: Router,
     private registerGQL: RegisterGQL,
-    private logService: LogService
+    private logService: LogService,
   ) {}
 
   @Effect({ dispatch: true })
@@ -33,9 +31,9 @@ export class RegisterEffects {
       switchMap((action) => {
         return this.registerGQL.mutate(action.data).pipe(
           map(() => new ActionRegisterSuccess()),
-          catchError((err) => of(new ActionRegisterFailure(err)))
+          catchError((err) => of(new ActionRegisterFailure(err))),
         );
-      })
+      }),
     );
   }
 
@@ -43,7 +41,7 @@ export class RegisterEffects {
   registerSuccess() {
     return this.actions$.pipe(
       ofType<ActionRegisterSuccess>(RegisterActionTypes.REGISTER_SUCCESS),
-      tap(() => this.router.navigate(['/auth', 'login']))
+      tap(() => this.router.navigate(['/auth', 'login'])),
     );
   }
 }

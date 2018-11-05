@@ -1,9 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiCreatedResponse,
-  ApiOperation,
-} from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
 import { ApiException } from '../shared/api-exception.model';
 import { GetOperationId } from '../shared/utilities/get-operation-id.helper';
 import { UserApiService } from '../user/user-api.service';
@@ -13,10 +9,7 @@ import { User } from '../user/models/user.model';
 
 @Controller('token')
 export class TokenController {
-  constructor(
-    private readonly userApiService: UserApiService,
-    private readonly tokenApiService: TokenApiService
-  ) {}
+  constructor(private readonly userApiService: UserApiService, private readonly tokenApiService: TokenApiService) {}
 
   @Post('verifyEmail')
   @ApiCreatedResponse({ type: UserVm })

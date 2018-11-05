@@ -10,11 +10,7 @@ export class RandomUtils {
    */
   static randomNumber(min = 0, max = 1000000, decimalPlacesAllowed?): number {
     let rand = Math.random() * (max - min) + min;
-    if (
-      typeof decimalPlacesAllowed === 'number' &&
-      decimalPlacesAllowed > 0 &&
-      isFinite(decimalPlacesAllowed)
-    ) {
+    if (typeof decimalPlacesAllowed === 'number' && decimalPlacesAllowed > 0 && isFinite(decimalPlacesAllowed)) {
       rand = Utils.truncateDecimals(rand, decimalPlacesAllowed);
     }
     return rand;

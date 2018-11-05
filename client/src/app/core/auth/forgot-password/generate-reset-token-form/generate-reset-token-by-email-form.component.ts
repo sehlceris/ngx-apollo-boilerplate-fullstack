@@ -12,9 +12,7 @@ export class GenerateResetTokenByEmailFormComponent extends AbstractGenerateRese
   onForgotPasswordFormSubmit() {
     if (this.forgotPasswordForm.valid) {
       const resetPasswordVm: any = this.forgotPasswordForm.value;
-      this.store.dispatch(
-        new ActionGenerateResetTokenByEmail(resetPasswordVm.email)
-      );
+      this.store.dispatch(new ActionGenerateResetTokenByEmail(resetPasswordVm.email));
     }
   }
 

@@ -28,7 +28,7 @@ export class ExamplesComponent implements OnInit, OnDestroy {
     private store: Store<any>,
     private router: Router,
     private titleService: TitleService,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
@@ -46,24 +46,17 @@ export class ExamplesComponent implements OnInit, OnDestroy {
     this.store
       .select(selectorSettings)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((settings: SettingsState) =>
-        this.translate.use(settings.language)
-      );
+      .subscribe((settings: SettingsState) => this.translate.use(settings.language));
   }
 
   private subscribeToRouterEvents() {
-    this.titleService.setTitle(
-      this.router.routerState.snapshot.root,
-      this.translate
-    );
+    this.titleService.setTitle(this.router.routerState.snapshot.root, this.translate);
     this.router.events
       .pipe(
         filter((event) => event instanceof ActivationEnd),
         map((event: ActivationEnd) => event.snapshot),
-        takeUntil(this.unsubscribe$)
+        takeUntil(this.unsubscribe$),
       )
-      .subscribe((snapshot) =>
-        this.titleService.setTitle(snapshot, this.translate)
-      );
+      .subscribe((snapshot) => this.titleService.setTitle(snapshot, this.translate));
   }
 }

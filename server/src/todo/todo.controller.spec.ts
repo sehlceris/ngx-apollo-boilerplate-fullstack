@@ -9,9 +9,7 @@ describe('Todo Controller', () => {
     }).compile();
   });
   it('should be defined', () => {
-    const controller: TodoController = module.get<TodoController>(
-      TodoController
-    );
+    const controller: TodoController = module.get<TodoController>(TodoController);
     expect(controller).toBeDefined();
   });
 });

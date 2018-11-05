@@ -19,16 +19,13 @@ export class TasksComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  constructor(
-    public tasksService: TasksService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(public tasksService: TasksService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.notDoneTasks$ = this.tasksService.tasks$.pipe(
       map((tasks: ITodoTask[]) => {
         return tasks.filter((task: ITodoTask) => !task.done);
-      })
+      }),
     );
   }
 

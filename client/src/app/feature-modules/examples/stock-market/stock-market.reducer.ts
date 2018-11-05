@@ -41,7 +41,7 @@ export const selectorStocks = (state) => state.examples.stocks;
 
 export function stockMarketReducer(
   state: StockMarketState = initialState,
-  action: StockMarketActions
+  action: StockMarketActions,
 ): StockMarketState {
   switch (action.type) {
     case StockMarketActionTypes.RETRIEVE:

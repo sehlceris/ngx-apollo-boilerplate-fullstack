@@ -42,10 +42,7 @@ describe('TodoReducer', () => {
 
   it('should remove done todos', () => {
     const TEST_INITIAL_STATE: TodosState = {
-      items: [
-        { id: '1', name: 'Romeo', done: false },
-        { id: '2', name: 'Juliet', done: true },
-      ],
+      items: [{ id: '1', name: 'Romeo', done: false }, { id: '2', name: 'Juliet', done: true }],
       filter: 'ALL',
     };
     const action = new ActionTodosRemoveDone();

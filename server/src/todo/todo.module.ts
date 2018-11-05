@@ -7,11 +7,7 @@ import { TodoResolvers } from './todo.resolvers';
 import { TodoApiService } from './todo-api.service';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      { name: Todo.modelName, schema: Todo.model.schema },
-    ]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Todo.modelName, schema: Todo.model.schema }])],
   controllers: [TodoController],
   providers: [TodoService, TodoApiService, TodoResolvers],
   exports: [TodoService, TodoApiService],

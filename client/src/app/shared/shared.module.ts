@@ -7,13 +7,7 @@ import { BigInputComponent } from './big-input/big-input.component';
 import { BigInputActionComponent } from './big-input/big-input-action.component';
 import { MaterialModule } from '@app/shared/material.module';
 
-const MODULES = [
-  CommonModule,
-  FormsModule,
-  ReactiveFormsModule,
-  TranslateModule,
-  MaterialModule,
-];
+const MODULES = [CommonModule, FormsModule, ReactiveFormsModule, TranslateModule, MaterialModule];
 
 const COMPONENTS = [BigInputComponent, BigInputActionComponent];
 

@@ -7,9 +7,7 @@ declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const hostDomain = AppModule.isDev
-    ? `${AppModule.host}:${AppModule.port}`
-    : AppModule.host;
+  const hostDomain = AppModule.isDev ? `${AppModule.host}:${AppModule.port}` : AppModule.host;
 
   const swaggerOptions = new DocumentBuilder()
     .setTitle('Nest MEAN')

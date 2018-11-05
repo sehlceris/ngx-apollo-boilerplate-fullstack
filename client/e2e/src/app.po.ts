@@ -10,8 +10,6 @@ export class AppPage {
   }
 
   getAllMenus() {
-    return element
-      .all(by.css('mat-toolbar button.nav-button'))
-      .map((elm) => elm.getText());
+    return element.all(by.css('mat-toolbar button.nav-button')).map((elm) => elm.getText());
   }
 }

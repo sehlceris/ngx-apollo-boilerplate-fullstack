@@ -7,14 +7,7 @@ import { MapperService } from './mapper/mapper.service';
 import { LogService } from './utilities/log.service';
 import { RedisService } from './utilities/redis.service';
 
-const SERVICES = [
-  ConfigurationService,
-  MapperService,
-  AuthService,
-  LogService,
-  RedisService,
-  JwtStrategy,
-];
+const SERVICES = [ConfigurationService, MapperService, AuthService, LogService, RedisService, JwtStrategy];
 
 @Global()
 @Module({

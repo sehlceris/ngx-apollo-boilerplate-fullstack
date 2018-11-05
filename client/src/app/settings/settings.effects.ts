@@ -5,18 +5,14 @@ import { tap } from 'rxjs/operators';
 
 import { LocalStorageService, AnimationsService } from '@app/core';
 
-import {
-  SETTINGS_KEY,
-  SettingsActionTypes,
-  ActionSettingsPersist,
-} from './settings.reducer';
+import { SETTINGS_KEY, SettingsActionTypes, ActionSettingsPersist } from './settings.reducer';
 
 @Injectable()
 export class SettingsEffects {
   constructor(
     private actions$: Actions<Action>,
     private localStorageService: LocalStorageService,
-    private animationsService: AnimationsService
+    private animationsService: AnimationsService,
   ) {}
 
   @Effect({ dispatch: false })
@@ -27,11 +23,8 @@ export class SettingsEffects {
         const { settings } = action.payload;
         const { pageAnimations, elementsAnimations } = settings;
         this.localStorageService.setItem(SETTINGS_KEY, settings);
-        this.animationsService.updateRouteAnimationType(
-          pageAnimations,
-          elementsAnimations
-        );
-      })
+        this.animationsService.updateRouteAnimationType(pageAnimations, elementsAnimations);
+      }),
     );
   }
 }

@@ -32,10 +32,7 @@ export const initialState: UserState = {
 
 export const selectorUser = (state): UserState => state.auth.user;
 
-export function userReducer(
-  state: UserState = initialState,
-  action: AuthActions
-): UserState {
+export function userReducer(state: UserState = initialState, action: AuthActions): UserState {
   switch (action.type) {
     case UserActionTypes.AUTHENTICATE:
       return {

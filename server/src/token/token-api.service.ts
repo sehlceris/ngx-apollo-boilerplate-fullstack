@@ -1,11 +1,11 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { JwtSingleUseUserPayload } from "../shared/auth/jwt-payload.model";
-import { RedisService } from "../shared/utilities/redis.service";
-import { UserRole } from "../user/models/user-role.enum";
-import { User } from "../user/models/user.model";
-import { UserVm } from "../user/models/view-models/user-vm.model";
-import { UserService } from "../user/user.service";
-import { TokenService } from "./token.service";
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { JwtSingleUseUserPayload } from '../shared/auth/jwt-payload.model';
+import { RedisService } from '../shared/utilities/redis.service';
+import { UserRole } from '../user/models/user-role.enum';
+import { User } from '../user/models/user.model';
+import { UserVm } from '../user/models/view-models/user-vm.model';
+import { UserService } from '../user/user.service';
+import { TokenService } from './token.service';
 
 @Injectable()
 export class TokenApiService {
@@ -13,8 +13,7 @@ export class TokenApiService {
     protected readonly tokenService: TokenService,
     protected readonly memoryCacheService: RedisService,
     protected readonly userService: UserService,
-  ) {
-  }
+  ) {}
 
   async tokenExists(vm: JwtSingleUseUserPayload): Promise<boolean> {
     return true; // the token is already verified to be existing via the token guard

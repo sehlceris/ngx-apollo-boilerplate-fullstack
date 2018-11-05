@@ -4,17 +4,12 @@ import { Subject } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { LoadingOverlayService } from '@app/core/shared/loading-overlay/loading-overlay.service';
 import { skip, takeUntil } from 'rxjs/operators';
-import {
-  ForgotPasswordState,
-  selectorForgotPassword,
-} from '@app/core/auth/forgot-password/forgot-password.reducer';
+import { ForgotPasswordState, selectorForgotPassword } from '@app/core/auth/forgot-password/forgot-password.reducer';
 
-const FORGOT_PASSWORD_COMPONENT_LOADING_OVERLAY_LOADING_REF =
-  'FORGOT_PASSWORD_COMPONENT_LOADING_OVERLAY_LOADING_REF';
+const FORGOT_PASSWORD_COMPONENT_LOADING_OVERLAY_LOADING_REF = 'FORGOT_PASSWORD_COMPONENT_LOADING_OVERLAY_LOADING_REF';
 
 @Injectable()
-export abstract class AbstractGenerateResetTokenFormComponent
-  implements OnInit, OnDestroy {
+export abstract class AbstractGenerateResetTokenFormComponent implements OnInit, OnDestroy {
   forgotPasswordForm: FormGroup = null;
   forgotPasswordError: string = null;
 
@@ -23,7 +18,7 @@ export abstract class AbstractGenerateResetTokenFormComponent
   constructor(
     protected fb: FormBuilder,
     protected store: Store<any>,
-    protected loadingOverlayService: LoadingOverlayService
+    protected loadingOverlayService: LoadingOverlayService,
   ) {}
 
   ngOnInit() {
@@ -33,30 +28,23 @@ export abstract class AbstractGenerateResetTokenFormComponent
       .pipe(
         select(selectorForgotPassword),
         takeUntil(this.unsubscribe$),
-        skip(1)
+        skip(1),
       )
       .subscribe((forgotPassword: ForgotPasswordState) => {
         if (forgotPassword.generatingToken || forgotPassword.submittingReset) {
           this.loadingOverlayService.pushOrEditLoadingScreen(
             FORGOT_PASSWORD_COMPONENT_LOADING_OVERLAY_LOADING_REF,
-            'Submitting password reset request...'
+            'Submitting password reset request...',
           );
         } else {
-          this.loadingOverlayService.removeLoadingScreen(
-            FORGOT_PASSWORD_COMPONENT_LOADING_OVERLAY_LOADING_REF
-          );
+          this.loadingOverlayService.removeLoadingScreen(FORGOT_PASSWORD_COMPONENT_LOADING_OVERLAY_LOADING_REF);
         }
-        this.forgotPasswordError =
-          forgotPassword.generateResetTokenError ||
-          forgotPassword.resetPasswordError ||
-          null;
+        this.forgotPasswordError = forgotPassword.generateResetTokenError || forgotPassword.resetPasswordError || null;
       });
   }
 
   ngOnDestroy() {
-    this.loadingOverlayService.removeLoadingScreen(
-      FORGOT_PASSWORD_COMPONENT_LOADING_OVERLAY_LOADING_REF
-    );
+    this.loadingOverlayService.removeLoadingScreen(FORGOT_PASSWORD_COMPONENT_LOADING_OVERLAY_LOADING_REF);
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

@@ -1,15 +1,11 @@
 import { ExecutionContext } from '@nestjs/common';
 import { User } from '../../../user/models/user.model';
-import { AnyJwtPayload } from "../../auth/jwt-payload.model";
+import { AnyJwtPayload } from '../../auth/jwt-payload.model';
 import { GuardHelpers } from '../shared/helpers';
-import { HttpRequestContextModel } from "./http-request-context.model";
+import { HttpRequestContextModel } from './http-request-context.model';
 
 export class HttpGuardHelpers extends GuardHelpers {
-
-  static async getJwtPayloadExecutionContext(
-    executionContext: ExecutionContext
-  ): Promise<AnyJwtPayload> {
-
+  static async getJwtPayloadExecutionContext(executionContext: ExecutionContext): Promise<AnyJwtPayload> {
     const request = executionContext.switchToHttp().getRequest<HttpRequestContextModel>();
 
     if (request.jwt) {
@@ -23,9 +19,7 @@ export class HttpGuardHelpers extends GuardHelpers {
     return jwtPayload;
   }
 
-  static getUserFromAuthenticatedContext(
-    executionContext: ExecutionContext
-  ): User {
+  static getUserFromAuthenticatedContext(executionContext: ExecutionContext): User {
     const request = executionContext.switchToHttp().getRequest();
     return request.user;
   }

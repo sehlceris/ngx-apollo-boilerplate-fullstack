@@ -76,13 +76,9 @@ export const initialState: SettingsState = {
   elementsAnimations: true,
 };
 
-export const selectorSettings = (state) =>
-  <SettingsState>(state.settings || { theme: '' });
+export const selectorSettings = (state) => <SettingsState>(state.settings || { theme: '' });
 
-export function settingsReducer(
-  state: SettingsState = initialState,
-  action: SettingsActions
-): SettingsState {
+export function settingsReducer(state: SettingsState = initialState, action: SettingsActions): SettingsState {
   switch (action.type) {
     case SettingsActionTypes.CHANGE_LANGUAGE:
     case SettingsActionTypes.CHANGE_THEME:

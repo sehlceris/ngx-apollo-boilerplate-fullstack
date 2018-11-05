@@ -10,7 +10,7 @@ import { JwtAuthPayload } from '../jwt-payload.model';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly _authService: AuthService,
-    private readonly _configurationService: ConfigurationService
+    private readonly _configurationService: ConfigurationService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

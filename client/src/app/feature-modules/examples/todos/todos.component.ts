@@ -65,9 +65,7 @@ export class TodosComponent implements OnInit, OnDestroy {
   }
 
   get isRemoveDoneTodosDisabled() {
-    return (
-      this.todos && this.todos.items.filter((item) => item.done).length === 0
-    );
+    return this.todos && this.todos.items.filter((item) => item.done).length === 0;
   }
 
   onNewTodoChange(newTodo: string) {

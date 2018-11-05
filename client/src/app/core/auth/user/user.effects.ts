@@ -18,7 +18,7 @@ export class UserEffects {
   constructor(
     private actions$: Actions<Action>,
     private localStorageService: LocalStorageService,
-    private logService: LogService
+    private logService: LogService,
   ) {}
 
   @Effect({ dispatch: false })
@@ -29,8 +29,8 @@ export class UserEffects {
         this.localStorageService.setItem(USER_LOCAL_STORAGE_KEY, {
           token: action.token,
           user: action.user,
-        })
-      )
+        }),
+      ),
     );
   }
 
@@ -42,8 +42,8 @@ export class UserEffects {
         this.localStorageService.setItem(USER_LOCAL_STORAGE_KEY, {
           token: null,
           user: null,
-        })
-      )
+        }),
+      ),
     );
   }
 }

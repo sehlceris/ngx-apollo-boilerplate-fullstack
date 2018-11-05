@@ -61,10 +61,7 @@ export const initialState: TodosState = {
 
 export const selectorTodos = (state) => state.examples.todos;
 
-export function todosReducer(
-  state: TodosState = initialState,
-  action: TodosActions
-): TodosState {
+export function todosReducer(state: TodosState = initialState, action: TodosActions): TodosState {
   switch (action.type) {
     case TodosActionTypes.ADD:
       return {
@@ -81,10 +78,7 @@ export function todosReducer(
     case TodosActionTypes.TOGGLE:
       return {
         ...state,
-        items: state.items.map(
-          (item: Todo) =>
-            item.id === action.payload.id ? { ...item, done: !item.done } : item
-        ),
+        items: state.items.map((item: Todo) => (item.id === action.payload.id ? { ...item, done: !item.done } : item)),
       };
 
     case TodosActionTypes.REMOVE_DONE:

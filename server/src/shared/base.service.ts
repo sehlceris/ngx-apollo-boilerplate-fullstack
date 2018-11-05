@@ -17,7 +17,7 @@ export abstract class BaseService<T extends Typegoose> {
   async map<K>(
     object: Partial<InstanceType<T>> | Partial<InstanceType<T>>[],
     sourceKey: string = this.modelName,
-    destinationKey: string = this.viewModelName
+    destinationKey: string = this.viewModelName,
   ): Promise<K> {
     return this._mapper.map(sourceKey, destinationKey, object);
   }
@@ -43,9 +43,7 @@ export abstract class BaseService<T extends Typegoose> {
   }
 
   async update(id: string, item: InstanceType<T>): Promise<InstanceType<T>> {
-    return this._model
-      .findByIdAndUpdate(this.toObjectId(id), item, { new: true })
-      .exec();
+    return this._model.findByIdAndUpdate(this.toObjectId(id), item, { new: true }).exec();
   }
 
   async clearCollection(filter = {}): Promise<void> {

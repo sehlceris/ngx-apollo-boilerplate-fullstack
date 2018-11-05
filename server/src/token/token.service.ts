@@ -9,9 +9,8 @@ import { Token, TokenModel } from './models/token.model';
 @Injectable()
 export class TokenService extends BaseService<Token> {
   constructor(
-    @InjectModel(Token.modelName)
-    private readonly _registrationModel: ModelType<Token>,
-    private readonly _mapperService: MapperService
+    @InjectModel(Token.modelName) private readonly _registrationModel: ModelType<Token>,
+    private readonly _mapperService: MapperService,
   ) {
     super();
     this._model = _registrationModel;

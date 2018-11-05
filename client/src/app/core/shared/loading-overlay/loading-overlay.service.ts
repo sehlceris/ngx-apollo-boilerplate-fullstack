@@ -26,11 +26,7 @@ export class LoadingOverlayService {
     return referenceId;
   }
 
-  public pushOrEditLoadingScreen(
-    referenceId: string,
-    message: string,
-    bringToTop: boolean = false
-  ): boolean {
+  public pushOrEditLoadingScreen(referenceId: string, message: string, bringToTop: boolean = false): boolean {
     const itemIndex = this.getItemIndexWithReferenceId(referenceId);
     if (itemIndex >= 0) {
       const item = this.loadingStack[itemIndex];
@@ -53,8 +49,7 @@ export class LoadingOverlayService {
   public removeLoadingScreen(referenceId: string): boolean {
     const itemIndex = this.getItemIndexWithReferenceId(referenceId);
     if (itemIndex >= 0) {
-      const topItemInStackWasRemoved =
-        itemIndex === this.loadingStack.length - 1;
+      const topItemInStackWasRemoved = itemIndex === this.loadingStack.length - 1;
       this.loadingStack.splice(itemIndex, 1);
       if (topItemInStackWasRemoved) {
         this.handleTopItemInLoadingStackChanged();
@@ -73,15 +68,11 @@ export class LoadingOverlayService {
   }
 
   private getItemIndexWithReferenceId(referenceId: string): number {
-    return this.loadingStack.findIndex(
-      (item: LoadingOverlayStackItem) => item.referenceId === referenceId
-    );
+    return this.loadingStack.findIndex((item: LoadingOverlayStackItem) => item.referenceId === referenceId);
   }
 
   private getItemWithReferenceId(referenceId: string): LoadingOverlayStackItem {
-    return this.loadingStack.find(
-      (item: LoadingOverlayStackItem) => item.referenceId === referenceId
-    );
+    return this.loadingStack.find((item: LoadingOverlayStackItem) => item.referenceId === referenceId);
   }
 
   private get topItemInStack(): LoadingOverlayStackItem {

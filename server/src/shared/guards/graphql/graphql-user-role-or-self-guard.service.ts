@@ -6,10 +6,7 @@ import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export abstract class GraphqlUserRoleOrSelfGuard extends AbstractRolesOrSelfGuard {
-  private static forIdFromArgumentKeyCache: Map<string, any> = new Map<
-    string,
-    any
-  >();
+  private static forIdFromArgumentKeyCache: Map<string, any> = new Map<string, any>();
 
   constructor(protected readonly _reflector: Reflector) {
     super(_reflector);
@@ -29,13 +26,9 @@ export abstract class GraphqlUserRoleOrSelfGuard extends AbstractRolesOrSelfGuar
     return c;
   }
 
-  abstract getTargetUserIdFromContext(
-    executionContext: ExecutionContext
-  ): string;
+  abstract getTargetUserIdFromContext(executionContext: ExecutionContext): string;
 
-  protected getUserFromContext(
-    executionContext: ExecutionContext
-  ): User {
+  protected getUserFromContext(executionContext: ExecutionContext): User {
     return GraphQLGuardHelpers.getUserFromAuthenticatedContext(executionContext);
   }
 }

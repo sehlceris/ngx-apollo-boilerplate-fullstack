@@ -11,9 +11,7 @@ const USERS_BASE_URI = `${AppConfig.BaseHttpUrl}/users`;
  */
 @Injectable()
 export class UserHttpApiService {
-  private log: BoundLogger = this.logService.bindToNamespace(
-    UserHttpApiService.name
-  );
+  private log: BoundLogger = this.logService.bindToNamespace(UserHttpApiService.name);
 
   constructor(private httpClient: HttpClient, private logService: LogService) {}
 

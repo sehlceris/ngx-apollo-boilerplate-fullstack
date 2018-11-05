@@ -9,11 +9,7 @@ import { UserResolvers } from './user.resolvers';
 const SERVICES = [UserService, UserApiService, UserResolvers];
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      { name: User.modelName, schema: User.model.schema },
-    ]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: User.modelName, schema: User.model.schema }])],
   providers: [...SERVICES],
   controllers: [UserController],
   exports: [...SERVICES],

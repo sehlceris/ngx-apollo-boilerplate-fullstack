@@ -9,20 +9,12 @@ export abstract class AbstractUserRoleGuard extends AbstractUserGuard {
     super(_reflector);
   }
 
-  protected abstract getUserFromContext(
-    context: ExecutionContext
-  ): User;
+  protected abstract getUserFromContext(context: ExecutionContext): User;
 
-  protected async checkCanActivate(
-    context: ExecutionContext
-  ): Promise<boolean> {
-    const roles = this._reflector.get<UserRole[]>(
-      'roles',
-      context.getHandler()
-    );
+  protected async checkCanActivate(context: ExecutionContext): Promise<boolean> {
+    const roles = this._reflector.get<UserRole[]>('roles', context.getHandler());
     const user: User = this.getUserFromContext(context);
-    const hasRole = () =>
-      roles && roles.length && roles.indexOf(user.role) >= 0;
+    const hasRole = () => roles && roles.length && roles.indexOf(user.role) >= 0;
     return user && user.role && hasRole();
   }
 }

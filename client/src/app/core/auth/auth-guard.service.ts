@@ -8,9 +8,7 @@ export class AuthGuardService implements CanActivate {
   isAuthenticated = false;
 
   constructor(private store: Store<any>) {
-    this.store
-      .pipe(select(selectorUser))
-      .subscribe((user) => (this.isAuthenticated = !!user.token));
+    this.store.pipe(select(selectorUser)).subscribe((user) => (this.isAuthenticated = !!user.token));
   }
   canActivate(): boolean {
     return this.isAuthenticated;

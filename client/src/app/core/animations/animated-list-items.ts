@@ -40,7 +40,7 @@ export const AnimatedListItems = {
             style({
               opacity: 1,
               transform: 'translateX(0) scale(1.0)',
-            })
+            }),
           ),
         ]),
       ]),
@@ -56,7 +56,7 @@ export const AnimatedListItems = {
             style({
               opacity: 0,
               transform: 'translateX(50%) scale(0.5)',
-            })
+            }),
           ),
         ]),
       ]),
@@ -69,7 +69,7 @@ export const AnimatedListItems = {
             300,
             style({
               transform: `translateY(calc(-100% - ${listItemMargin})`,
-            })
+            }),
           ),
         ]),
         transition('true => false', [
