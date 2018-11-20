@@ -1,8 +1,8 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { User } from '../../../user/models/user.model';
-import { AbstractUserRoleGuard } from '../shared/abstract-user-role.guard';
-import { GraphQLGuardHelpers } from './helpers';
+import {ExecutionContext, Injectable} from '@nestjs/common';
+import {Reflector} from '@nestjs/core';
+import {User} from '../../../user/models/user.model';
+import {AbstractUserRoleGuard} from '../shared/abstract-user-role.guard';
+import {GraphQLGuardHelpers} from './helpers';
 
 @Injectable()
 export class GraphQLRolesGuard extends AbstractUserRoleGuard {

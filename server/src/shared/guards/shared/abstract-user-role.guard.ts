@@ -1,8 +1,8 @@
-import { ExecutionContext } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { UserRole } from '../../../user/models/user-role.enum';
-import { User } from '../../../user/models/user.model';
-import { AbstractUserGuard } from './abstract-user.guard';
+import {ExecutionContext} from '@nestjs/common';
+import {Reflector} from '@nestjs/core';
+import {UserRole} from '../../../user/models/user-role.enum';
+import {User} from '../../../user/models/user.model';
+import {AbstractUserGuard} from './abstract-user.guard';
 
 export abstract class AbstractUserRoleGuard extends AbstractUserGuard {
   constructor(protected readonly _reflector: Reflector) {

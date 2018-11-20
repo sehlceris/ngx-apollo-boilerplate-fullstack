@@ -1,15 +1,15 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { UserApiService } from './user-api.service';
-import { UserVm } from './models/view-models/user-vm.model';
-import { RegisterVm } from './models/view-models/register-vm.model';
-import { LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm } from './models/view-models/login-vm.model';
-import { LoginResponseVm } from './models/view-models/login-response-vm.model';
-import { Roles } from '../shared/decorators/roles.decorator';
-import { UserRole } from './models/user-role.enum';
-import { UseGuards } from '@nestjs/common';
-import { GraphQLJwtAuthGuard } from '../shared/guards/graphql/graphql-jwt-auth-guard.service';
-import { GraphQLRolesGuard } from '../shared/guards/graphql/graphql-roles-guard.service';
-import { GraphqlUserRoleOrSelfGuard } from '../shared/guards/graphql/graphql-user-role-or-self-guard.service';
+import {Args, Mutation, Query, Resolver} from '@nestjs/graphql';
+import {UserApiService} from './user-api.service';
+import {UserVm} from './models/view-models/user-vm.model';
+import {RegisterVm} from './models/view-models/register-vm.model';
+import {LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm} from './models/view-models/login-vm.model';
+import {LoginResponseVm} from './models/view-models/login-response-vm.model';
+import {Roles} from '../shared/decorators/roles.decorator';
+import {UserRole} from './models/user-role.enum';
+import {UseGuards} from '@nestjs/common';
+import {GraphQLJwtAuthGuard} from '../shared/guards/graphql/graphql-jwt-auth-guard.service';
+import {GraphQLRolesGuard} from '../shared/guards/graphql/graphql-roles-guard.service';
+import {GraphqlUserRoleOrSelfGuard} from '../shared/guards/graphql/graphql-user-role-or-self-guard.service';
 
 @Resolver('User')
 export class UserResolvers {

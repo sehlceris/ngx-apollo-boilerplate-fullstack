@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { GraphQLModule } from '@nestjs/graphql';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { Configuration } from './shared/configuration/configuration.enum';
-import { ConfigurationService } from './shared/configuration/configuration.service';
-import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './shared/core/core.module';
+import {Module} from '@nestjs/common';
+import {MongooseModule} from '@nestjs/mongoose';
+import {GraphQLModule} from '@nestjs/graphql';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
+import {Configuration} from './shared/configuration/configuration.enum';
+import {ConfigurationService} from './shared/configuration/configuration.service';
+import {SharedModule} from './shared/shared.module';
+import {CoreModule} from './shared/core/core.module';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { CoreModule } from './shared/core/core.module';
     GraphQLModule.forRoot({
       typePaths: ['./src/**/*.types.graphql'],
       installSubscriptionHandlers: true,
-      context: ({ req }) => {
+      context: ({req}) => {
         return {
           headers: {
             ...req.headers,

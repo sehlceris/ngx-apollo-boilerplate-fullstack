@@ -1,11 +1,11 @@
-import { ApiModelPropertyOptional } from '@nestjs/swagger';
-import { SchemaOptions } from 'mongoose';
+import {ApiModelPropertyOptional} from '@nestjs/swagger';
+import {SchemaOptions} from 'mongoose';
 
 export class BaseModelVm {
-  @ApiModelPropertyOptional({ type: String, format: 'date-time' })
+  @ApiModelPropertyOptional({type: String, format: 'date-time'})
   createdAt?: Date;
 
-  @ApiModelPropertyOptional({ type: String, format: 'date-time' })
+  @ApiModelPropertyOptional({type: String, format: 'date-time'})
   updatedAt?: Date;
 
   @ApiModelPropertyOptional()

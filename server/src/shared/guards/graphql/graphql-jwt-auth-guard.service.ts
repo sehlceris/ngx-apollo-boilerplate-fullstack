@@ -1,11 +1,11 @@
-import { CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { GqlExecutionContext } from '@nestjs/graphql';
-import { Configuration } from '../../configuration/configuration.enum';
-import { ConfigurationService } from '../../configuration/configuration.service';
-import { AuthService } from '../../auth/auth.service';
-import { GraphqlContextModel } from './graphql-context.model';
-import { GraphQLGuardHelpers } from './helpers';
+import {CanActivate, ExecutionContext, HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {Reflector} from '@nestjs/core';
+import {GqlExecutionContext} from '@nestjs/graphql';
+import {Configuration} from '../../configuration/configuration.enum';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {AuthService} from '../../auth/auth.service';
+import {GraphqlContextModel} from './graphql-context.model';
+import {GraphQLGuardHelpers} from './helpers';
 
 @Injectable()
 export class GraphQLJwtAuthGuard implements CanActivate {

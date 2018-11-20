@@ -1,16 +1,16 @@
-import { TodoService } from './todo.service';
-import { isArray, map } from 'lodash';
-import { TodoVm } from './models/view-models/todo-vm.model';
-import { TodoLevel } from './models/todo-level.enum';
-import { TodoParams } from './models/view-models/todo-params.model';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {TodoService} from './todo.service';
+import {isArray, map} from 'lodash';
+import {TodoVm} from './models/view-models/todo-vm.model';
+import {TodoLevel} from './models/todo-level.enum';
+import {TodoParams} from './models/view-models/todo-params.model';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 
 @Injectable()
 export class TodoApiService {
   constructor(protected readonly todoService: TodoService) {}
 
   async getTodosForUser(ownerId: string): Promise<TodoVm[]> {
-    const todos = await this.todoService.findAll({ ownerId });
+    const todos = await this.todoService.findAll({ownerId});
     return this.todoService.map<TodoVm[]>(map(todos, (todo) => todo.toJSON()));
   }
 
@@ -18,12 +18,12 @@ export class TodoApiService {
     let filter = {};
 
     if (level) {
-      filter['level'] = { $in: isArray(level) ? [...level] : [level] };
+      filter['level'] = {$in: isArray(level) ? [...level] : [level]};
     }
 
     if (typeof isCompleted === 'boolean') {
       if (filter['level']) {
-        filter = { $and: [{ level: filter['level'] }, { isCompleted }] };
+        filter = {$and: [{level: filter['level']}, {isCompleted}]};
       } else {
         filter['isCompleted'] = isCompleted;
       }
@@ -40,7 +40,7 @@ export class TodoApiService {
   }
 
   async updateTodo(vm: TodoVm): Promise<TodoVm> {
-    const { id, content, level, isCompleted } = vm;
+    const {id, content, level, isCompleted} = vm;
 
     if (!vm || !id) {
       throw new HttpException('Missing parameters', HttpStatus.BAD_REQUEST);

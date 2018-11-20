@@ -1,11 +1,11 @@
-import { UserService } from './user.service';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { RegisterVm } from './models/view-models/register-vm.model';
-import { UserVm } from './models/view-models/user-vm.model';
-import { LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm } from './models/view-models/login-vm.model';
-import { LoginResponseVm } from './models/view-models/login-response-vm.model';
-import { AuthService } from '../shared/auth/auth.service';
-import { BoundLogger, LogService } from '../shared/utilities/log.service';
+import {UserService} from './user.service';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {RegisterVm} from './models/view-models/register-vm.model';
+import {UserVm} from './models/view-models/user-vm.model';
+import {LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm} from './models/view-models/login-vm.model';
+import {LoginResponseVm} from './models/view-models/login-response-vm.model';
+import {AuthService} from '../shared/auth/auth.service';
+import {BoundLogger, LogService} from '../shared/utilities/log.service';
 
 @Injectable()
 export class UserApiService {
@@ -37,18 +37,18 @@ export class UserApiService {
     if (!username) {
       throw new HttpException('No username provided', HttpStatus.BAD_REQUEST);
     }
-    return this.getExistingUserByFilter({ username: username }, throwIfNotFound);
+    return this.getExistingUserByFilter({username: username}, throwIfNotFound);
   }
 
   async getUserByEmail(email: string, throwIfNotFound: boolean = true): Promise<UserVm> {
     if (!email) {
       throw new HttpException('No email provided', HttpStatus.BAD_REQUEST);
     }
-    return this.getExistingUserByFilter({ email: email }, throwIfNotFound);
+    return this.getExistingUserByFilter({email: email}, throwIfNotFound);
   }
 
   async register(vm: RegisterVm): Promise<UserVm> {
-    const { username, email, password } = vm;
+    const {username, email, password} = vm;
 
     if (!username) {
       throw new HttpException('Username is required', HttpStatus.BAD_REQUEST);
@@ -113,7 +113,7 @@ export class UserApiService {
   }
 
   async updateUser(vm: UserVm): Promise<UserVm> {
-    const { id, email } = vm;
+    const {id, email} = vm;
 
     const unmappedExistingUser = await this.userService.findById(id);
     if (!unmappedExistingUser) {
@@ -129,6 +129,9 @@ export class UserApiService {
   }
 
   async updatePasswordById(id: string, currentPassword: string, newPassword: string): Promise<UserVm> {
+    if (!this.userService.passwordMeetsSecurityRequirements(newPassword)) {
+      throw new HttpException(`Password does not meet security requirements`, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
     await this.userService.loginWithId({
       id,
       password: currentPassword,

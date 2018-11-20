@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { OperatorFunction } from 'rxjs/internal/types';
-import { tap } from 'rxjs/operators';
+import {Injectable} from '@nestjs/common';
+import {Observable} from 'rxjs';
+import {OperatorFunction} from 'rxjs/internal/types';
+import {tap} from 'rxjs/operators';
 
 export enum LogLevel {
   DEBUG = 4,

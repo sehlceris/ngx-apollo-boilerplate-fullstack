@@ -1,14 +1,15 @@
-import { decode, verify } from 'jsonwebtoken';
-import { AnyJwtUserPayload } from '../../auth/jwt-payload.model';
-import { Configuration } from '../../configuration/configuration.enum';
-import { ConfigurationService } from '../../configuration/configuration.service';
+import {HttpException, HttpStatus} from '@nestjs/common';
+import {decode, verify} from 'jsonwebtoken';
+import {AnyJwtUserPayload} from '../../auth/jwt-payload.model';
+import {Configuration} from '../../configuration/configuration.enum';
+import {ConfigurationService} from '../../configuration/configuration.service';
 
 const jwtKey = ConfigurationService.get(Configuration.JWT_SECRET_KEY);
 
 export abstract class GuardHelpers {
   static getJwtStringFromHeaders(headers): string {
     if (!headers || !(headers['authorization'] || headers['Authorization'])) {
-      throw new Error('No authorization header provided');
+      throw new HttpException('No authorization header provided', HttpStatus.UNAUTHORIZED);
     }
 
     const authHeader = headers['authorization'] || headers['Authorization'];
@@ -18,7 +19,7 @@ export abstract class GuardHelpers {
       const jwtStr = split[1];
       return jwtStr;
     }
-    throw new Error('Authorization header is not in expected format: Bearer {{jwt}} ');
+    throw new HttpException('Authorization header is not in expected format: Bearer {{jwt}}', HttpStatus.BAD_REQUEST);
   }
 
   static async verifyJwtPayload(jwtStr: string): Promise<AnyJwtUserPayload> {

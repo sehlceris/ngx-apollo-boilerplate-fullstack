@@ -1,17 +1,11 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { decode, sign, SignOptions } from 'jsonwebtoken';
-import { User } from '../../user/models/user.model';
-import { UserService } from '../../user/user.service';
-import { Configuration } from '../configuration/configuration.enum';
-import { ConfigurationService } from '../configuration/configuration.service';
-import {
-  JwtAuthPayload,
-  JwtPayload,
-  JwtPayloadType,
-  JwtSingleUseUserPayload,
-  JwtUserPayload,
-} from './jwt-payload.model';
-import { RedisService } from '../utilities/redis.service';
+import {forwardRef, Inject, Injectable} from '@nestjs/common';
+import {decode, sign, SignOptions} from 'jsonwebtoken';
+import {User} from '../../user/models/user.model';
+import {UserService} from '../../user/user.service';
+import {Configuration} from '../configuration/configuration.enum';
+import {ConfigurationService} from '../configuration/configuration.service';
+import {JwtAuthPayload, JwtPayload, JwtPayloadType, JwtSingleUseUserPayload, JwtUserPayload} from './jwt-payload.model';
+import {MemoryCacheService} from '../utilities/memory-cache.service';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +15,7 @@ export class AuthService {
   constructor(
     @Inject(forwardRef(() => UserService)) readonly _userService: UserService,
     private readonly _configurationService: ConfigurationService,
-    private readonly memoryCacheService: RedisService,
+    private readonly memoryCacheService: MemoryCacheService,
   ) {
     this.jwtOptions = {
       expiresIn: _configurationService.get(Configuration.JWT_AUTH_TOKEN_EXPIRATION),
@@ -47,7 +41,7 @@ export class AuthService {
     });
 
     const decoded: JwtSingleUseUserPayload = <JwtSingleUseUserPayload>decode(signed);
-    const { jti, exp } = decoded;
+    const {jti, exp} = decoded;
 
     // TODO: store JTI with expiration
     await this.memoryCacheService.addJti(jti, exp);

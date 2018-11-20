@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { BoundLogger, LogService } from '../../utilities/log.service';
-import { Subject } from 'rxjs';
-import { EmailService } from '../../email/email.service';
+import {Injectable} from '@nestjs/common';
+import {BoundLogger, LogService} from '../../utilities/log.service';
+import {Subject} from 'rxjs';
+import {EmailService} from '../../email/email.service';
 
 @Injectable()
 export class BackgroundService {

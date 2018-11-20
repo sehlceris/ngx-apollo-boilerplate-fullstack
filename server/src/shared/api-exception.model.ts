@@ -1,4 +1,4 @@
-import { ApiModelPropertyOptional } from '@nestjs/swagger';
+import {ApiModelPropertyOptional} from '@nestjs/swagger';
 
 export class ApiException {
   @ApiModelPropertyOptional()

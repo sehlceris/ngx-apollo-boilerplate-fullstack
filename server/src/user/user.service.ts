@@ -1,8 +1,8 @@
-import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { compare, genSalt, hash } from 'bcryptjs';
-import { ModelType } from 'typegoose';
-import { AuthService } from '../shared/auth/auth.service';
+import {forwardRef, HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
+import {compare, genSalt, hash} from 'bcryptjs';
+import {ModelType} from 'typegoose';
+import {AuthService} from '../shared/auth/auth.service';
 import {
   JwtAuthPayload,
   JwtPayload,
@@ -10,20 +10,20 @@ import {
   JwtSingleUseUserPayload,
   JwtUserPayload,
 } from '../shared/auth/jwt-payload.model';
-import { BaseService } from '../shared/base.service';
-import { SecurityConstants } from '../shared/constants/security-constants';
-import { MapperService } from '../shared/mapper/mapper.service';
-import { User, UserModel } from './models/user.model';
-import { LoginResponseVm } from './models/view-models/login-response-vm.model';
-import { LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm } from './models/view-models/login-vm.model';
-import { RegisterVm } from './models/view-models/register-vm.model';
-import { UserVm } from './models/view-models/user-vm.model';
-import { UserRole } from './models/user-role.enum';
-import { randomBase64, randomUuid } from '../shared/utilities/random-utils';
-import { Configuration } from '../shared/configuration/configuration.enum';
-import { ConfigurationService } from '../shared/configuration/configuration.service';
-import { Observable, Subject } from 'rxjs';
-import { BoundLogger, LogService } from '../shared/utilities/log.service';
+import {BaseService} from '../shared/base.service';
+import {SecurityConstants} from '../shared/constants/security-constants';
+import {MapperService} from '../shared/mapper/mapper.service';
+import {User, UserModel} from './models/user.model';
+import {LoginResponseVm} from './models/view-models/login-response-vm.model';
+import {LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm} from './models/view-models/login-vm.model';
+import {RegisterVm} from './models/view-models/register-vm.model';
+import {UserVm} from './models/view-models/user-vm.model';
+import {UserRole} from './models/user-role.enum';
+import {randomBase64, randomUuid} from '../shared/utilities/random-utils';
+import {Configuration} from '../shared/configuration/configuration.enum';
+import {ConfigurationService} from '../shared/configuration/configuration.service';
+import {Observable, Subject} from 'rxjs';
+import {BoundLogger, LogService} from '../shared/utilities/log.service';
 
 @Injectable()
 export class UserService extends BaseService<User> {
@@ -60,7 +60,7 @@ export class UserService extends BaseService<User> {
   }
 
   async register(vm: RegisterVm): Promise<User> {
-    const { username, email, password } = vm;
+    const {username, email, password} = vm;
 
     const newUser = new UserModel();
     newUser.username = username.trim().toLowerCase();
@@ -83,25 +83,25 @@ export class UserService extends BaseService<User> {
   }
 
   async loginWithUsername(vm: LoginWithUsernameVm): Promise<LoginResponseVm> {
-    const { username, password } = vm;
-    const user = await this.findOne({ username });
+    const {username, password} = vm;
+    const user = await this.findOne({username});
     return this.performCommonLoginSequence(user, password);
   }
 
   async loginWithEmail(vm: LoginWithEmailVm): Promise<LoginResponseVm> {
-    const { email, password } = vm;
-    const user = await this.findOne({ email });
+    const {email, password} = vm;
+    const user = await this.findOne({email});
     return this.performCommonLoginSequence(user, password);
   }
 
   async loginWithId(vm: LoginWithIdVm): Promise<LoginResponseVm> {
-    const { id, password } = vm;
+    const {id, password} = vm;
     const user = await this.findById(id);
     return this.performCommonLoginSequence(user, password);
   }
 
   async requestPasswordReset(email: string) {
-    const user = await this.findOne({ email });
+    const user = await this.findOne({email});
     if (user) {
       const userVm: UserVm = await this.map<UserVm>(user.toJSON());
       this.userRequestedPasswordResetSubject.next(userVm);
@@ -174,7 +174,15 @@ export class UserService extends BaseService<User> {
     };
   }
 
+  public passwordMeetsSecurityRequirements(password: string): boolean {
+    return password && password.length > SecurityConstants.MinimumPasswordLength;
+  }
+
   async updatePasswordById(id: string, newPassword: string): Promise<UserVm> {
+    if (!this.passwordMeetsSecurityRequirements(newPassword)) {
+      throw new HttpException(`Password does not meet security requirements`, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
     const user = await this.findById(id);
     if (!user) {
       throw new HttpException(`No user with id ${id}`, HttpStatus.NOT_FOUND);

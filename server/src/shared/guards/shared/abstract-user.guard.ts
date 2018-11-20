@@ -1,7 +1,7 @@
-import { ExecutionContext, HttpException, HttpStatus } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { User } from '../../../user/models/user.model';
-import { AbstractTemplateGuard } from './abstract-template.guard';
+import {ExecutionContext, HttpException, HttpStatus} from '@nestjs/common';
+import {Reflector} from '@nestjs/core';
+import {User} from '../../../user/models/user.model';
+import {AbstractTemplateGuard} from './abstract-template.guard';
 
 export abstract class AbstractUserGuard extends AbstractTemplateGuard {
   protected constructor(protected readonly _reflector: Reflector) {

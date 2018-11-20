@@ -1,16 +1,16 @@
-import { ExecutionContext } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { BoundLogger, LogService } from '../../utilities/log.service';
-import { AbstractTemplateGuard } from './abstract-template.guard';
-import { JwtPayloadType, JwtSingleUseUserPayload } from '../../auth/jwt-payload.model';
-import { RedisService } from '../../utilities/redis.service';
+import {ExecutionContext} from '@nestjs/common';
+import {Reflector} from '@nestjs/core';
+import {BoundLogger, LogService} from '../../utilities/log.service';
+import {AbstractTemplateGuard} from './abstract-template.guard';
+import {JwtPayloadType, JwtSingleUseUserPayload} from '../../auth/jwt-payload.model';
+import {MemoryCacheService} from '../../utilities/memory-cache.service';
 
 export abstract class AbstractTokenGuard extends AbstractTemplateGuard {
   private log: BoundLogger = this.logService.bindToNamespace(AbstractTokenGuard.name);
 
   protected constructor(
     protected readonly _reflector: Reflector,
-    protected readonly memoryCacheService: RedisService,
+    protected readonly memoryCacheService: MemoryCacheService,
     protected logService: LogService,
   ) {
     super();

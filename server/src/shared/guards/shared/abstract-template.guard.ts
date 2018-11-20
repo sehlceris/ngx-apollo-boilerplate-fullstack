@@ -1,6 +1,6 @@
-import { CanActivate, ExecutionContext, HttpException, HttpStatus } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { User } from '../../../user/models/user.model';
+import {CanActivate, ExecutionContext, HttpException, HttpStatus} from '@nestjs/common';
+import {Reflector} from '@nestjs/core';
+import {User} from '../../../user/models/user.model';
 
 export abstract class AbstractTemplateGuard implements CanActivate {
   protected abstract async checkCanActivate(context: ExecutionContext): Promise<boolean>;

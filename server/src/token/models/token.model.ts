@@ -1,5 +1,5 @@
-import { ModelType, pre, prop, Typegoose } from 'typegoose';
-import { schemaOptions } from '../../shared/base.model';
+import {ModelType, pre, prop, Typegoose} from 'typegoose';
+import {schemaOptions} from '../../shared/base.model';
 
 @pre<Token>('findOneAndUpdate', function(next) {
   this._update.updatedAt = new Date(Date.now());
@@ -18,16 +18,16 @@ export class Token extends Typegoose {
   })
   confirmationToken: string;
 
-  @prop({ default: Date.now() })
+  @prop({default: Date.now()})
   createdAt?: Date;
 
-  @prop({ default: Date.now() })
+  @prop({default: Date.now()})
   updatedAt?: Date;
 
   id?: string;
 
   static get model(): ModelType<Token> {
-    return new Token().getModelForClass(Token, { schemaOptions });
+    return new Token().getModelForClass(Token, {schemaOptions});
   }
 
   static get modelName(): string {

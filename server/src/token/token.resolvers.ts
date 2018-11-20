@@ -1,11 +1,11 @@
-import { UseGuards } from '@nestjs/common';
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { JwtPayloadType, JwtSingleUseUserPayload } from '../shared/auth/jwt-payload.model';
-import { GraphqlTokenGuard } from '../shared/guards/graphql/graphql-token-guard';
-import { BoundLogger, LogService } from '../shared/utilities/log.service';
-import { UserVm } from '../user/models/view-models/user-vm.model';
-import { TokenApiService } from './token-api.service';
-import { AllowedJwtPayloadType } from '../shared/decorators/allowed-jwt-payload-type';
+import {UseGuards} from '@nestjs/common';
+import {Args, Context, Mutation, Query, Resolver} from '@nestjs/graphql';
+import {JwtPayloadType, JwtSingleUseUserPayload} from '../shared/auth/jwt-payload.model';
+import {GraphqlTokenGuard} from '../shared/guards/graphql/graphql-token-guard';
+import {BoundLogger, LogService} from '../shared/utilities/log.service';
+import {UserVm} from '../user/models/view-models/user-vm.model';
+import {TokenApiService} from './token-api.service';
+import {AllowedJwtPayloadType} from '../shared/decorators/allowed-jwt-payload-type';
 
 @Resolver('Token')
 export class TokenResolvers {
@@ -16,8 +16,7 @@ export class TokenResolvers {
   @Query('tokenExists')
   @UseGuards(GraphqlTokenGuard)
   async tokenExists(@Context('jwt') jwt: JwtSingleUseUserPayload): Promise<boolean> {
-    this.log.debug(`checking existence of JTI: ${jwt.jti}`);
-    return true;
+    return this.tokenApiService.tokenExists(jwt);
   }
 
   @Mutation('verifyEmail')

@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { BoundLogger, LogService } from './log.service';
-import { ConfigurationService } from '../configuration/configuration.service';
-import { Configuration } from '../configuration/configuration.enum';
+import {Injectable} from '@nestjs/common';
+import {BoundLogger, LogService} from './log.service';
+import {ConfigurationService} from '../configuration/configuration.service';
+import {Configuration} from '../configuration/configuration.enum';
 
 import * as redis from 'redis';
 import * as moment from 'moment';
@@ -15,8 +15,8 @@ interface JtiInfo {
 }
 
 @Injectable()
-export class RedisService {
-  private log: BoundLogger = this.logService.bindToNamespace(RedisService.name);
+export class MemoryCacheService {
+  private log: BoundLogger = this.logService.bindToNamespace(MemoryCacheService.name);
 
   private _client;
 

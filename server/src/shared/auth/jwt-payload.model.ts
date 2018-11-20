@@ -1,4 +1,4 @@
-import { UserRole } from '../../user/models/user-role.enum';
+import {UserRole} from '../../user/models/user-role.enum';
 
 export enum JwtPayloadType {
   Auth = 'JwtPayloadType.Auth',

@@ -1,6 +1,6 @@
 import 'automapper-ts/dist/automapper';
-import { Types } from 'mongoose';
-import { InstanceType, ModelType, Typegoose } from 'typegoose';
+import {Types} from 'mongoose';
+import {InstanceType, ModelType, Typegoose} from 'typegoose';
 
 export abstract class BaseService<T extends Typegoose> {
   protected _model: ModelType<T>;
@@ -43,7 +43,7 @@ export abstract class BaseService<T extends Typegoose> {
   }
 
   async update(id: string, item: InstanceType<T>): Promise<InstanceType<T>> {
-    return this._model.findByIdAndUpdate(this.toObjectId(id), item, { new: true }).exec();
+    return this._model.findByIdAndUpdate(this.toObjectId(id), item, {new: true}).exec();
   }
 
   async clearCollection(filter = {}): Promise<void> {

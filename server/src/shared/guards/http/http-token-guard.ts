@@ -5,12 +5,10 @@ import {JwtSingleUseUserPayload} from '../../auth/jwt-payload.model';
 import {LogService} from '../../utilities/log.service';
 import {MemoryCacheService} from '../../utilities/memory-cache.service';
 import {AbstractTokenGuard} from '../shared/abstract-token.guard';
-import {GraphqlContextModel} from './graphql-context.model';
-import {GraphQLGuardHelpers} from './helpers';
-import {GqlExecutionContext} from '@nestjs/graphql';
+import {HttpGuardHelpers} from './helpers';
 
 @Injectable()
-export class GraphqlTokenGuard extends AbstractTokenGuard {
+export class HttpTokenGuard extends AbstractTokenGuard {
   constructor(
     protected readonly _reflector: Reflector,
     protected readonly memoryCacheService: MemoryCacheService,
@@ -21,6 +19,6 @@ export class GraphqlTokenGuard extends AbstractTokenGuard {
   }
 
   protected async getJwtPayloadFromContext(executionContext: ExecutionContext): Promise<JwtSingleUseUserPayload> {
-    return <Promise<JwtSingleUseUserPayload>>GraphQLGuardHelpers.getJwtPayloadFromContext(executionContext);
+    return <Promise<JwtSingleUseUserPayload>>HttpGuardHelpers.getJwtPayloadFromExecutionContext(executionContext);
   }
 }

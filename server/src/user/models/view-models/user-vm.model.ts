@@ -1,6 +1,6 @@
-import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
-import { BaseModelVm } from '../../../shared/base.model';
-import { UserRole } from '../user-role.enum';
+import {ApiModelProperty, ApiModelPropertyOptional} from '@nestjs/swagger';
+import {BaseModelVm} from '../../../shared/base.model';
+import {UserRole} from '../user-role.enum';
 
 export class UserVm extends BaseModelVm {
   @ApiModelProperty()
@@ -9,6 +9,6 @@ export class UserVm extends BaseModelVm {
   email: string;
   @ApiModelProperty()
   securityIdentifier?: string;
-  @ApiModelPropertyOptional({ enum: UserRole })
+  @ApiModelPropertyOptional({enum: UserRole})
   role?: UserRole;
 }

@@ -1,17 +1,17 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { JwtSingleUseUserPayload } from '../shared/auth/jwt-payload.model';
-import { RedisService } from '../shared/utilities/redis.service';
-import { UserRole } from '../user/models/user-role.enum';
-import { User } from '../user/models/user.model';
-import { UserVm } from '../user/models/view-models/user-vm.model';
-import { UserService } from '../user/user.service';
-import { TokenService } from './token.service';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {JwtSingleUseUserPayload} from '../shared/auth/jwt-payload.model';
+import {MemoryCacheService} from '../shared/utilities/memory-cache.service';
+import {UserRole} from '../user/models/user-role.enum';
+import {User} from '../user/models/user.model';
+import {UserVm} from '../user/models/view-models/user-vm.model';
+import {UserService} from '../user/user.service';
+import {TokenService} from './token.service';
 
 @Injectable()
 export class TokenApiService {
   constructor(
     protected readonly tokenService: TokenService,
-    protected readonly memoryCacheService: RedisService,
+    protected readonly memoryCacheService: MemoryCacheService,
     protected readonly userService: UserService,
   ) {}
 
@@ -33,6 +33,9 @@ export class TokenApiService {
   }
 
   async resetPassword(vm: JwtSingleUseUserPayload, password: string): Promise<UserVm> {
+    if (!this.userService.passwordMeetsSecurityRequirements(password)) {
+      throw new HttpException(`Password does not meet security requirements`, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
     await this.consumeJti(vm);
     return this.userService.updatePasswordById(vm.userId, password);
   }
