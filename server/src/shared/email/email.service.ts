@@ -107,11 +107,6 @@ export class EmailService {
 
   private async sendEmail(email: Email, templatePath: string, destinationAddress: string, locals: any): Promise<void> {
 
-    if (this.configurationService.isDevelopment && !this.configurationService.get(Configuration.SEND_EMAILS_IN_DEVELOPMENT)) {
-      this.log.info(`circumvented email sending because the environment is development`);
-      return Promise.resolve();
-    }
-
     const sendPromise = email.send({
       template: templatePath,
       message: { to: destinationAddress },
