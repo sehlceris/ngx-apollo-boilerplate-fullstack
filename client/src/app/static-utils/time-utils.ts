@@ -71,7 +71,9 @@ export class TimeUtils {
    */
   static weeksSinceEpoch(floor: boolean = true, date?: Date): number {
     const momentToCompare = date ? moment(date) : moment();
-    const weeksSinceEpoch = moment.duration(momentToCompare.diff(moment(0))).asWeeks();
+    const weeksSinceEpoch = moment
+      .duration(momentToCompare.diff(moment(0)))
+      .asWeeks();
     return floor ? Math.floor(weeksSinceEpoch) : weeksSinceEpoch;
   }
 }

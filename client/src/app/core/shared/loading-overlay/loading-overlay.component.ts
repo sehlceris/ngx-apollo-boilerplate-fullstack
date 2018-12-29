@@ -20,13 +20,13 @@ export class LoadingOverlayComponent implements OnInit, OnDestroy {
       this.overlayService.onShow$.subscribe((message) => {
         this.message = message;
         this.show = true;
-      }),
+      })
     );
 
     this.subscriptions.push(
       this.overlayService.onHide$.subscribe(() => {
         this.show = false;
-      }),
+      })
     );
   }
 
