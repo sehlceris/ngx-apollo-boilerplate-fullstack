@@ -1,7 +1,7 @@
-import {NestFactory} from '@nestjs/core';
-import {AppModule} from './app.module';
-import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
-import {HttpExceptionFilter} from './shared/filters/http-exception.filter';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 
 declare const module: any;
 
@@ -22,6 +22,8 @@ async function bootstrap() {
   const swaggerDoc = SwaggerModule.createDocument(app, swaggerOptions);
 
   app.use('/api/docs/swagger.json', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.send(swaggerDoc);
   });
 
@@ -46,4 +48,5 @@ async function bootstrap() {
 
   await app.listen(AppModule.port);
 }
+
 bootstrap();

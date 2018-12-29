@@ -1,16 +1,16 @@
-import {Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as Email from 'email-templates';
 import * as SMTPTransport from 'nodemailer/lib/smtp-transport';
 import * as path from 'path';
 import * as nodemailer from 'nodemailer';
-import {UserVm} from '../../user/models/view-models/user-vm.model';
-import {Configuration} from '../configuration/configuration.enum';
-import {ConfigurationService} from '../configuration/configuration.service';
-import {ClientPaths} from '../constants/client-paths';
-import {BoundLogger, LogService} from '../utilities/log.service';
-import {UserService} from '../../user/user.service';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import { UserVm } from '../../user/models/view-models/user-vm.model';
+import { Configuration } from '../configuration/configuration.enum';
+import { ConfigurationService } from '../configuration/configuration.service';
+import { ClientPaths } from '../constants/client-paths';
+import { BoundLogger, LogService } from '../utilities/log.service';
+import { UserService } from '../../user/user.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 enum EmailTemplatePath {
   VerifyEmail = 'verify-email',
@@ -31,7 +31,8 @@ export class EmailService {
     private readonly userService: UserService,
     private readonly configurationService: ConfigurationService,
     private readonly logService: LogService,
-  ) {}
+  ) {
+  }
 
   public startReactingToEvents() {
     this.unsubscribe$.next(); // prevent double email effects if this method is accidentally called twice
@@ -105,9 +106,15 @@ export class EmailService {
   }
 
   private async sendEmail(email: Email, templatePath: string, destinationAddress: string, locals: any): Promise<void> {
+
+    if (this.configurationService.isDevelopment && !this.configurationService.get(Configuration.SEND_EMAILS_IN_DEVELOPMENT)) {
+      this.log.info(`circumvented email sending because the environment is development`);
+      return Promise.resolve();
+    }
+
     const sendPromise = email.send({
       template: templatePath,
-      message: {to: destinationAddress},
+      message: { to: destinationAddress },
       locals,
     });
     return sendPromise;

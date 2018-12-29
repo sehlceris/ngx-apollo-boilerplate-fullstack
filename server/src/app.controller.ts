@@ -5,8 +5,6 @@ import {AppService} from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  // router.get('/hello');
-  // localhost:3000/root/hello
   @Get('hello')
   root(): any {
     return this.appService.root();
