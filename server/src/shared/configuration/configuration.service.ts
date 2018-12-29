@@ -1,6 +1,7 @@
 import {Injectable} from '@nestjs/common';
-import {get} from 'config';
 import {Configuration} from './configuration.enum';
+
+require('dotenv').config();
 
 export enum Environment {
   Development = 'development',
@@ -13,7 +14,7 @@ export class ConfigurationService {
   static environment: string = process.env.NODE_ENV || Environment.Development;
 
   static get(name: string): string {
-    const val = process.env[name] || get(name);
+    const val = process.env[name];
     if (val === undefined || val === null) {
       throw new Error(`Configuration does not have key '${name}'`);
     }
