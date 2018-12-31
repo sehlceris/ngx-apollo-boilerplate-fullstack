@@ -1,2 +1,26 @@
 <h2>Verify Email</h2>
-<mat-hint>Token: {{(state$ | async).verifyToken}}</mat-hint>
+<div class="status-messages">
+  <div
+    *ngIf="(state$ | async).verifyState === VerifyState.VERIFYING"
+    class="pending"
+  >Verifying your email, this should only take a second...</div>
+  <div
+    *ngIf="(state$ | async).verifyState === VerifyState.VERIFY_SUCCESS"
+    class="success"
+  >
+    <mat-icon fontSet="fas" fontIcon="fa-check-circle"></mat-icon>
+    <a
+      routerLink="../login"
+    >Successfully verified your email! Please log in</a>.
+  </div>
+  <div
+    *ngIf="(state$ | async).verifyState === VerifyState.VERIFY_FAILURE"
+    class="error"
+  >
+    <mat-icon fontSet="fas" fontIcon="fa-exclamation-triangle"></mat-icon>
+    <span>Unable to verify your email: {{(state$ | async).verifyError}}</span>
+  </div>
+</div>
+<div
+  class="token-debug"
+>Token: {{(state$ | async).verifyToken || 'MISSING'}}</div>

@@ -94,6 +94,34 @@ $anms-black-theme: mat-dark-theme($anms-black-primary, $anms-black-accent, $anms
         'background-type': 'dark',
       ),
     ),
+    'affirmative': (
+      'base': (
+        'color': map_get($mat-green, 800),
+        'background-type': 'dark',
+      ),
+      'light': (
+        'color': map_get($mat-green, 700),
+        'background-type': 'dark',
+      ),
+      'dark': (
+        'color': map_get($mat-green, 900),
+        'background-type': 'dark',
+      ),
+    ),
+    'negative': (
+      'base': (
+        'color': map_get($mat-red, 800),
+        'background-type': 'dark',
+      ),
+      'light': (
+        'color': map_get($mat-red, 700),
+        'background-type': 'dark',
+      ),
+      'dark': (
+        'color': map_get($mat-red, 900),
+        'background-type': 'dark',
+      ),
+    ),
   );
 
   $contrast-colors: (

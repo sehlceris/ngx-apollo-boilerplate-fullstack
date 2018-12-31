@@ -4,9 +4,21 @@
   flex-direction: column;
   text-align: center;
 
-  .form-error {
+  .status-messages {
+    margin: 1em;
+
+    .success {
+      color: var(--theme-color-affirmative-base);
+    }
+
+    .error {
+      color: var(--theme-color-warn-base);
+    }
+  }
+
+  .token-debug {
+    font-size: 0.7em;
     margin-top: 1em;
-    font-size: 0.8rem;
-    color: var(--theme-color-error-base);
+    color: var(--theme-color-contrast-background-base-hint);
   }
 }

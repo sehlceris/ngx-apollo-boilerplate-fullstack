@@ -2,6 +2,7 @@ import {Action} from '@ngrx/store';
 
 export enum VerifyEmailActionTypes {
   VERIFY_EMAIL = '[VerifyEmail] VERIFY_EMAIL',
+  VERIFY_EMAIL_CANCEL = '[VerifyEmail] VERIFY_EMAIL_CANCEL',
   VERIFY_EMAIL_SUCCESS = '[VerifyEmail] VERIFY_EMAIL_SUCCESS',
   VERIFY_EMAIL_FAILURE = '[VerifyEmail] VERIFY_EMAIL_FAILURE',
 }
@@ -9,6 +10,11 @@ export enum VerifyEmailActionTypes {
 export class ActionVerifyEmail implements Action {
   constructor(readonly payload: string) {}
   readonly type = VerifyEmailActionTypes.VERIFY_EMAIL;
+}
+
+export class ActionVerifyEmailCancel implements Action {
+  constructor() {}
+  readonly type = VerifyEmailActionTypes.VERIFY_EMAIL_CANCEL;
 }
 
 export class ActionVerifyEmailSuccess implements Action {
@@ -21,7 +27,11 @@ export class ActionVerifyEmailFailure implements Action {
   readonly type = VerifyEmailActionTypes.VERIFY_EMAIL_FAILURE;
 }
 
-export type ForgotPasswordActions = ActionVerifyEmail | ActionVerifyEmailSuccess | ActionVerifyEmailFailure;
+export type VerifyEmailActions =
+  | ActionVerifyEmail
+  | ActionVerifyEmailCancel
+  | ActionVerifyEmailSuccess
+  | ActionVerifyEmailFailure;
 
 export interface VerifyEmailState {
   verifyState: VerifyState;
@@ -42,11 +52,11 @@ export const initialState: VerifyEmailState = {
   verifyError: null,
 };
 
-export const selectorVerifyEmail = (state): VerifyEmailState => state.auth.forgotPassword;
+export const selectorVerifyEmail = (state): VerifyEmailState => state.auth.verifyEmail;
 
 export function verifyEmailReducer(
   state: VerifyEmailState = initialState,
-  action: ForgotPasswordActions,
+  action: VerifyEmailActions,
 ): VerifyEmailState {
   switch (action.type) {
     case VerifyEmailActionTypes.VERIFY_EMAIL:
@@ -54,6 +64,13 @@ export function verifyEmailReducer(
         ...state,
         verifyState: VerifyState.VERIFYING,
         verifyToken: action.payload,
+        verifyError: null,
+      };
+    case VerifyEmailActionTypes.VERIFY_EMAIL_CANCEL:
+      return {
+        ...state,
+        verifyState: VerifyState.PRE_VERIFICATION,
+        verifyToken: null,
         verifyError: null,
       };
     case VerifyEmailActionTypes.VERIFY_EMAIL_SUCCESS:

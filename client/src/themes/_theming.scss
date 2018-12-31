@@ -74,4 +74,10 @@
 
   @include theme-css-variables-colors-by-key($theme-colors, $contrast-colors, 'error');
   @include theme-css-variables-contrast-colors-by-key($theme-colors, $contrast-colors, 'error');
+
+  @include theme-css-variables-colors-by-key($theme-colors, $contrast-colors, 'affirmative');
+  @include theme-css-variables-contrast-colors-by-key($theme-colors, $contrast-colors, 'affirmative');
+
+  @include theme-css-variables-colors-by-key($theme-colors, $contrast-colors, 'negative');
+  @include theme-css-variables-contrast-colors-by-key($theme-colors, $contrast-colors, 'negative');
 }
