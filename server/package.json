@@ -16,7 +16,7 @@
     "prettier": "prettier '{src,e2e}/**/*.{ts,json,md,scss}' --write",
     "mongodb": "cd dev-tools/mongodb-docker && docker-compose up",
     "redis": "cd dev-tools/redis-docker && docker-compose up",
-    "generate:types": "rm ./generated/anms.typings.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-typescript-template --out ./generated/anms.typings.ts './src/**/*.queries.graphql'",
+    "generate:types": "rm -f ./generated/anms.typings.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-typescript-template --out ./generated/anms.typings.ts './src/**/*.queries.graphql'",
     "generate:client:graphql": "rm ./generated/anms-graphql-client.ts; gql-gen --schema http://localhost:3000/graphql --template graphql-codegen-apollo-angular-template --out ./generated/anms-graphql-client.ts './src/**/*.queries.graphql'"
   },
   "husky": {
