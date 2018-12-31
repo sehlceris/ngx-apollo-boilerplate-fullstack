@@ -1,13 +1,13 @@
 import {Action} from '@ngrx/store';
 
 export enum VerifyEmailActionTypes {
-  VERIFY_EMAIL = '[VerifyEmail] GENERATE_RESET_TOKEN_BY_EMAIL',
-  VERIFY_EMAIL_SUCCESS = '[VerifyEmail] GENERATE_RESET_TOKEN_BY_EMAIL_SUCCESS',
-  VERIFY_EMAIL_FAILURE = '[VerifyEmail] GENERATE_RESET_TOKEN_BY_EMAIL_FAILURE',
+  VERIFY_EMAIL = '[VerifyEmail] VERIFY_EMAIL',
+  VERIFY_EMAIL_SUCCESS = '[VerifyEmail] VERIFY_EMAIL_SUCCESS',
+  VERIFY_EMAIL_FAILURE = '[VerifyEmail] VERIFY_EMAIL_FAILURE',
 }
 
 export class ActionVerifyEmail implements Action {
-  constructor(readonly token: string) {}
+  constructor(readonly payload: string) {}
   readonly type = VerifyEmailActionTypes.VERIFY_EMAIL;
 }
 
@@ -17,7 +17,7 @@ export class ActionVerifyEmailSuccess implements Action {
 }
 
 export class ActionVerifyEmailFailure implements Action {
-  constructor(readonly error: string) {}
+  constructor(readonly payload: string) {}
   readonly type = VerifyEmailActionTypes.VERIFY_EMAIL_FAILURE;
 }
 
@@ -53,7 +53,7 @@ export function verifyEmailReducer(
       return {
         ...state,
         verifyState: VerifyState.VERIFYING,
-        verifyToken: action.token,
+        verifyToken: action.payload,
         verifyError: null,
       };
     case VerifyEmailActionTypes.VERIFY_EMAIL_SUCCESS:
@@ -68,7 +68,7 @@ export function verifyEmailReducer(
         ...state,
         verifyState: VerifyState.VERIFYING,
         verifyToken: null,
-        verifyError: null,
+        verifyError: action.payload,
       };
     default:
       return state;

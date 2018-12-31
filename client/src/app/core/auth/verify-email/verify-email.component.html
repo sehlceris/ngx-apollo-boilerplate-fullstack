@@ -1,7 +1,2 @@
-<h2>Recover Password</h2>
-<ng-container
-  *ngIf="recoveryMethod === PasswordRecoveryMethod.Email"
->
-  <anms-generate-reset-token-by-email-form>
-  </anms-generate-reset-token-by-email-form>
-</ng-container>
+<h2>Verify Email</h2>
+<mat-hint>Token: {{(state$ | async).verifyToken}}</mat-hint>
