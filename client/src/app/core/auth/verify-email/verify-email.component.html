@@ -1,0 +1,7 @@
+<h2>Recover Password</h2>
+<ng-container
+  *ngIf="recoveryMethod === PasswordRecoveryMethod.Email"
+>
+  <anms-generate-reset-token-by-email-form>
+  </anms-generate-reset-token-by-email-form>
+</ng-container>
