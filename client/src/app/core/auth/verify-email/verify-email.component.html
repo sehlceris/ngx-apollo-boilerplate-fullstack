@@ -21,8 +21,11 @@
     *ngIf="(state$ | async).verifyState === VerifyState.VERIFY_FAILURE"
     class="error"
   >
-    <mat-icon fontSet="fas" fontIcon="fa-exclamation-triangle"></mat-icon>
-    <span>Unable to verify your email: {{(state$ | async).verifyError}}</span>
+    <div>
+      <mat-icon fontSet="fas" fontIcon="fa-exclamation-triangle"></mat-icon>
+      <span>Unable to verify your email</span>
+    </div>
+    <div>{{(state$ | async).verifyError}}</div>
   </div>
 </div>
 <div

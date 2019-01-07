@@ -5,8 +5,14 @@ import {VerifyEmailGQL} from '@app/generated/anms-graphql-client';
 import {Action} from '@ngrx/store';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {of, pipe} from 'rxjs';
-import {map, switchMap, tap} from 'rxjs/operators';
-import {ActionVerifyEmail, VerifyEmailActionTypes} from '@app/core/auth/verify-email/verify-email.reducer';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
+import {
+  ActionVerifyEmail,
+  ActionVerifyEmailFailure,
+  ActionVerifyEmailSuccess,
+  VerifyEmailActionTypes,
+} from '@app/core/auth/verify-email/verify-email.reducer';
+import {HttpHeaders} from '@angular/common/http';
 
 @Injectable()
 export class VerifyEmailEffects {
@@ -19,23 +25,26 @@ export class VerifyEmailEffects {
     private logService: LogService,
   ) {}
 
-  @Effect({dispatch: false})
+  @Effect({dispatch: true})
   verifyEmail() {
     return this.actions$.pipe(
       ofType<ActionVerifyEmail>(VerifyEmailActionTypes.VERIFY_EMAIL),
       pipe(
         switchMap((action: ActionVerifyEmail) => {
-          this.log.error('verifying email!');
-          return this.verifyEmailGql.mutate();
+          return this.verifyEmailGql.mutate(undefined, {
+            context: {
+              headers: new HttpHeaders({
+                Authorization: `Bearer ${action.payload}`,
+              }),
+            },
+          });
         }),
-        tap(
-          () => {
-            this.log.error('ATTEMPTED TO MUTATE AND SUCCEEDED');
-          },
-          (err) => {
-            this.log.error('ATTEMPTED TO MUTATE AND FAILED: ' + err);
-          },
-        ),
+        map(() => {
+          return new ActionVerifyEmailSuccess();
+        }),
+        catchError((err) => {
+          return of(new ActionVerifyEmailFailure(err));
+        }),
       ),
     );
   }

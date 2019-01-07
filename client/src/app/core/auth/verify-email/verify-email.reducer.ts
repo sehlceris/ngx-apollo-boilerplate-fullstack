@@ -76,14 +76,14 @@ export function verifyEmailReducer(
     case VerifyEmailActionTypes.VERIFY_EMAIL_SUCCESS:
       return {
         ...state,
-        verifyState: VerifyState.VERIFYING,
+        verifyState: VerifyState.VERIFY_SUCCESS,
         verifyToken: null,
         verifyError: null,
       };
     case VerifyEmailActionTypes.VERIFY_EMAIL_FAILURE:
       return {
         ...state,
-        verifyState: VerifyState.VERIFYING,
+        verifyState: VerifyState.VERIFY_FAILURE,
         verifyToken: null,
         verifyError: action.payload,
       };
