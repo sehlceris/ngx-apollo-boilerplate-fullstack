@@ -20,9 +20,11 @@ const COMPONENTS = [
   VerifyEmailComponent,
 ];
 
+const SERVICES = [];
+
 @NgModule({
   imports: [SharedModule, AuthRoutingModule],
   declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  exports: [...COMPONENTS, ...SERVICES],
 })
 export class AuthModule {}

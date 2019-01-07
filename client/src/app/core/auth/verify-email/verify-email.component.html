@@ -11,7 +11,11 @@
     <mat-icon fontSet="fas" fontIcon="fa-check-circle"></mat-icon>
     <a
       routerLink="../login"
-    >Successfully verified your email! Please log in</a>.
+    >
+      Successfully verified your email!
+      <br>
+      <span class="login-text">Click here to log in</span>
+    </a>
   </div>
   <div
     *ngIf="(state$ | async).verifyState === VerifyState.VERIFY_FAILURE"
@@ -23,4 +27,4 @@
 </div>
 <div
   class="token-debug"
->Token: {{(state$ | async).verifyToken || 'MISSING'}}</div>
+>{{(state$ | async).verifyToken || 'MISSING'}}</div>
