@@ -112,6 +112,10 @@ export class UserApiService {
     return this.userService.loginWithId(vm);
   }
 
+  async resetPassword(email: string): Promise<void> {
+    // TODO
+  }
+
   async updateUser(vm: UserVm): Promise<UserVm> {
     const {id, email} = vm;
 

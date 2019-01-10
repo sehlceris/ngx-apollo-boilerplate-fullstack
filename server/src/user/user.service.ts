@@ -30,6 +30,7 @@ export class UserService extends BaseService<User> {
   private newUserRegisteredSubject: Subject<UserVm> = new Subject<UserVm>();
   public newUserRegistered$: Observable<UserVm> = this.newUserRegisteredSubject.asObservable();
 
+  // TODO: this isnt triggered
   private userVerifiedEmailSubject: Subject<UserVm> = new Subject<UserVm>();
   public userVerifiedEmail$: Observable<UserVm> = this.userVerifiedEmailSubject.asObservable();
 
@@ -37,7 +38,10 @@ export class UserService extends BaseService<User> {
   public userForgotPassword$: Observable<UserVm> = this.userForgotPasswordSubject.asObservable();
 
   private userRequestedPasswordResetSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userRequestedPasswordReset$: Observable<UserVm> = this.userRequestedPasswordResetSubject.asObservable();
+  public userRequestedPasswordReset$: Observable<UserVm> = this.userRequestedPasswordResetSubject
+
+  private userRequestedResendVerificationEmailSubject: Subject<UserVm> = new Subject<UserVm>();
+  public userRequestedResendVerificationEmail$: Observable<UserVm> = this.userRequestedPasswordResetSubject.asObservable();
 
   private userExecutePasswordResetSubject: Subject<UserVm> = new Subject<UserVm>();
   public userExecutePasswordReset$: Observable<UserVm> = this.userExecutePasswordResetSubject.asObservable();
@@ -106,6 +110,10 @@ export class UserService extends BaseService<User> {
       const userVm: UserVm = await this.map<UserVm>(user.toJSON());
       this.userRequestedPasswordResetSubject.next(userVm);
     }
+  }
+
+  async requestResendVerificationEmail(user: UserVm) {
+    this.userRequestedPasswordResetSubject.next(user);
   }
 
   private async createJwtAuthPayload(user: UserVm): Promise<string> {

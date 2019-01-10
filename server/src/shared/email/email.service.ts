@@ -41,6 +41,10 @@ export class EmailService {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(this.handleNewUserRegistered.bind(this));
 
+    this.userService.userRequestedResendVerificationEmail$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(this.handleUserRequestedResendVerificationEmail.bind(this));
+
     this.userService.userRequestedPasswordReset$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(this.handleUserRequestedPasswordReset.bind(this));
@@ -96,6 +100,11 @@ export class EmailService {
   }
 
   private async handleNewUserRegistered(user: UserVm) {
+    const token = await this.userService.createJwtVerifyEmailPayload(user);
+    await this.sendVerifyEmailAddressEmail(user, token);
+  }
+
+  private async handleUserRequestedResendVerificationEmail(user: UserVm) {
     const token = await this.userService.createJwtVerifyEmailPayload(user);
     await this.sendVerifyEmailAddressEmail(user, token);
   }
