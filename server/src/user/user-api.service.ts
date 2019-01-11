@@ -112,8 +112,16 @@ export class UserApiService {
     return this.userService.loginWithId(vm);
   }
 
+  async resetPassword(email: string): Promise<void> {
+    return this.userService.resetPassword(email);
+  }
+
+  async resendVerificationEmail(email: string): Promise<void> {
+    return this.userService.resendVerificationEmail(email);
+  }
+
   async updateUser(vm: UserVm): Promise<UserVm> {
-    const {id, email} = vm;
+    const {id, email, username} = vm;
 
     const unmappedExistingUser = await this.userService.findById(id);
     if (!unmappedExistingUser) {
@@ -122,6 +130,9 @@ export class UserApiService {
 
     if (email) {
       unmappedExistingUser.email = email;
+    }
+    if (username) {
+      unmappedExistingUser.username = username;
     }
 
     const unmappedUpdatedUser = await this.userService.update(id, unmappedExistingUser);

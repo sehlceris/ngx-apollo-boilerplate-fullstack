@@ -9,7 +9,7 @@ import {UserRole} from './models/user-role.enum';
 import {UseGuards} from '@nestjs/common';
 import {GraphQLJwtAuthGuard} from '../shared/guards/graphql/graphql-jwt-auth-guard.service';
 import {GraphQLRolesGuard} from '../shared/guards/graphql/graphql-roles-guard.service';
-import {GraphqlUserRoleOrSelfGuard} from '../shared/guards/graphql/graphql-user-role-or-self-guard.service';
+import {GraphQLUserRoleOrSelfGuard} from '../shared/guards/graphql/graphql-user-role-or-self-guard.service';
 
 @Resolver('User')
 export class UserResolvers {
@@ -44,7 +44,7 @@ export class UserResolvers {
 
   @Query('getUserById')
   @Roles(UserRole.Admin)
-  @UseGuards(GraphQLJwtAuthGuard, GraphqlUserRoleOrSelfGuard.forIdFromArgumentKey('id'))
+  @UseGuards(GraphQLJwtAuthGuard, GraphQLUserRoleOrSelfGuard.forIdFromArgumentKey('id'))
   async getUserById(@Args('id') id: string): Promise<UserVm> {
     return this.userApiService.getUserById(id);
   }
@@ -68,5 +68,18 @@ export class UserResolvers {
   @UseGuards(GraphQLJwtAuthGuard, GraphQLRolesGuard)
   async deleteUserById(@Args('id') id: string): Promise<UserVm> {
     return this.userApiService.deleteUserById(id);
+  }
+
+  @Mutation('resendVerificationEmail')
+  @Roles(UserRole.Admin)
+  @UseGuards(GraphQLJwtAuthGuard, GraphQLUserRoleOrSelfGuard.forIdFromArgumentKey('id'))
+  async resendVerificationEmail(@Args('id') id: string): Promise<void> {
+    return this.userApiService.resendVerificationEmail(id);
+  }
+
+  @Mutation('resetPassword')
+  @UseGuards()
+  async resetPassword(@Args('email') email: string): Promise<void> {
+    return this.userApiService.resetPassword(email);
   }
 }

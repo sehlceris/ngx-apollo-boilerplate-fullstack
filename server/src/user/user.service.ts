@@ -1,4 +1,4 @@
-import {forwardRef, HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common';
+import { BadRequestException, forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose';
 import {compare, genSalt, hash} from 'bcryptjs';
 import {ModelType} from 'typegoose';
@@ -30,20 +30,21 @@ export class UserService extends BaseService<User> {
   private newUserRegisteredSubject: Subject<UserVm> = new Subject<UserVm>();
   public newUserRegistered$: Observable<UserVm> = this.newUserRegisteredSubject.asObservable();
 
-  private userVerifiedEmailSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userVerifiedEmail$: Observable<UserVm> = this.userVerifiedEmailSubject.asObservable();
+  private resendVerificationEmailRequestedSubject: Subject<UserVm> = new Subject<UserVm>();
+  public resendVerificationEmailRequested$: Observable<UserVm> = this.resendVerificationEmailRequestedSubject.asObservable();
 
-  private userForgotPasswordSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userForgotPassword$: Observable<UserVm> = this.userForgotPasswordSubject.asObservable();
+  // TODO: this isnt triggered
+  private emailVerifiedSubject: Subject<UserVm> = new Subject<UserVm>();
+  public emailVerified$: Observable<UserVm> = this.emailVerifiedSubject.asObservable();
 
-  private userRequestedPasswordResetSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userRequestedPasswordReset$: Observable<UserVm> = this.userRequestedPasswordResetSubject.asObservable();
+  private passwordResetRequestedSubject: Subject<UserVm> = new Subject<UserVm>();
+  public passwordResetRequested$: Observable<UserVm> = this.passwordResetRequestedSubject.asObservable();
 
-  private userExecutePasswordResetSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userExecutePasswordReset$: Observable<UserVm> = this.userExecutePasswordResetSubject.asObservable();
+  private passwordResetCompletedSubject: Subject<UserVm> = new Subject<UserVm>();
+  public passwordResetCompleted$: Observable<UserVm> = this.passwordResetCompletedSubject.asObservable();
 
-  private userChangedPasswordSubject: Subject<UserVm> = new Subject<UserVm>();
-  public userChangedPassword$: Observable<UserVm> = this.userChangedPasswordSubject.asObservable();
+  private passwordChangedSubject: Subject<UserVm> = new Subject<UserVm>();
+  public passwordChanged$: Observable<UserVm> = this.passwordChangedSubject.asObservable();
 
   private log: BoundLogger = this.logService.bindToNamespace(UserService.name);
 
@@ -100,12 +101,17 @@ export class UserService extends BaseService<User> {
     return this.performCommonLoginSequence(user, password);
   }
 
-  async requestPasswordReset(email: string) {
+  async resetPassword(email: string) {
     const user = await this.findOne({email});
     if (user) {
       const userVm: UserVm = await this.map<UserVm>(user.toJSON());
-      this.userRequestedPasswordResetSubject.next(userVm);
+      this.passwordResetRequestedSubject.next(userVm);
     }
+  }
+
+  async resendVerificationEmail(id: string) {
+    const user = await this.findById(id);
+    this.resendVerificationEmailRequestedSubject.next(user);
   }
 
   private async createJwtAuthPayload(user: UserVm): Promise<string> {
@@ -190,6 +196,7 @@ export class UserService extends BaseService<User> {
 
     const salt = await genSalt(10);
     user.password = await hash(newPassword, salt);
+    user.securityIdentifier = await randomBase64(SecurityConstants.SecurityIdentifierByteLength);
 
     try {
       const updatedUser = await this.update(id, user);

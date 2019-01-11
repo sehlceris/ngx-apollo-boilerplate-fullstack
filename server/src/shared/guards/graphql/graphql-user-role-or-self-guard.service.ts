@@ -5,7 +5,7 @@ import {GraphQLGuardHelpers} from './helpers';
 import {Reflector} from '@nestjs/core';
 
 @Injectable()
-export abstract class GraphqlUserRoleOrSelfGuard extends AbstractRolesOrSelfGuard {
+export abstract class GraphQLUserRoleOrSelfGuard extends AbstractRolesOrSelfGuard {
   private static forIdFromArgumentKeyCache: Map<string, any> = new Map<string, any>();
 
   constructor(protected readonly _reflector: Reflector) {
@@ -16,7 +16,7 @@ export abstract class GraphqlUserRoleOrSelfGuard extends AbstractRolesOrSelfGuar
     if (this.forIdFromArgumentKeyCache.has(key)) {
       return this.forIdFromArgumentKeyCache.get(key);
     }
-    const c = class GraphqlUserRoleOrSelfFromArgumentKeyGuard extends GraphqlUserRoleOrSelfGuard {
+    const c = class GraphqlUserRoleOrSelfFromArgumentKeyGuard extends GraphQLUserRoleOrSelfGuard {
       getTargetUserIdFromContext(executionContext: ExecutionContext): string {
         const args = executionContext.getArgByIndex(1);
         return args[key];
