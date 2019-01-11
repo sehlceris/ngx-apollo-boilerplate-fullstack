@@ -33,7 +33,7 @@ export enum Configuration {
   // public key of auth server, flatted into a single line with linebreaks replaced with '\n' and wrapped in quotes, like so: "-----BEGIN PUBLIC KEY-----\nMFww..."
   AUTH_SERVER_PUBLIC_KEY = 'AUTH_SERVER_PUBLIC_KEY', // auth server's public key
 
-  // private key of auth server in PKCS#1 format, flatted into a single line with linebreaks replaced with '\n' and wrapped in quotes, like so: "-----BEGIN PUBLIC KEY-----\nMFww..."
+  // private key of auth server in PKCS#1 format, flatted into a single line with linebreaks replaced with '\n' and wrapped in quotes, like so: "-----BEGIN RSA PRIVATE KEY-----\nMFww..."
   AUTH_SERVER_PRIVATE_KEY = 'AUTH_SERVER_PRIVATE_KEY', // auth server's private key
 
 
