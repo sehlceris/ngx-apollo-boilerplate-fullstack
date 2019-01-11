@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
-import { HttpErrorResponse } from '@angular/common/http';
+import {Action} from '@ngrx/store';
+import {HttpErrorResponse} from '@angular/common/http';
 
 export const STOCK_MARKET_KEY = 'EXAMPLES.STOCKS';
 
@@ -12,19 +12,19 @@ export enum StockMarketActionTypes {
 export class ActionStockMarketRetrieve implements Action {
   readonly type = StockMarketActionTypes.RETRIEVE;
 
-  constructor(readonly payload: { symbol: string }) {}
+  constructor(readonly payload: {symbol: string}) {}
 }
 
 export class ActionStockMarketRetrieveSuccess implements Action {
   readonly type = StockMarketActionTypes.RETRIEVE_SUCCESS;
 
-  constructor(readonly payload: { stock: Stock }) {}
+  constructor(readonly payload: {stock: Stock}) {}
 }
 
 export class ActionStockMarketRetrieveError implements Action {
   readonly type = StockMarketActionTypes.RETRIEVE_ERROR;
 
-  constructor(readonly payload: { error: HttpErrorResponse }) {}
+  constructor(readonly payload: {error: HttpErrorResponse}) {}
 }
 
 export type StockMarketActions =
@@ -41,7 +41,7 @@ export const selectorStocks = (state) => state.examples.stocks;
 
 export function stockMarketReducer(
   state: StockMarketState = initialState,
-  action: StockMarketActions
+  action: StockMarketActions,
 ): StockMarketState {
   switch (action.type) {
     case StockMarketActionTypes.RETRIEVE:

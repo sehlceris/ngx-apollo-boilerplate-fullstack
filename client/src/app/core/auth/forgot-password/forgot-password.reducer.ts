@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import {Action} from '@ngrx/store';
 
 export enum ForgotPasswordActionTypes {
   GENERATE_RESET_TOKEN_BY_EMAIL = '[ForgotPassword] GENERATE_RESET_TOKEN_BY_EMAIL',
@@ -20,32 +20,27 @@ export class ActionGenerateResetTokenByEmail implements Action {
 
 export class ActionGenerateResetTokenByEmailSuccess implements Action {
   constructor() {}
-  readonly type =
-    ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_EMAIL_SUCCESS;
+  readonly type = ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_EMAIL_SUCCESS;
 }
 
 export class ActionGenerateResetTokenByEmailFailure implements Action {
   constructor(readonly error: string) {}
-  readonly type =
-    ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_EMAIL_FAILURE;
+  readonly type = ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_EMAIL_FAILURE;
 }
 
 export class ActionGenerateResetTokenByTextMessage implements Action {
   constructor(readonly phoneNumber: string) {}
-  readonly type =
-    ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_TEXT_MESSAGE;
+  readonly type = ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_TEXT_MESSAGE;
 }
 
 export class ActionGenerateResetTokenByTextMessageSuccess implements Action {
   constructor() {}
-  readonly type =
-    ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_TEXT_MESSAGE_SUCCESS;
+  readonly type = ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_TEXT_MESSAGE_SUCCESS;
 }
 
 export class ActionGenerateResetTokenByTextMessageFailure implements Action {
   constructor(readonly error: string) {}
-  readonly type =
-    ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_TEXT_MESSAGE_FAILURE;
+  readonly type = ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_TEXT_MESSAGE_FAILURE;
 }
 
 export class ActionResetPasswordWithEmailToken implements Action {
@@ -55,8 +50,7 @@ export class ActionResetPasswordWithEmailToken implements Action {
 
 export class ActionResetPasswordWithTextMessageToken implements Action {
   constructor(token: string, password: string) {}
-  readonly type =
-    ForgotPasswordActionTypes.RESET_PASSWORD_WITH_TEXT_MESSAGE_TOKEN;
+  readonly type = ForgotPasswordActionTypes.RESET_PASSWORD_WITH_TEXT_MESSAGE_TOKEN;
 }
 
 export class ActionResetPasswordSuccess implements Action {
@@ -95,12 +89,11 @@ export const initialState: ForgotPasswordState = {
   resetPasswordError: null,
 };
 
-export const selectorForgotPassword = (state): ForgotPasswordState =>
-  state.auth.forgotPassword;
+export const selectorForgotPassword = (state): ForgotPasswordState => state.auth.forgotPassword;
 
 export function forgotPasswordReducer(
   state: ForgotPasswordState = initialState,
-  action: ForgotPasswordActions
+  action: ForgotPasswordActions,
 ): ForgotPasswordState {
   switch (action.type) {
     case ForgotPasswordActionTypes.GENERATE_RESET_TOKEN_BY_EMAIL:

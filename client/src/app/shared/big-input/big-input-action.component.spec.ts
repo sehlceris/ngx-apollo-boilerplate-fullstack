@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import {Component} from '@angular/core';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
 
-import { SharedModule } from '@app/shared';
+import {SharedModule} from '@app/shared';
 
 @Component({
   selector: 'host-for-test',
@@ -18,13 +18,10 @@ describe('BigInputActionComponent', () => {
 
   const getButton = () => fixture.debugElement.query(By.css('button'));
   const getIcon = () => fixture.debugElement.query(By.css('mat-icon'));
-  const getLabel = () =>
-    fixture.debugElement.query(By.css('.mat-button-wrapper > span'));
+  const getLabel = () => fixture.debugElement.query(By.css('.mat-button-wrapper > span'));
 
-  function createHostComponent(
-    template: string
-  ): ComponentFixture<HostComponent> {
-    TestBed.overrideComponent(HostComponent, { set: { template: template } });
+  function createHostComponent(template: string): ComponentFixture<HostComponent> {
+    TestBed.overrideComponent(HostComponent, {set: {template: template}});
     fixture = TestBed.createComponent(HostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -52,8 +49,7 @@ describe('BigInputActionComponent', () => {
   });
 
   it('should disable button if disabled property is set', () => {
-    const template =
-      '<anms-big-input-action [disabled]="true"></anms-big-input-action>';
+    const template = '<anms-big-input-action [disabled]="true"></anms-big-input-action>';
     fixture = createHostComponent(template);
     expect(getButton().nativeElement.disabled).toBeTruthy();
   });

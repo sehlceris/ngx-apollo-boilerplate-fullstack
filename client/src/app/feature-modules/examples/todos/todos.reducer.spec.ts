@@ -21,7 +21,7 @@ describe('TodoReducer', () => {
       items: [],
       filter: 'ALL',
     };
-    const action = new ActionTodosAdd({ name: 'Mercuccio' });
+    const action = new ActionTodosAdd({name: 'Mercuccio'});
     const state = todosReducer(TEST_INITIAL_STATE, action);
 
     expect(state.items.length).toEqual(1);
@@ -30,7 +30,7 @@ describe('TodoReducer', () => {
 
   it('should toggle selected todo', () => {
     const TEST_INITIAL_STATE: TodosState = {
-      items: [{ id: '1', name: 'Tibald', done: false }],
+      items: [{id: '1', name: 'Tibald', done: false}],
       filter: 'ALL',
     };
     const action = new ActionTodosToggle({
@@ -42,10 +42,7 @@ describe('TodoReducer', () => {
 
   it('should remove done todos', () => {
     const TEST_INITIAL_STATE: TodosState = {
-      items: [
-        { id: '1', name: 'Romeo', done: false },
-        { id: '2', name: 'Juliet', done: true },
-      ],
+      items: [{id: '1', name: 'Romeo', done: false}, {id: '2', name: 'Juliet', done: true}],
       filter: 'ALL',
     };
     const action = new ActionTodosRemoveDone();
@@ -58,13 +55,13 @@ describe('TodoReducer', () => {
   it('should return filtered todos', () => {
     const TEST_INITIAL_STATE: TodosState = {
       items: [
-        { id: '1', name: 'Friar Laurence', done: false },
-        { id: '2', name: 'Friar John', done: false },
-        { id: '3', name: 'Baltasar', done: true },
+        {id: '1', name: 'Friar Laurence', done: false},
+        {id: '2', name: 'Friar John', done: false},
+        {id: '3', name: 'Baltasar', done: true},
       ],
       filter: 'ALL',
     };
-    const action = new ActionTodosFilter({ filter: 'DONE' });
+    const action = new ActionTodosFilter({filter: 'DONE'});
     const state = todosReducer(TEST_INITIAL_STATE, action);
 
     expect(state.items.length).toEqual(3); // must not change items collection

@@ -1,6 +1,6 @@
 {
-    "watch": ["src"],
-    "ext": "ts,json,graphql,tsx,nswag,js",
+    "watch": ["src", ".env", "webpack.config.js"],
+    "ext": "ts,json,graphql,tsx,nswag,js,env,.env",
     "ignore": ["src/**/*.spec.ts", "node_modules/"],
     "exec": "node -r tsconfig-paths/register --inspect=5000 --require ts-node/register src/main.ts"
 }

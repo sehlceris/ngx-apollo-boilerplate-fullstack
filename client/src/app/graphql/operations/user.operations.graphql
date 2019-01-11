@@ -38,3 +38,12 @@ mutation Register($email: String! $username: String! $password: String!) {
     role,
   }
 }
+
+mutation VerifyEmail {
+  verifyEmail {
+    id,
+    username,
+    email,
+    role,
+  }
+}

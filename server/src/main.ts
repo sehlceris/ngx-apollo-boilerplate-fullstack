@@ -7,9 +7,7 @@ declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const hostDomain = AppModule.isDev
-    ? `${AppModule.host}:${AppModule.port}`
-    : AppModule.host;
+  const hostDomain = AppModule.isDev ? `${AppModule.host}:${AppModule.port}` : AppModule.host;
 
   const swaggerOptions = new DocumentBuilder()
     .setTitle('Nest MEAN')
@@ -24,6 +22,8 @@ async function bootstrap() {
   const swaggerDoc = SwaggerModule.createDocument(app, swaggerOptions);
 
   app.use('/api/docs/swagger.json', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.send(swaggerDoc);
   });
 
@@ -48,4 +48,5 @@ async function bootstrap() {
 
   await app.listen(AppModule.port);
 }
+
 bootstrap();

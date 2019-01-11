@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { Validators } from '@angular/forms';
-import { ActionGenerateResetTokenByEmail } from '@app/core/auth/forgot-password/forgot-password.reducer';
-import { AbstractGenerateResetTokenFormComponent } from '@app/core/auth/forgot-password/generate-reset-token-form/abstract-generate-reset-token-form.component';
+import {Component} from '@angular/core';
+import {Validators} from '@angular/forms';
+import {ActionGenerateResetTokenByEmail} from '@app/core/auth/forgot-password/forgot-password.reducer';
+import {AbstractGenerateResetTokenFormComponent} from '@app/core/auth/forgot-password/generate-reset-token-form/abstract-generate-reset-token-form.component';
 
 @Component({
   selector: 'anms-generate-reset-token-by-email-form',
@@ -12,9 +12,7 @@ export class GenerateResetTokenByEmailFormComponent extends AbstractGenerateRese
   onForgotPasswordFormSubmit() {
     if (this.forgotPasswordForm.valid) {
       const resetPasswordVm: any = this.forgotPasswordForm.value;
-      this.store.dispatch(
-        new ActionGenerateResetTokenByEmail(resetPasswordVm.email)
-      );
+      this.store.dispatch(new ActionGenerateResetTokenByEmail(resetPasswordVm.email));
     }
   }
 

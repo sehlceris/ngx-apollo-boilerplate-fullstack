@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { AppConfig } from '@app/app.config';
-import { UserVm } from '../../../../../../server/src/user/models/view-models/user-vm.model';
-import { BoundLogger, LogService } from '@app/core/services';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {AppConfig} from '@app/app.config';
+import {UserVm} from '../../../../../../server/src/user/models/view-models/user-vm.model';
+import {BoundLogger, LogService} from '@app/core/services';
 
 const USERS_BASE_URI = `${AppConfig.BaseHttpUrl}/users`;
 
@@ -11,9 +11,7 @@ const USERS_BASE_URI = `${AppConfig.BaseHttpUrl}/users`;
  */
 @Injectable()
 export class UserHttpApiService {
-  private log: BoundLogger = this.logService.bindToNamespace(
-    UserHttpApiService.name
-  );
+  private log: BoundLogger = this.logService.bindToNamespace(UserHttpApiService.name);
 
   constructor(private httpClient: HttpClient, private logService: LogService) {}
 

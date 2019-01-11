@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
-import { RegisterVm } from '../../../../../../server/src/user/models/view-models/register-vm.model';
+import {Action} from '@ngrx/store';
+import {RegisterVm} from '../../../../../../server/src/user/models/view-models/register-vm.model';
 
 export enum RegisterActionTypes {
   REGISTER_REQUEST = '[Register] REGISTER_REQUEST',
@@ -22,10 +22,7 @@ export class ActionRegisterFailure implements Action {
   readonly type = RegisterActionTypes.REGISTER_FAILURE;
 }
 
-export type RegisterActions =
-  | ActionRegisterRequest
-  | ActionRegisterSuccess
-  | ActionRegisterFailure;
+export type RegisterActions = ActionRegisterRequest | ActionRegisterSuccess | ActionRegisterFailure;
 
 export interface RegisterState {
   registering: boolean;
@@ -39,10 +36,7 @@ export const initialState: RegisterState = {
 
 export const selectorRegister = (state): RegisterState => state.auth.register;
 
-export function registerReducer(
-  state: RegisterState = initialState,
-  action: RegisterActions
-): RegisterState {
+export function registerReducer(state: RegisterState = initialState, action: RegisterActions): RegisterState {
   switch (action.type) {
     case RegisterActionTypes.REGISTER_REQUEST:
       return {

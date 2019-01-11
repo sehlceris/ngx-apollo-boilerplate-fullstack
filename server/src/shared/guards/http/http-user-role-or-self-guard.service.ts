@@ -1,18 +1,14 @@
-import { ExecutionContext, Injectable } from '@nestjs/common';
-import { InstanceType } from 'typegoose';
-import { User } from '../../../user/models/user.model';
-import { AbstractRolesOrSelfGuard } from '../shared/abstract-roles-or-self.guard';
-import { Reflector } from '@nestjs/core';
-import { HttpGuardHelpers } from './helpers';
-import { IncomingMessage } from 'http';
-import { parse } from 'url';
+import {ExecutionContext, Injectable} from '@nestjs/common';
+import {User} from '../../../user/models/user.model';
+import {AbstractRolesOrSelfGuard} from '../shared/abstract-roles-or-self.guard';
+import {Reflector} from '@nestjs/core';
+import {HttpGuardHelpers} from './helpers';
+import {IncomingMessage} from 'http';
+import {parse} from 'url';
 
 @Injectable()
 export abstract class HttpRolesOrSelfGuard extends AbstractRolesOrSelfGuard {
-  private static forQueryStringIdKeyCache: Map<string, any> = new Map<
-    string,
-    any
-  >();
+  private static forQueryStringIdKeyCache: Map<string, any> = new Map<string, any>();
 
   private static forParamIdKeyCache: Map<string, any> = new Map<string, any>();
 
@@ -28,9 +24,7 @@ export abstract class HttpRolesOrSelfGuard extends AbstractRolesOrSelfGuard {
     }
     const c = class HttpRolesOrSelfFromQueryStringGuard extends HttpRolesOrSelfGuard {
       getTargetUserIdFromContext(executionContext: ExecutionContext): string {
-        const incomingMessage: IncomingMessage = executionContext.getArgByIndex(
-          0
-        );
+        const incomingMessage: IncomingMessage = executionContext.getArgByIndex(0);
         const parsedUrl = parse(incomingMessage.url, true);
         const id = <string>parsedUrl.query[key];
         return id;
@@ -68,13 +62,9 @@ export abstract class HttpRolesOrSelfGuard extends AbstractRolesOrSelfGuard {
     return c;
   }
 
-  abstract getTargetUserIdFromContext(
-    executionContext: ExecutionContext
-  ): string;
+  abstract getTargetUserIdFromContext(executionContext: ExecutionContext): string;
 
-  protected getUserFromContext(
-    executionContext: ExecutionContext
-  ): InstanceType<User> {
-    return HttpGuardHelpers.getUserFromContext(executionContext);
+  protected getUserFromContext(executionContext: ExecutionContext): User {
+    return HttpGuardHelpers.getUserFromAuthenticatedContext(executionContext);
   }
 }

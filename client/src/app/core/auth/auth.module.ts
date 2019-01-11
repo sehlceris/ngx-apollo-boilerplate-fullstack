@@ -1,14 +1,15 @@
-import { NgModule } from '@angular/core';
-import { GenerateResetTokenByEmailFormComponent } from '@app/core/auth/forgot-password/generate-reset-token-form/generate-reset-token-by-email-form.component';
+import {NgModule} from '@angular/core';
+import {GenerateResetTokenByEmailFormComponent} from '@app/core/auth/forgot-password/generate-reset-token-form/generate-reset-token-by-email-form.component';
 
-import { SharedModule } from 'app/shared/index';
+import {SharedModule} from 'app/shared/index';
 
-import { AboutComponent } from './about/about.component';
-import { AuthRoutingModule } from '@app/core/auth/auth-routing.module';
-import { LoginComponent } from '@app/core/auth/login/login.component';
-import { RegisterComponent } from '@app/core/auth/register/register.component';
-import { ForgotPasswordComponent } from '@app/core/auth/forgot-password/forgot-password.component';
-import { AuthComponent } from '@app/core/auth/auth.component';
+import {AboutComponent} from './about/about.component';
+import {AuthRoutingModule} from '@app/core/auth/auth-routing.module';
+import {LoginComponent} from '@app/core/auth/login/login.component';
+import {RegisterComponent} from '@app/core/auth/register/register.component';
+import {ForgotPasswordComponent} from '@app/core/auth/forgot-password/forgot-password.component';
+import {AuthComponent} from '@app/core/auth/auth.component';
+import {VerifyEmailComponent} from '@app/core/auth/verify-email/verify-email.component';
 
 const COMPONENTS = [
   AuthComponent,
@@ -16,11 +17,14 @@ const COMPONENTS = [
   RegisterComponent,
   ForgotPasswordComponent,
   GenerateResetTokenByEmailFormComponent,
+  VerifyEmailComponent,
 ];
+
+const SERVICES = [];
 
 @NgModule({
   imports: [SharedModule, AuthRoutingModule],
   declarations: [...COMPONENTS],
-  exports: [...COMPONENTS],
+  exports: [...COMPONENTS, ...SERVICES],
 })
 export class AuthModule {}

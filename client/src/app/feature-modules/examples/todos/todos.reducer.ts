@@ -1,5 +1,5 @@
-import { v4 as uuid } from 'uuid';
-import { Action } from '@ngrx/store';
+import {v4 as uuid} from 'uuid';
+import {Action} from '@ngrx/store';
 
 export const TODOS_KEY = 'EXAMPLES.TODOS';
 
@@ -14,13 +14,13 @@ export enum TodosActionTypes {
 export class ActionTodosAdd implements Action {
   readonly type = TodosActionTypes.ADD;
 
-  constructor(readonly payload: { name: string }) {}
+  constructor(readonly payload: {name: string}) {}
 }
 
 export class ActionTodosToggle implements Action {
   readonly type = TodosActionTypes.TOGGLE;
 
-  constructor(readonly payload: { id: string }) {}
+  constructor(readonly payload: {id: string}) {}
 }
 
 export class ActionTodosRemoveDone implements Action {
@@ -30,13 +30,13 @@ export class ActionTodosRemoveDone implements Action {
 export class ActionTodosFilter implements Action {
   readonly type = TodosActionTypes.FILTER;
 
-  constructor(readonly payload: { filter: TodosFilter }) {}
+  constructor(readonly payload: {filter: TodosFilter}) {}
 }
 
 export class ActionTodosPersist implements Action {
   readonly type = TodosActionTypes.PERSIST;
 
-  constructor(readonly payload: { todos: Todo[] }) {}
+  constructor(readonly payload: {todos: Todo[]}) {}
 }
 
 export type TodosActions =
@@ -48,8 +48,8 @@ export type TodosActions =
 
 export const initialState: TodosState = {
   items: [
-    { id: uuid(), name: 'Open Todo list example', done: true },
-    { id: uuid(), name: 'Check the other examples', done: false },
+    {id: uuid(), name: 'Open Todo list example', done: true},
+    {id: uuid(), name: 'Check the other examples', done: false},
     {
       id: uuid(),
       name: 'Use Angular ngRx Material Starter in your project',
@@ -61,10 +61,7 @@ export const initialState: TodosState = {
 
 export const selectorTodos = (state) => state.examples.todos;
 
-export function todosReducer(
-  state: TodosState = initialState,
-  action: TodosActions
-): TodosState {
+export function todosReducer(state: TodosState = initialState, action: TodosActions): TodosState {
   switch (action.type) {
     case TodosActionTypes.ADD:
       return {
@@ -81,10 +78,7 @@ export function todosReducer(
     case TodosActionTypes.TOGGLE:
       return {
         ...state,
-        items: state.items.map(
-          (item: Todo) =>
-            item.id === action.payload.id ? { ...item, done: !item.done } : item
-        ),
+        items: state.items.map((item: Todo) => (item.id === action.payload.id ? {...item, done: !item.done} : item)),
       };
 
     case TodosActionTypes.REMOVE_DONE:
@@ -94,7 +88,7 @@ export function todosReducer(
       };
 
     case TodosActionTypes.FILTER:
-      return { ...state, filter: action.payload.filter };
+      return {...state, filter: action.payload.filter};
 
     default:
       return state;

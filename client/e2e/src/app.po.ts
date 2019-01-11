@@ -1,4 +1,4 @@
-import { browser, by, element } from 'protractor';
+import {browser, by, element} from 'protractor';
 
 export class AppPage {
   navigateTo() {
@@ -10,8 +10,6 @@ export class AppPage {
   }
 
   getAllMenus() {
-    return element
-      .all(by.css('mat-toolbar button.nav-button'))
-      .map((elm) => elm.getText());
+    return element.all(by.css('mat-toolbar button.nav-button')).map((elm) => elm.getText());
   }
 }

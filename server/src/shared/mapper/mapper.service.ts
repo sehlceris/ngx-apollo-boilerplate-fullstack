@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import 'automapper-ts/dist/automapper';
 
 @Injectable()
@@ -20,8 +20,6 @@ export class MapperService {
       .forSourceMember('_id', (opts) => opts.ignored())
       .forSourceMember('password', (opts) => opts.ignore());
 
-    config
-      .createMap('Todo', 'TodoVm')
-      .forSourceMember('_id', (opts) => opts.ignore());
+    config.createMap('Todo', 'TodoVm').forSourceMember('_id', (opts) => opts.ignore());
   }
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 import {
   selectorSettings,
@@ -24,12 +24,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
   settings: SettingsState;
 
   themes = [
-    { value: 'DEFAULT-THEME', label: 'default' },
-    { value: 'LIGHT-THEME', label: 'light' },
-    { value: 'BLACK-THEME', label: 'dark' },
+    {value: 'DEFAULT-THEME', label: 'default'},
+    {value: 'LIGHT-THEME', label: 'light'},
+    {value: 'BLACK-THEME', label: 'dark'},
   ];
 
-  languages = [{ value: 'en', label: 'en' }, { value: 'sk', label: 'sk' }];
+  languages = [{value: 'en', label: 'en'}, {value: 'sk', label: 'sk'}];
 
   constructor(private store: Store<any>) {
     store
@@ -45,34 +45,28 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  onLanguageSelect({ value: language }) {
-    this.store.dispatch(new ActionSettingsChangeLanguage({ language }));
-    this.store.dispatch(new ActionSettingsPersist({ settings: this.settings }));
+  onLanguageSelect({value: language}) {
+    this.store.dispatch(new ActionSettingsChangeLanguage({language}));
+    this.store.dispatch(new ActionSettingsPersist({settings: this.settings}));
   }
 
-  onThemeSelect({ value: theme }) {
-    this.store.dispatch(new ActionSettingsChangeTheme({ theme }));
-    this.store.dispatch(new ActionSettingsPersist({ settings: this.settings }));
+  onThemeSelect({value: theme}) {
+    this.store.dispatch(new ActionSettingsChangeTheme({theme}));
+    this.store.dispatch(new ActionSettingsPersist({settings: this.settings}));
   }
 
-  onAutoNightModeToggle({ checked: autoNightMode }) {
-    this.store.dispatch(
-      new ActionSettingsChangeAutoNightMode({ autoNightMode })
-    );
-    this.store.dispatch(new ActionSettingsPersist({ settings: this.settings }));
+  onAutoNightModeToggle({checked: autoNightMode}) {
+    this.store.dispatch(new ActionSettingsChangeAutoNightMode({autoNightMode}));
+    this.store.dispatch(new ActionSettingsPersist({settings: this.settings}));
   }
 
-  onPageAnimationsToggle({ checked: pageAnimations }) {
-    this.store.dispatch(
-      new ActionSettingsChangeAnimationsPage({ pageAnimations })
-    );
-    this.store.dispatch(new ActionSettingsPersist({ settings: this.settings }));
+  onPageAnimationsToggle({checked: pageAnimations}) {
+    this.store.dispatch(new ActionSettingsChangeAnimationsPage({pageAnimations}));
+    this.store.dispatch(new ActionSettingsPersist({settings: this.settings}));
   }
 
-  onElementsAnimationsToggle({ checked: elementsAnimations }) {
-    this.store.dispatch(
-      new ActionSettingsChangeAnimationsElements({ elementsAnimations })
-    );
-    this.store.dispatch(new ActionSettingsPersist({ settings: this.settings }));
+  onElementsAnimationsToggle({checked: elementsAnimations}) {
+    this.store.dispatch(new ActionSettingsChangeAnimationsElements({elementsAnimations}));
+    this.store.dispatch(new ActionSettingsPersist({settings: this.settings}));
   }
 }

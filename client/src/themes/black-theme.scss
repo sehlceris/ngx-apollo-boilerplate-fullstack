@@ -6,11 +6,7 @@ $anms-black-accent: mat-palette($mat-blue-grey, 400);
 $anms-black-warn: mat-palette($mat-orange, 500);
 $anms-black-error: mat-palette($mat-red, 500);
 
-$anms-black-theme: mat-dark-theme(
-  $anms-black-primary,
-  $anms-black-accent,
-  $anms-black-warn
-);
+$anms-black-theme: mat-dark-theme($anms-black-primary, $anms-black-accent, $anms-black-warn);
 
 @mixin black-theme() {
   $theme-colors: (
@@ -95,6 +91,34 @@ $anms-black-theme: mat-dark-theme(
       ),
       'dark': (
         'color': map_get($mat-grey, 900),
+        'background-type': 'dark',
+      ),
+    ),
+    'affirmative': (
+      'base': (
+        'color': map_get($mat-green, 800),
+        'background-type': 'dark',
+      ),
+      'light': (
+        'color': map_get($mat-green, 700),
+        'background-type': 'dark',
+      ),
+      'dark': (
+        'color': map_get($mat-green, 900),
+        'background-type': 'dark',
+      ),
+    ),
+    'negative': (
+      'base': (
+        'color': map_get($mat-red, 800),
+        'background-type': 'dark',
+      ),
+      'light': (
+        'color': map_get($mat-red, 700),
+        'background-type': 'dark',
+      ),
+      'dark': (
+        'color': map_get($mat-red, 900),
         'background-type': 'dark',
       ),
     ),

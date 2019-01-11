@@ -1,22 +1,11 @@
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-  inject,
-} from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { Store } from '@ngrx/store';
+import {async, ComponentFixture, TestBed, inject} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {Store} from '@ngrx/store';
 
-import { TestStore, TestingModule } from '@testing/utils';
+import {TestStore, TestingModule} from '@testing/utils';
 
-import { TodosComponent } from './todos.component';
-import {
-  ActionTodosAdd,
-  ActionTodosFilter,
-  ActionTodosToggle,
-  ActionTodosRemoveDone,
-  TodosState,
-} from './todos.reducer';
+import {TodosComponent} from './todos.component';
+import {ActionTodosAdd, ActionTodosFilter, ActionTodosToggle, ActionTodosRemoveDone, TodosState} from './todos.reducer';
 
 describe('TodosComponent', () => {
   let component: TodosComponent;
@@ -26,27 +15,17 @@ describe('TodosComponent', () => {
 
   const getTodos = () => fixture.debugElement.queryAll(By.css('.todo'));
 
-  const getBigInput = () =>
-    fixture.debugElement.query(By.css('anms-big-input'));
+  const getBigInput = () => fixture.debugElement.query(By.css('anms-big-input'));
 
-  const getBigInputValue = () =>
-    getBigInput().query(By.css('input')).nativeElement.value;
+  const getBigInputValue = () => getBigInput().query(By.css('input')).nativeElement.value;
 
-  const getTodosFilter = () =>
-    fixture.debugElement.query(By.css('.todos-filter'));
+  const getTodosFilter = () => fixture.debugElement.query(By.css('.todos-filter'));
   const getTodosFilterOptions = () =>
-    fixture.debugElement.queryAll(
-      By.css('.todos-filter-menu-overlay .mat-menu-item')
-    );
+    fixture.debugElement.queryAll(By.css('.todos-filter-menu-overlay .mat-menu-item'));
 
   const deleteDoneTodosBtn = () =>
-    fixture.debugElement.query(
-      By.css('anms-big-input-action[fontIcon="fa-trash"] > button')
-    );
-  const addTodoBtn = () =>
-    fixture.debugElement.query(
-      By.css('anms-big-input-action[fontIcon="fa-plus"] > button')
-    );
+    fixture.debugElement.query(By.css('anms-big-input-action[fontIcon="fa-trash"] > button'));
+  const addTodoBtn = () => fixture.debugElement.query(By.css('anms-big-input-action[fontIcon="fa-plus"] > button'));
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -57,7 +36,7 @@ describe('TodosComponent', () => {
 
   beforeEach(inject([Store], (testStore: TestStore<TodosState>) => {
     store = testStore;
-    store.setState({ items: [], filter: 'ALL' });
+    store.setState({items: [], filter: 'ALL'});
     fixture = TestBed.createComponent(TodosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -71,7 +50,7 @@ describe('TodosComponent', () => {
 
   it('should display todos', () => {
     store.setState({
-      items: [{ id: '1', name: 'test', done: false }],
+      items: [{id: '1', name: 'test', done: false}],
       filter: 'ALL',
     });
 
@@ -82,10 +61,7 @@ describe('TodosComponent', () => {
 
   it('should filter and show "DONE" todos', () => {
     store.setState({
-      items: [
-        { id: '1', name: 'test 1', done: true },
-        { id: '2', name: 'test 2', done: false },
-      ],
+      items: [{id: '1', name: 'test 1', done: true}, {id: '2', name: 'test 2', done: false}],
       filter: 'DONE',
     });
 
@@ -96,10 +72,7 @@ describe('TodosComponent', () => {
 
   it('should dispatch remove "DONE" todos action', () => {
     store.setState({
-      items: [
-        { id: '1', name: 'test 1', done: true },
-        { id: '2', name: 'test 2', done: false },
-      ],
+      items: [{id: '1', name: 'test 1', done: true}, {id: '2', name: 'test 2', done: false}],
       filter: 'DONE',
     });
 
@@ -120,9 +93,7 @@ describe('TodosComponent', () => {
     fixture.detectChanges();
     expect(component.newTodo).toBe('');
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionTodosAdd({ name: 'test' })
-    );
+    expect(dispatchSpy).toHaveBeenCalledWith(new ActionTodosAdd({name: 'test'}));
   });
 
   it('should dispatch filter todo action', () => {
@@ -131,14 +102,12 @@ describe('TodosComponent', () => {
     getTodosFilterOptions()[2].triggerEventHandler('click', {});
 
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionTodosFilter({ filter: 'ACTIVE' })
-    );
+    expect(dispatchSpy).toHaveBeenCalledWith(new ActionTodosFilter({filter: 'ACTIVE'}));
   });
 
   it('should dispatch toggle todo action', () => {
     store.setState({
-      items: [{ id: '1', name: 'test 1', done: true }],
+      items: [{id: '1', name: 'test 1', done: true}],
       filter: 'ALL',
     });
 
@@ -150,14 +119,12 @@ describe('TodosComponent', () => {
 
     fixture.detectChanges();
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
-    expect(dispatchSpy).toHaveBeenCalledWith(
-      new ActionTodosToggle({ id: '1' })
-    );
+    expect(dispatchSpy).toHaveBeenCalledWith(new ActionTodosToggle({id: '1'}));
   });
 
   it('should disable remove done todos button if no todo is done', () => {
     store.setState({
-      items: [{ id: '1', name: 'test 1', done: true }],
+      items: [{id: '1', name: 'test 1', done: true}],
       filter: 'ALL',
     });
 

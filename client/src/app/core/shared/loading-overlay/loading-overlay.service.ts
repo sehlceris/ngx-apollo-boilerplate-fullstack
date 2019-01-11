@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { RandomUtils } from '../../../static-utils/random-utils';
+import {Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {RandomUtils} from '../../../static-utils/random-utils';
 
 interface LoadingOverlayStackItem {
   referenceId: string;
@@ -21,16 +21,12 @@ export class LoadingOverlayService {
 
   public pushLoadingScreen(message: string): string {
     const referenceId = RandomUtils.randomString();
-    this.loadingStack.push({ referenceId, message });
+    this.loadingStack.push({referenceId, message});
     this.handleTopItemInLoadingStackChanged();
     return referenceId;
   }
 
-  public pushOrEditLoadingScreen(
-    referenceId: string,
-    message: string,
-    bringToTop: boolean = false
-  ): boolean {
+  public pushOrEditLoadingScreen(referenceId: string, message: string, bringToTop: boolean = false): boolean {
     const itemIndex = this.getItemIndexWithReferenceId(referenceId);
     if (itemIndex >= 0) {
       const item = this.loadingStack[itemIndex];
@@ -44,7 +40,7 @@ export class LoadingOverlayService {
       }
       return true;
     } else {
-      this.loadingStack.push({ referenceId, message });
+      this.loadingStack.push({referenceId, message});
       this.handleTopItemInLoadingStackChanged();
       return false;
     }
@@ -53,8 +49,7 @@ export class LoadingOverlayService {
   public removeLoadingScreen(referenceId: string): boolean {
     const itemIndex = this.getItemIndexWithReferenceId(referenceId);
     if (itemIndex >= 0) {
-      const topItemInStackWasRemoved =
-        itemIndex === this.loadingStack.length - 1;
+      const topItemInStackWasRemoved = itemIndex === this.loadingStack.length - 1;
       this.loadingStack.splice(itemIndex, 1);
       if (topItemInStackWasRemoved) {
         this.handleTopItemInLoadingStackChanged();
@@ -73,15 +68,11 @@ export class LoadingOverlayService {
   }
 
   private getItemIndexWithReferenceId(referenceId: string): number {
-    return this.loadingStack.findIndex(
-      (item: LoadingOverlayStackItem) => item.referenceId === referenceId
-    );
+    return this.loadingStack.findIndex((item: LoadingOverlayStackItem) => item.referenceId === referenceId);
   }
 
   private getItemWithReferenceId(referenceId: string): LoadingOverlayStackItem {
-    return this.loadingStack.find(
-      (item: LoadingOverlayStackItem) => item.referenceId === referenceId
-    );
+    return this.loadingStack.find((item: LoadingOverlayStackItem) => item.referenceId === referenceId);
   }
 
   private get topItemInStack(): LoadingOverlayStackItem {

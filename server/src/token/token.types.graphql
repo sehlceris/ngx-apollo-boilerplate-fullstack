@@ -1,0 +1,15 @@
+type Query {
+
+  tokenExists: Boolean
+
+}
+
+type Mutation {
+
+  verifyEmail: User
+
+  resetPassword(
+    password: String!
+  ): User
+
+}
