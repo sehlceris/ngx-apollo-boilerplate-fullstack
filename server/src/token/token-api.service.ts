@@ -15,10 +15,6 @@ export class TokenApiService {
     protected readonly userService: UserService,
   ) {}
 
-  async sendPasswordResetEmail(email: string) {
-
-  }
-
   async tokenExists(vm: JwtSingleUseUserPayload): Promise<boolean> {
     return true; // the token is already verified to be existing via the token guard
   }
