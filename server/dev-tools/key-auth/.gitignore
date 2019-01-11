@@ -21,5 +21,8 @@ src/app/generated/
 config/
 .env
 
-# docker data
-data/
+# keys
+*.key
+
+# misc
+package-lock.json

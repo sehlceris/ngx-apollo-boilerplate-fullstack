@@ -30,6 +30,12 @@ export enum Configuration {
   JWT_VERIFY_EMAIL_TOKEN_EXPIRATION = 'JWT_VERIFY_EMAIL_TOKEN_EXPIRATION',
   JWT_EMAIL_TOKEN_EXPIRATION = 'JWT_EMAIL_VERIFICATION_TOKEN_EXPIRATION',
 
-  // secrets
+  // public and private RSA keys
+  // flatted into a single line with linebreaks replaced with '\n' and wrapped in quotes, like so: "-----BEGIN PUBLIC KEY-----\nMFww..."
+  AUTH_SERVER_PUBLIC_KEY = 'AUTH_SERVER_PUBLIC_KEY', // auth server's public key
+  AUTH_SERVER_PRIVATE_KEY = 'AUTH_SERVER_PRIVATE_KEY', // auth server's private key
+
+
+  // secrets (TODO: deprecated, remove)
   JWT_SECRET_KEY = 'JWT_SECRET_KEY',
 }
