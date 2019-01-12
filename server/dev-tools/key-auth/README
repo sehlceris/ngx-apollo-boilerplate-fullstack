@@ -1,0 +1,34 @@
+# key-auth
+
+This folder has tools for:
+- generating RSA public/private keypairs
+- flattening the keypairs to a single line so you can put them in the environment config
+- testing token generation/verification using the keypairs
+
+## generate RSA keys from terminal
+
+```
+openssl genrsa -f4 -out private.key 4096
+openssl rsa -in private.key -outform PEM -pubout -out public.key
+```
+
+## usage
+
+### generating keys for production
+
+```
+npm run generate
+```
+
+### generating (smaller) keys for dev
+
+```
+npm run generate:dev
+```
+
+### testing out generated keys
+
+```
+npm i
+npm start
+```

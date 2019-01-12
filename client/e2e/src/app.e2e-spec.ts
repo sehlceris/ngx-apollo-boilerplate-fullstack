@@ -1,6 +1,6 @@
-import { AppPage } from './app.po';
+import {AppPage} from './app.po';
 
-import { getCurrentRouteUrl } from './utils';
+import {getCurrentRouteUrl} from './utils';
 
 describe('App', () => {
   let page: AppPage;
@@ -19,10 +19,6 @@ describe('App', () => {
 
   it('should have "About", "Features", "Examples" menus', () => {
     page.navigateTo();
-    page
-      .getAllMenus()
-      .then((menus) =>
-        expect(menus).toEqual(['About', 'Features', 'Examples'])
-      );
+    page.getAllMenus().then((menus) => expect(menus).toEqual(['About', 'Features', 'Examples']));
   });
 });

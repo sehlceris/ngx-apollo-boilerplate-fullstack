@@ -1,9 +1,9 @@
-import { TestBed, inject } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import {TestBed, inject} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
 
-import { CoreModule } from '@app/core';
+import {CoreModule} from '@app/core';
 
-import { StockMarketService } from './stock-market.service';
+import {StockMarketService} from './stock-market.service';
 
 describe('StockMarketService', () => {
   beforeEach(() => {
@@ -13,10 +13,7 @@ describe('StockMarketService', () => {
     });
   });
 
-  it('should be created', inject(
-    [StockMarketService],
-    (service: StockMarketService) => {
-      expect(service).toBeTruthy();
-    }
-  ));
+  it('should be created', inject([StockMarketService], (service: StockMarketService) => {
+    expect(service).toBeTruthy();
+  }));
 });

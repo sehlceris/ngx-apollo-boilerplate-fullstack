@@ -1,5 +1,5 @@
-import { Action } from '@ngrx/store';
-import { UserVm } from '../../../../../../server/src/user/models/view-models/user-vm.model';
+import {Action} from '@ngrx/store';
+import {UserVm} from '../../../../../../server/src/user/models/view-models/user-vm.model';
 
 export const USER_LOCAL_STORAGE_KEY = 'auth.user'; // this must match the path to the state in the store
 
@@ -32,10 +32,7 @@ export const initialState: UserState = {
 
 export const selectorUser = (state): UserState => state.auth.user;
 
-export function userReducer(
-  state: UserState = initialState,
-  action: AuthActions
-): UserState {
+export function userReducer(state: UserState = initialState, action: AuthActions): UserState {
   switch (action.type) {
     case UserActionTypes.AUTHENTICATE:
       return {

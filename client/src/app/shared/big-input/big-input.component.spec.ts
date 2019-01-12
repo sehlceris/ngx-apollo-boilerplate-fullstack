@@ -1,6 +1,6 @@
-import { Component, DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SharedModule } from '@app/shared';
+import {Component, DebugElement} from '@angular/core';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {SharedModule} from '@app/shared';
 
 @Component({
   selector: 'host-for-test',
@@ -37,9 +37,7 @@ describe('BigInputComponent', () => {
   });
 
   it('should have expected placeholder', () => {
-    expect(bigInputDebugElement.attributes['placeholder']).toContain(
-      'going to do'
-    );
+    expect(bigInputDebugElement.attributes['placeholder']).toContain('going to do');
   });
 
   it('should have updatable value', () => {
@@ -73,21 +71,12 @@ describe('BigInputComponent', () => {
   });
 
   it('should respond to focus and blur', () => {
-    expect(bigInputDebugElement.componentInstance.hasFocus).toBe(
-      false,
-      'before focus'
-    );
+    expect(bigInputDebugElement.componentInstance.hasFocus).toBe(false, 'before focus');
 
     inputNativeElement.dispatchEvent(new Event('focus'));
-    expect(bigInputDebugElement.componentInstance.hasFocus).toBe(
-      true,
-      'after focus'
-    );
+    expect(bigInputDebugElement.componentInstance.hasFocus).toBe(true, 'after focus');
 
     inputNativeElement.dispatchEvent(new Event('blur'));
-    expect(bigInputDebugElement.componentInstance.hasFocus).toBe(
-      false,
-      'after blur'
-    );
+    expect(bigInputDebugElement.componentInstance.hasFocus).toBe(false, 'after blur');
   });
 });

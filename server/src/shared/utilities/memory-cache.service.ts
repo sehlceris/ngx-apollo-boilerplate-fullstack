@@ -1,52 +1,67 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
+import {BoundLogger, LogService} from './log.service';
+import {ConfigurationService} from '../configuration/configuration.service';
+import {Configuration} from '../configuration/configuration.enum';
+
+import * as redis from 'redis';
+import * as moment from 'moment';
+import * as bluebird from 'bluebird';
+
+bluebird.promisifyAll(redis);
+
+interface JtiInfo {
+  jti: string;
+  exp: moment.Moment;
+}
 
 @Injectable()
 export class MemoryCacheService {
+  private log: BoundLogger = this.logService.bindToNamespace(MemoryCacheService.name);
 
-  private generalMemoryCache: Map<string, any>;
-  private jtiCache: Map<string, Set<string>>;
+  private _client;
 
-  constructor() {
+  constructor(private configurationService: ConfigurationService, private logService: LogService) {
     this.initializeCache();
   }
 
-  public set(key: string, value: any) {
-    this.generalMemoryCache.set(key, value);
+  public get client() {
+    return this._client;
   }
 
-  public get(key: string) {
-    return this.generalMemoryCache.get(key);
-  }
-
-  public addJti(key: string, jti: string) {
-    let jtiSet = this.jtiCache.get(key);
-    if (!jtiSet) {
-      jtiSet = new Set();
-      this.jtiCache.set(key, jtiSet);
+  public async addJti(jti: string, exp?: number) {
+    if (exp) {
+      const ttl = Math.ceil(moment.unix(exp).diff(moment()) / 1000);
+      return this._client.setAsync(jti, true, 'EX', ttl);
+    } else {
+      return this._client.setAsync(jti, true);
     }
-    jtiSet.add(jti);
   }
 
-  public hasJti(key: string, jti: string) {
-    let jtiSet = this.jtiCache.get(key);
-    if (!jtiSet) {
-      jtiSet = new Set();
-      this.jtiCache.set(key, jtiSet);
-    }
-    return jtiSet.has(jti);
+  public async hasJti(jti: string) {
+    const hasJti = await this._client.existsAsync(jti);
+    return hasJti;
   }
 
-  public removeJti(key: string, jti: string) {
-    let jtiSet = this.jtiCache.get(key);
-    if (!jtiSet) {
-      jtiSet = new Set();
-      this.jtiCache.set(key, jtiSet);
-    }
-    jtiSet.delete(jti);
+  public async removeJti(jti: string) {
+    return this._client.delAsync(jti);
   }
 
   public initializeCache() {
-    this.generalMemoryCache = new Map();
-    this.jtiCache = new Map();
+    const host = this.configurationService.get(Configuration.REDIS_HOST);
+    const port = this.configurationService.get(Configuration.REDIS_PORT);
+    const password = this.configurationService.get(Configuration.REDIS_PASSWORD);
+
+    const clientOpts = {
+      host,
+      password,
+      port: parseInt(port, 10),
+    };
+
+    if (this._client) {
+      this._client.quit();
+      this._client = null;
+    }
+
+    this._client = redis.createClient(clientOpts);
   }
 }

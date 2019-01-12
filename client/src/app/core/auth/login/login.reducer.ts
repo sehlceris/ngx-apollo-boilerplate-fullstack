@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import {Action} from '@ngrx/store';
 
 export enum LoginActionTypes {
   LOGIN_WITH_USERNAME_REQUEST = '[Login] LOGIN_WITH_USERNAME_REQUEST',
@@ -50,10 +50,7 @@ export const initialState: LoginState = {
 
 export const selectorLogin = (state): LoginState => state.auth.login;
 
-export function loginReducer(
-  state: LoginState = initialState,
-  action: LoginActions
-): LoginState {
+export function loginReducer(state: LoginState = initialState, action: LoginActions): LoginState {
   switch (action.type) {
     case LoginActionTypes.LOGIN_WITH_USERNAME_REQUEST:
       return {

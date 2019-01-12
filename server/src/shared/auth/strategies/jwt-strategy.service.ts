@@ -1,16 +1,16 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy, VerifiedCallback } from 'passport-jwt';
-import { Configuration } from '../../configuration/configuration.enum';
-import { ConfigurationService } from '../../configuration/configuration.service';
-import { AuthService } from '../auth.service';
-import { JwtAuthPayload } from '../jwt-payload.model';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {PassportStrategy} from '@nestjs/passport';
+import {ExtractJwt, Strategy, VerifiedCallback} from 'passport-jwt';
+import {Configuration} from '../../configuration/configuration.enum';
+import {ConfigurationService} from '../../configuration/configuration.service';
+import {AuthService} from '../auth.service';
+import {JwtAuthPayload} from '../jwt-payload.model';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private readonly _authService: AuthService,
-    private readonly _configurationService: ConfigurationService
+    private readonly _configurationService: ConfigurationService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtAuthPayload, done: VerifiedCallback) {
-    const user = await this._authService.validateUser(payload);
+    const user = await this._authService.validateUserAuthentication(payload);
     if (!user) {
       return done(new HttpException({}, HttpStatus.UNAUTHORIZED), false);
     }

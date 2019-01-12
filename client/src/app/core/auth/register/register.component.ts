@@ -1,19 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {
-  ActionRegisterRequest,
-  RegisterState,
-  selectorRegister,
-} from '@app/core/auth/register/register.reducer';
-import { LoadingOverlayService } from '@app/core/shared/loading-overlay/loading-overlay.service';
-import { select, Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
-import { skip, takeUntil } from 'rxjs/operators';
-import { RegisterVm } from '../../../../../../server/src/user/models/view-models/register-vm.model';
-import { MatSnackBar } from '@angular/material';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActionRegisterRequest, RegisterState, selectorRegister} from '@app/core/auth/register/register.reducer';
+import {LoadingOverlayService} from '@app/core/shared/loading-overlay/loading-overlay.service';
+import {select, Store} from '@ngrx/store';
+import {Subject} from 'rxjs';
+import {skip, takeUntil} from 'rxjs/operators';
+import {RegisterVm} from '../../../../../../server/src/user/models/view-models/register-vm.model';
+import {MatSnackBar} from '@angular/material';
 
-const REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF =
-  'REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF';
+const REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF = 'REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF';
 
 @Component({
   selector: 'anms-register',
@@ -29,7 +24,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private store: Store<any>,
-    private loadingOverlayService: LoadingOverlayService
+    private loadingOverlayService: LoadingOverlayService,
   ) {}
 
   ngOnInit() {
@@ -39,27 +34,23 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .pipe(
         select(selectorRegister),
         takeUntil(this.unsubscribe$),
-        skip(1)
+        skip(1),
       )
       .subscribe((register: RegisterState) => {
         if (register.registering) {
           this.loadingOverlayService.pushOrEditLoadingScreen(
             REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF,
-            'Registering...'
+            'Registering...',
           );
         } else {
-          this.loadingOverlayService.removeLoadingScreen(
-            REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF
-          );
+          this.loadingOverlayService.removeLoadingScreen(REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF);
         }
         this.registerError = register.registerError;
       });
   }
 
   ngOnDestroy() {
-    this.loadingOverlayService.removeLoadingScreen(
-      REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF
-    );
+    this.loadingOverlayService.removeLoadingScreen(REGISTER_COMPONENT_LOADING_OVERLAY_LOADING_REF);
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

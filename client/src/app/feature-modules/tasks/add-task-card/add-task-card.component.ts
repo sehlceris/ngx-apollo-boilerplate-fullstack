@@ -1,9 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
-import { FormValidationService } from '@app/core/services/form-validation.service';
-import { LogService } from '@app/core/services/log.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
+import {Router} from '@angular/router';
+import {FormValidationService} from '@app/core/services/form-validation.service';
+import {LogService} from '@app/core/services/log.service';
 
 @Component({
   selector: 'anms-add-task-card',
@@ -20,7 +20,7 @@ export class AddTaskCardComponent implements OnInit {
     public formValidationService: FormValidationService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private logService: LogService
+    private logService: LogService,
   ) {}
 
   ngOnInit() {

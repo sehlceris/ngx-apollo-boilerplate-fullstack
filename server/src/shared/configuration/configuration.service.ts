@@ -1,6 +1,7 @@
-import {Injectable} from '@nestjs/common';
-import {get} from 'config';
-import {Configuration} from './configuration.enum';
+import { Injectable } from '@nestjs/common';
+import { Configuration } from './configuration.enum';
+
+require('dotenv').config();
 
 export enum Environment {
   Development = 'development',
@@ -8,12 +9,34 @@ export enum Environment {
   Production = 'production',
 }
 
+const config: Map<Configuration, any> = new Map();
+const booleanKeys = [];
+
+const intKeys = [];
+
+const floatKeys = [];
+
 @Injectable()
 export class ConfigurationService {
+
+  constructor() {}
+
   static environment: string = process.env.NODE_ENV || Environment.Development;
 
-  static get(name: string): string {
-    const val = process.env[name] || get(name);
+  static get(name: Configuration): string {
+    if (!config.has(name)) {
+      const stringValue = process.env[name];
+      if (booleanKeys.indexOf(name) > -1) {
+        config.set(name, !!JSON.parse(stringValue));
+      } else if (intKeys.indexOf(name) > -1) {
+        config.set(name, Number.parseInt(stringValue, 10));
+      } else if (intKeys.indexOf(name) > -1) {
+        config.set(name, Number.parseFloat(stringValue));
+      } else {
+        config.set(name, stringValue);
+      }
+    }
+    const val = config.get(name);
     if (val === undefined || val === null) {
       throw new Error(`Configuration does not have key '${name}'`);
     }

@@ -1,0 +1,15 @@
+{
+  "name": "jwtcoder",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "generate": "openssl genrsa -f4 -out private.key 4096 && openssl rsa -in private.key -outform PEM -pubout -out public.key",
+    "generate:dev": "openssl genrsa -f4 -out private.key 512 && openssl rsa -in private.key -outform PEM -pubout -out public.key"
+  },
+  "author": "",
+  "dependencies": {
+    "jsonwebtoken": "^8.4.0"
+  }
+}

@@ -1,0 +1,29 @@
+:host {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  .status-messages {
+    margin: 1em;
+
+    .success {
+      color: var(--theme-color-affirmative-base);
+
+      .login-text {
+        text-decoration: underline;
+      }
+    }
+
+    .error {
+      color: var(--theme-color-warn-base);
+    }
+  }
+
+  .token-debug {
+    display: none;
+    font-size: 0.7em;
+    margin-top: 1em;
+    color: var(--theme-color-contrast-background-base-hint);
+  }
+}

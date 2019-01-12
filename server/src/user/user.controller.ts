@@ -1,77 +1,51 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiBearerAuth,
-  ApiCreatedResponse,
-  ApiOperation,
-  ApiUseTags,
-} from '@nestjs/swagger';
-import { ApiException } from '../shared/api-exception.model';
-import { GetOperationId } from '../shared/utilities/get-operation-id.helper';
-import { User } from './models/user.model';
-import { LoginResponseVm } from './models/view-models/login-response-vm.model';
-import {
-  LoginWithEmailVm,
-  LoginWithIdVm,
-  LoginWithUsernameVm,
-} from './models/view-models/login-vm.model';
-import { RegisterVm } from './models/view-models/register-vm.model';
-import { UserVm } from './models/view-models/user-vm.model';
-import { UserApiService } from './user-api.service';
-import { Roles } from '../shared/decorators/roles.decorator';
-import { UserRole } from './models/user-role.enum';
-import { AuthGuard } from '@nestjs/passport';
-import { HttpRolesGuard } from '../shared/guards/http/http-roles.guard';
-import { TodoApiService } from '../todo/todo-api.service';
-import { TodoVm } from '../todo/models/view-models/todo-vm.model';
-import { HttpRolesOrSelfGuard } from '../shared/guards/http/http-user-role-or-self-guard.service';
+import {Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards} from '@nestjs/common';
+import {ApiBadRequestResponse, ApiBearerAuth, ApiCreatedResponse, ApiOperation, ApiUseTags} from '@nestjs/swagger';
+import {ApiException} from '../shared/api-exception.model';
+import {GetOperationId} from '../shared/utilities/get-operation-id.helper';
+import {User} from './models/user.model';
+import {LoginResponseVm} from './models/view-models/login-response-vm.model';
+import {LoginWithEmailVm, LoginWithIdVm, LoginWithUsernameVm} from './models/view-models/login-vm.model';
+import {RegisterVm} from './models/view-models/register-vm.model';
+import {UserVm} from './models/view-models/user-vm.model';
+import {UserApiService} from './user-api.service';
+import {Roles} from '../shared/decorators/roles.decorator';
+import {UserRole} from './models/user-role.enum';
+import {AuthGuard} from '@nestjs/passport';
+import {HttpRolesGuard} from '../shared/guards/http/http-roles.guard';
+import {HttpRolesOrSelfGuard} from '../shared/guards/http/http-user-role-or-self-guard.service';
 
 @Controller('users')
 @ApiUseTags(User.modelName)
 export class UserController {
-  constructor(
-    private readonly userApiService: UserApiService
-  ) {}
+  constructor(private readonly userApiService: UserApiService) {}
 
   @Post('register')
-  @ApiCreatedResponse({ type: UserVm })
-  @ApiBadRequestResponse({ type: ApiException })
+  @ApiCreatedResponse({type: UserVm})
+  @ApiBadRequestResponse({type: ApiException})
   @ApiOperation(GetOperationId(User.modelName, 'register'))
   async register(@Body() vm: RegisterVm): Promise<UserVm> {
     return this.userApiService.register(vm);
   }
 
   @Post('loginWithUsername')
-  @ApiCreatedResponse({ type: LoginResponseVm })
-  @ApiBadRequestResponse({ type: ApiException })
+  @ApiCreatedResponse({type: LoginResponseVm})
+  @ApiBadRequestResponse({type: ApiException})
   @ApiOperation(GetOperationId(User.modelName, 'loginWithUsername'))
-  async loginWithUsername(
-    @Body() vm: LoginWithUsernameVm
-  ): Promise<LoginResponseVm> {
+  async loginWithUsername(@Body() vm: LoginWithUsernameVm): Promise<LoginResponseVm> {
     return this.userApiService.loginWithUsername(vm);
   }
 
   @Post('loginWithEmail')
-  @ApiCreatedResponse({ type: LoginResponseVm })
-  @ApiBadRequestResponse({ type: ApiException })
+  @ApiCreatedResponse({type: LoginResponseVm})
+  @ApiBadRequestResponse({type: ApiException})
   @ApiOperation(GetOperationId(User.modelName, 'loginWithEmail'))
   async loginWithEmail(@Body() vm: LoginWithEmailVm): Promise<LoginResponseVm> {
     return this.userApiService.loginWithEmail(vm);
   }
 
   @Post('loginWithId')
-  @ApiCreatedResponse({ type: LoginResponseVm })
-  @ApiBadRequestResponse({ type: ApiException })
+  @ApiCreatedResponse({type: LoginResponseVm})
+  @ApiBadRequestResponse({type: ApiException})
   @ApiOperation(GetOperationId(User.modelName, 'loginWithId'))
   async loginWithId(@Body() vm: LoginWithIdVm): Promise<LoginResponseVm> {
     return this.userApiService.loginWithId(vm);
@@ -109,7 +83,7 @@ export class UserController {
   @Roles(UserRole.Admin)
   @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
   @ApiBearerAuth()
-  @ApiBadRequestResponse({ type: ApiException })
+  @ApiBadRequestResponse({type: ApiException})
   @ApiOperation(GetOperationId(User.modelName, 'getUsers'))
   async getUsers(): Promise<UserVm[]> {
     return this.userApiService.getUsers();
@@ -119,12 +93,10 @@ export class UserController {
   @Roles(UserRole.Admin)
   @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
   @ApiBearerAuth()
-  @ApiCreatedResponse({ type: UserVm })
-  @ApiBadRequestResponse({ type: ApiException })
+  @ApiCreatedResponse({type: UserVm})
+  @ApiBadRequestResponse({type: ApiException})
   @ApiOperation(GetOperationId(User.modelName, 'getUserByUsername'))
-  async getUserByUsername(
-    @Param('username') username: string
-  ): Promise<UserVm> {
+  async getUserByUsername(@Param('username') username: string): Promise<UserVm> {
     return this.userApiService.getUserByUsername(username);
   }
 
@@ -132,10 +104,10 @@ export class UserController {
   @Roles(UserRole.Admin)
   @UseGuards(<any>AuthGuard('jwt'), HttpRolesGuard)
   @ApiBearerAuth()
-  @ApiCreatedResponse({ type: UserVm })
-  @ApiBadRequestResponse({ type: ApiException })
+  @ApiCreatedResponse({type: UserVm})
+  @ApiBadRequestResponse({type: ApiException})
   @ApiOperation(GetOperationId(User.modelName, 'getUsersByRole'))
   async getUsersByRole(@Query('role') role: UserRole): Promise<UserVm[]> {
-    return this.userApiService.getUsers({ role });
+    return this.userApiService.getUsers({role});
   }
 }

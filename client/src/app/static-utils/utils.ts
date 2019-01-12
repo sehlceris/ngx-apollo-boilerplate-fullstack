@@ -29,9 +29,7 @@ export class Utils {
     if (typeof padString !== 'string') {
       padString = '0';
     }
-    return original.length >= width
-      ? original
-      : new Array(width - original.length + 1).join(padString) + original;
+    return original.length >= width ? original : new Array(width - original.length + 1).join(padString) + original;
   }
 
   /**
@@ -63,9 +61,7 @@ export class Utils {
    * @param promises
    * @returns {Promise<Array<TResult>>}
    */
-  static allResolvedPromises<T>(
-    promises: Array<Promise<T>>
-  ): Promise<Array<T | Error>> {
+  static allResolvedPromises<T>(promises: Array<Promise<T>>): Promise<Array<T | Error>> {
     const settledPromise = Promise.all(
       promises.map((p) => {
         return p.catch((e) => {
@@ -76,7 +72,7 @@ export class Utils {
             return new Error(e);
           }
         });
-      })
+      }),
     );
 
     const successfulResultsPromise = settledPromise.then((results) => {
@@ -93,9 +89,7 @@ export class Utils {
    * @param promises
    * @returns {Promise<Array<TResult>>}
    */
-  static allRejectedPromises<T>(
-    promises: Array<Promise<T>>
-  ): Promise<Array<Error>> {
+  static allRejectedPromises<T>(promises: Array<Promise<T>>): Promise<Array<Error>> {
     const settledPromise = Promise.all(
       promises.map((p) => {
         return p.catch((e) => {
@@ -106,7 +100,7 @@ export class Utils {
             return new Error(e);
           }
         });
-      })
+      }),
     );
 
     const rejectedResultsPromise = settledPromise.then((results) => {
