@@ -18,9 +18,10 @@ Here's the prereqs you need installed:
 
 Open 3 terminal windows.
 
-First terminal window (starts up a Redis docker instance:
+First terminal window (copies `.env` sample and starts up a Redis docker instance:
 
 ```bash
+cp .env.sample .env
 cd server
 npm run redis
 ```
