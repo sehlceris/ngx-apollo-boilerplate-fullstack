@@ -47,6 +47,7 @@ You will first need the server running, as the client needs to contact the serve
 Open a terminal window and run the following command to generate the GraphQL client:
 
 ```bash
+npm i
 npm run generate
 ```
 
