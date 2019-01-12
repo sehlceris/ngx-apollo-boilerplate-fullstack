@@ -21,8 +21,8 @@ Open 3 terminal windows.
 First terminal window (copies `.env` sample and starts up a Redis docker instance:
 
 ```bash
-cp .env.sample .env
 cd server
+cp .env.sample .env
 npm run redis
 ```
 
