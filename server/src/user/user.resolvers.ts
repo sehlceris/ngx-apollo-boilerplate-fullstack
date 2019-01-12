@@ -77,9 +77,9 @@ export class UserResolvers {
     return this.userApiService.resendVerificationEmail(id);
   }
 
-  @Mutation('resetPassword')
+  @Mutation('requestPasswordReset')
   @UseGuards()
-  async resetPassword(@Args('email') email: string): Promise<void> {
-    return this.userApiService.resetPassword(email);
+  async requestPasswordReset(@Args('email') email: string): Promise<void> {
+    return this.userApiService.requestPasswordReset(email);
   }
 }

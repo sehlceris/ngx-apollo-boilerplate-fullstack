@@ -26,6 +26,14 @@ type Mutation {
   ): User
 
   deleteUserById(id: String!): User
+
+  resendVerificationEmail(
+    id: String!
+  ): Boolean
+
+  requestPasswordReset(
+    email: String!
+  ): Boolean
 }
 
 type User {

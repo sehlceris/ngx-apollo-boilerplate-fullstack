@@ -112,8 +112,8 @@ export class UserApiService {
     return this.userService.loginWithId(vm);
   }
 
-  async resetPassword(email: string): Promise<void> {
-    return this.userService.resetPassword(email);
+  async requestPasswordReset(email: string): Promise<void> {
+    return this.userService.requestPasswordReset(email);
   }
 
   async resendVerificationEmail(email: string): Promise<void> {

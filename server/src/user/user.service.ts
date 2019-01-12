@@ -101,7 +101,7 @@ export class UserService extends BaseService<User> {
     return this.performCommonLoginSequence(user, password);
   }
 
-  async resetPassword(email: string) {
+  async requestPasswordReset(email: string) {
     const user = await this.findOne({email});
     if (user) {
       const userVm: UserVm = await this.map<UserVm>(user.toJSON());
